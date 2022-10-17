@@ -1,0 +1,33 @@
+//---------------컬러 변수 정리---------------
+$mainColor          : #406178;
+$subColor           : #3C8FEF;
+$fontColor          : #15171A;
+$subFontColor       : #858585;
+$highlight_red      : #FF3838;
+$gray               : #434343;
+$borderColor        : #CDCDCD;
+$backgroundColor    : #EEEEEE;
+$thBackColor        : #F5F5F5;
+$white              : #FFFFFF;
+
+//---------------폰트 변수 정리---------------
+$boldFont       : 'NotoSansB', '맑은 고딕', sans-serif;
+$middleFont     : 'NotoSansM', '맑은 고딕', sans-serif;
+$regularFont    : 'NotoSansR', '맑은 고딕', sans-serif;
+$thinFont       : 'NotoSansT', '맑은 고딕', sans-serif;
+
+//---------------display flex style mixin---------------
+@mixin flex-style($flexDirection: row, $alignVal: center, $justifyVal: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignVal;
+  justify-content: $justifyVal;
+}
+
+//---------------position style mixin---------------
+@mixin position-style($position: absolute, $left: 0, $top: 0, $zIndex: null) {
+  position: $position;
+  left: $left;
+  top: $top;
+  z-index: $zIndex;
+}
