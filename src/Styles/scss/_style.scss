@@ -1,20 +1,41 @@
 //---------------컬러 변수 정리---------------
-$mainColor          : #406178;
-$subColor           : #3C8FEF;
-$fontColor          : #15171A;
-$subFontColor       : #858585;
-$highlight_red      : #FF3838;
-$gray               : #434343;
-$borderColor        : #CDCDCD;
-$backgroundColor    : #EEEEEE;
-$thBackColor        : #F5F5F5;
-$white              : #FFFFFF;
+$mainColor: #406178;
+$subColor: #3c8fef;
+$fontColor: #15171a;
+$subFontColor: #858585;
+$highlight_red: #ff3838;
+$gray: #434343;
+$borderColor: #cdcdcd;
+$backgroundColor: #e7e3e0;
+$thBackColor: #f5f5f5;
+$white: #ffffff;
+//각 홈페이지 메인 컬러
+$linkMainColor: #ffc200;
+$tongMainColor: #de5d60;
+//배경색,텍스트 및 선 컬러
+$footerColor: #eeeeee;
+$black: #15171a;
+$gray01: #858585;
+$gray02: #333333;
+$gray03: #cdcdcd;
+$gray04: #dddddd;
+$gray05: #f5f5f5;
+$bgColor: #fafafa;
+$red: #f74848;
+$firstStepColor: #98b9e6;
+$secondStepColor: #6f9cdb;
+$highlightColor: #3172cc;
+$powerBlue: #0b55aa;
+$lightBlue: #e6f0f9;
+$mainOpacityColor: rgba(60, 143, 239, 0.08);
 
 //---------------폰트 변수 정리---------------
-$boldFont       : 'NotoSansB', '맑은 고딕', sans-serif;
-$middleFont     : 'NotoSansM', '맑은 고딕', sans-serif;
-$regularFont    : 'NotoSansR', '맑은 고딕', sans-serif;
-$thinFont       : 'NotoSansT', '맑은 고딕', sans-serif;
+$blackFont: 'NotoSansBlack', '맑은 고딕', 'sans-serif';
+$boldFont: 'NotoSansB', '맑은 고딕', 'sans-serif';
+$middleFont: 'NotoSansM', '맑은 고딕', 'sans-serif';
+$regularFont: 'NotoSansR', '맑은 고딕', 'sans-serif';
+$lightFont: 'NotoSansL', '맑은 고딕', 'sans-serif';
+$thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
 
 //---------------display flex style mixin---------------
 @mixin flex-style($flexDirection: row, $alignVal: center, $justifyVal: center) {
