@@ -5,24 +5,20 @@ import Notice from 'Pages/Notice';
 import Manage from 'Pages/Manage';
 import Inquiry from 'Pages/Inquiry';
 import Coupon from 'Pages/Coupon';
-import InquiryDetail from 'Pages/Common/InquiryDetail';
-import NoticeDetail from 'Pages/Common/NoticeDetail';
-import NoticeWrite from 'Pages/Common/NoticeWrite';
 import Home from 'Pages/Home';
+import PopUp from 'Pages/PopUp';
 
 function App() {
   return (
     <div className='App'>
       <Routes>
         <Route path='/' element={<SignIn />} />
-        <Route path='/home' element={<Home/>}/>
-        <Route path='/event' element={<Coupon />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/manage' element={<Manage />} />
         <Route path='/inquiry' element={<Inquiry />} />
-        <Route path='/inquiry/:id' element={<InquiryDetail />} />
         <Route path='/notice' element={<Notice />} />
-        <Route path='/notice/:id' element={<NoticeDetail />} />
-        <Route path='/notice/write' element={<NoticeWrite />} />
+        <Route path='/popup' element={<PopUp />} />
+        <Route path='/event' element={<Coupon />} />
       </Routes>
     </div>
   );

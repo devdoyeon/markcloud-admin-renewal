@@ -35,114 +35,6 @@
   font-size: 50px;
   color: #333333;
 }
-.container.signIn {
-  background-color: #434343;
-}
-.container.signIn .signInBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  border: 4px solid white;
-  padding: 50px;
-  min-width: 400px;
-  min-height: 500px;
-}
-.container.signIn .signInBox h2 {
-  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
-  color: white;
-  letter-spacing: 3px;
-}
-.container.signIn .signInBox > .form {
-  width: 100%;
-  margin-bottom: 20px;
-}
-.container.signIn .signInBox > .form > input {
-  width: 100%;
-  height: 46px;
-  border: 2px solid white;
-  border-radius: 8px;
-  background-color: transparent;
-  padding: 5px;
-  color: white;
-  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
-  transition: all 0.3s;
-}
-.container.signIn .signInBox > .form > input::placeholder {
-  color: white;
-}
-.container.signIn .signInBox > .form > input:focus {
-  background-color: rgba(21, 23, 26, 0.4);
-  transition: all 0.3s;
-}
-.container.signIn .signInBox > .form :first-child {
-  margin: 30px 0 15px;
-}
-.container.signIn .signInBox > .remember-id {
-  width: 100%;
-  display: block;
-  position: relative;
-}
-.container.signIn .signInBox > .remember-id label {
-  width: 35%;
-  display: block;
-  cursor: pointer;
-  color: white;
-  position: relative;
-  z-index: 2;
-  transition: color 200ms ease-in;
-  overflow: hidden;
-  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
-}
-.container.signIn .signInBox > .remember-id label:before {
-  width: 16px;
-  height: 16px;
-  content: "";
-  border: 2px solid #d1d7dc;
-  background-color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
-  background-position: -1px -1px;
-  border-radius: 15px;
-  z-index: 2;
-  position: absolute;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-8px) translateX(25px);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.container.signIn .signInBox > .remember-id input:checked ~ label {
-  color: #fff;
-}
-.container.signIn .signInBox > .remember-id input:checked ~ label:before {
-  background-color: #3c8fef;
-  border-color: #3c8fef;
-}
-.container.signIn .signInBox > .remember-id input {
-  position: absolute;
-  transform: translateY(-50%);
-  visibility: hidden;
-}
-.container.signIn .signInBox hr {
-  margin: 20px 0;
-  width: 100%;
-}
-.container.signIn .signInBox button {
-  width: 100%;
-  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
-  border-radius: 7px;
-  color: white;
-  padding: 10px 0;
-  transition: all 0.3s;
-  border: 2px solid white;
-  box-shadow: 0px 0px 1px white;
-}
-.container.signIn .signInBox button:hover {
-  background-color: rgba(21, 23, 26, 0.4);
-  transition: all 0.3s;
-  box-shadow: 0px 0px 4px white;
-}
 
 .sideBar {
   position: fixed;
@@ -166,6 +58,7 @@
   text-decoration: none;
 }
 .sideBar > .mainMenu li {
+  cursor: pointer;
   text-justify: center;
   border-bottom: 1px solid #858585;
   color: white;
@@ -179,6 +72,11 @@
   padding: 3px 15px;
   background-color: rgba(255, 255, 255, 0.15);
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  cursor: default;
+}
+.sideBar > .mainMenu li.active {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .logoutBtn {
@@ -200,58 +98,380 @@
   background-color: #de5d60;
 }
 
-.dashboard > .row {
-  width: 100%;
+.topBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
-.dashboard > .row:nth-child(2) > div > div {
-  max-height: 260px;
-  overflow: auto;
-}
-.dashboard > .row > div {
-  flex: 1;
-  background-color: white;
-  margin: 10px;
-  height: auto;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 1px 1px 4px #858585;
-}
-.dashboard > .row > div h2 {
+.topBar > h2 {
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
-  color: #434343;
+  font-size: 50px;
+  color: #333333;
 }
-.dashboard > .row > div > div {
-  margin-top: 10px;
-  overflow: auto;
+.topBar > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.topBar > div :first-child {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.topBar > div :last-child {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.topBar > div select {
+  padding: 4px 20px;
+  background-color: #ffffff;
+  border: 1px solid #333333;
+  border-right: none;
+  font-size: 16px;
+}
+.topBar > div input[type=text] {
+  height: 36px;
+  border: 1px solid #333333;
+  padding: 7px;
+}
+.topBar > div button {
+  height: 36px;
+  padding: 5px 20px;
+  font-size: 16px;
+  background-color: #333333;
+  color: white;
+}
+.topBar > div button > .searchIcon {
+  margin-left: 5px;
+}
+.topBar > div button > .searchIcon > svg {
+  transform: translateY(2px);
+}
+.topBar > div button.searchBtn {
+  border-right: 1px solid white;
+}
+
+.pagination {
+  margin-top: 50px;
+}
+.pagination > li {
+  background-color: white;
+  padding: 10px 0;
+  width: 40px;
+  text-align: center;
   border: 1px solid #cdcdcd;
+  cursor: pointer;
+  border-right: none;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  user-select: none;
 }
-.dashboard > .row > div > div.table-wrap > table {
+.pagination > li:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.pagination > li:last-child {
+  border-right: 1px solid #cdcdcd;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.pagination > li.now {
+  background-color: #333333;
+  color: white;
+}
+.pagination > li.active > svg > polyline {
+  stroke: #333333;
+}
+.pagination > li.block {
+  cursor: default;
+}
+.pagination > li.block > svg > polyline {
+  stroke: #cdcdcd;
+}
+.pagination > li > svg {
+  transform: scale(1.4);
+}
+
+.table-wrap > table {
   width: 100%;
+  padding: 10px;
   text-align: center;
   border-collapse: collapse;
 }
-.dashboard > .row > div > div.table-wrap > table thead {
+.table-wrap > table thead {
   background-color: #f5f5f5;
 }
-.dashboard > .row > div > div.table-wrap > table tr > th,
-.dashboard > .row > div > div.table-wrap > table tr td {
+.table-wrap > table tbody {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.table-wrap > table tr > th {
+  font-weight: normal;
+  padding: 15px 0;
+}
+.table-wrap > table tr > td {
+  padding: 20px 0;
+}
+.table-wrap > table tr > td.title {
+  cursor: pointer;
+}
+.table-wrap > table tr > td.title:hover {
+  color: #406178;
+}
+.table-wrap > table tr > th,
+.table-wrap > table tr td {
   border-bottom: 1px solid #cdcdcd;
-  padding: 10px 0;
 }
-.dashboard > .row > div > div.table-wrap > table tr th {
+.table-wrap > table tr th {
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
-.dashboard > .row > div > div.king {
-  height: auto;
+
+.modal-background {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(51, 51, 51, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
-.dashboard > .row > div > div.count-wrap {
-  height: 220px;
+.modal-background .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50vw;
+  height: 700px;
+  padding: 50px;
+  background-color: white;
+  overflow-y: auto;
 }
-.dashboard > .row > div > div.count-wrap div {
-  font-size: 20px;
+.modal-background .modal .topBar {
+  width: 100%;
+}
+.modal-background .modal .topBar > div {
+  cursor: pointer;
+}
+.modal-background .modal .topBar > div > table {
+  box-shadow: 0px 0px 9px rgba(67, 67, 67, 0.3);
+  border: 1px solid #cdcdcd;
+  border-collapse: collapse;
+}
+.modal-background .modal .topBar > div > table thead th,
+.modal-background .modal .topBar > div > table thead td,
+.modal-background .modal .topBar > div > table tbody th,
+.modal-background .modal .topBar > div > table tbody td {
+  border-radius: 0;
+  padding: 5px;
+  border-bottom: 1px solid #cdcdcd;
+}
+.modal-background .modal .topBar > div > table thead th:first-child,
+.modal-background .modal .topBar > div > table thead td:first-child,
+.modal-background .modal .topBar > div > table tbody th:first-child,
+.modal-background .modal .topBar > div > table tbody td:first-child {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  background-color: #f5f5f5;
+}
+.modal-background .modal .topBar > div > table thead th:nth-child(2),
+.modal-background .modal .topBar > div > table thead td:nth-child(2),
+.modal-background .modal .topBar > div > table tbody th:nth-child(2),
+.modal-background .modal .topBar > div > table tbody td:nth-child(2) {
+  background-color: white;
+  text-align: right;
+}
+.modal-background .modal .topBar > div > svg {
+  scale: 2;
+  border-radius: 0;
+  fill: #434343;
+}
+.modal-background .modal .topBar .viewBytes {
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.5);
+  padding: 5px;
+  border-radius: 7px;
+  margin-left: 10px;
+  color: #434343;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
-.dashboard > .row > div > div.count-wrap div.count {
-  font-size: 50px;
+.modal-background .modal .topBar .viewBytes > span {
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > hr {
+  width: 100%;
+  margin: 30px 0;
+}
+.modal-background .modal > .title-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+.modal-background .modal > .title-wrap > svg {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #434343;
+}
+.modal-background .modal > .title-wrap h1 {
+  display: inline-block;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > .context {
+  overflow: auto;
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.2);
+  width: 100%;
+  margin-top: 10px;
+  min-height: 300px;
+  border-radius: 8px;
+}
+.modal-background .modal > .answer-wrap,
+.modal-background .modal .view-answer-wrap {
+  margin-top: 30px;
+  width: 100%;
+}
+.modal-background .modal > .answer-wrap > .header,
+.modal-background .modal .view-answer-wrap > .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.modal-background .modal > .answer-wrap > .header h2,
+.modal-background .modal .view-answer-wrap > .header h2 {
+  display: inline-block;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > .answer-wrap > .header svg,
+.modal-background .modal .view-answer-wrap > .header svg {
+  margin-right: 10px;
+  font-size: 25px;
+  color: #434343;
+}
+.modal-background .modal > .answer-wrap > .answer-area,
+.modal-background .modal > .answer-wrap .view-answer-area,
+.modal-background .modal .view-answer-wrap > .answer-area,
+.modal-background .modal .view-answer-wrap .view-answer-area {
+  margin-top: 10px;
+  resize: none;
+  width: 100%;
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.2);
+  min-height: 200px;
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.modal-background .modal > .answer-wrap > .answer-area:focus,
+.modal-background .modal > .answer-wrap .view-answer-area:focus,
+.modal-background .modal .view-answer-wrap > .answer-area:focus,
+.modal-background .modal .view-answer-wrap .view-answer-area:focus {
+  outline: none;
+  border: 1px solid #858585;
+}
+.modal-background .modal .footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  margin-top: 5px;
+}
+.modal-background .modal .footer .viewBytes {
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.5);
+  padding: 5px;
+  border-radius: 7px;
+  color: #434343;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .footer .viewBytes > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .footer button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .footer button.delBtn {
+  margin-left: 5px;
+}
+.modal-background .modal .go-service {
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+}
+.modal-background .modal .go-service > a {
+  color: #858585;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+.modal-background .modal.editor {
+  width: 70vw !important;
+  height: 80vh !important;
+}
+.modal-background .modal.editor .ck.ck-editor {
+  width: 100%;
+}
+.modal-background .modal.editor .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 500px;
+  max-height: 700px;
+  min-width: 100%;
+}
+.modal-background .modal.editor > .topBar select {
+  padding: 10px;
+  border: 1px solid #cdcdcd;
+  border-right: none;
+}
+.modal-background .modal.editor > .topBar input {
+  border: 1px solid #cdcdcd !important;
+  font-size: 26px;
+  padding: 23px 15px !important;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.editor .footer {
+  margin-top: 10px;
+}
+.modal-background .modal.editor .footer > div > button:last-child {
+  margin-left: 5px;
+}
+.modal-background .modal.coupon {
+  width: 500px;
+  height: 430px;
+}
+.modal-background .modal.coupon .topBar > h2 {
+  font-size: 30px;
+}
+.modal-background .modal.coupon .wrap {
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  width: 100%;
+}
+.modal-background .modal.coupon .wrap input {
+  border: 1px solid #cdcdcd;
+  padding: 10px 20px;
+  width: 100%;
+}
+.modal-background .modal.coupon .wrap p {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.coupon .wrap p::before {
+  content: "*";
+  color: #f74848;
+}
+.modal-background .modal.coupon .wrap .footer {
+  margin-top: 20px;
+  justify-content: center;
+}
+.modal-background .modal.coupon .wrap .footer > div > button:last-child {
+  margin-left: 10px;
 }

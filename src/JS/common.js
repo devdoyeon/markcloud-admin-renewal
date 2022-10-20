@@ -1,5 +1,13 @@
-import { removeCookie } from 'js/cookie';
-import { errorList } from 'js/array';
+import { removeCookie } from 'JS/cookie';
+import { errorList } from 'JS/array';
+
+export const changeState = (setState, column, value) => {
+  setState(prev => {
+    const clone = {...prev};
+    clone[column] = value;
+    return clone;
+  })
+}
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {
   let countByte;

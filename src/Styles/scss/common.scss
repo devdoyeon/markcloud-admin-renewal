@@ -27,114 +27,6 @@
       color: $gray02;
     }
   }
-
-  &.signIn {
-    background-color: $gray;
-    .signInBox {
-      @include flex-style(column);
-      border-radius: 12px;
-      border: 4px solid white;
-      padding: 50px;
-      min-width: 400px;
-      min-height: 500px;
-      h2 {
-        font-family: $boldFont;
-        color: white;
-        letter-spacing: 3px;
-      }
-      > .form {
-        width: 100%;
-        margin-bottom: 20px;
-        > input {
-          width: 100%;
-          height: 46px;
-          border: 2px solid white;
-          border-radius: 8px;
-          background-color: transparent;
-          padding: 5px;
-          color: white;
-          font-family: $middleFont;
-          transition: all 0.3s;
-          &::placeholder {
-            color: white;
-          }
-          &:focus {
-            background-color: rgba($color: $black, $alpha: 0.4);
-            transition: all 0.3s;
-          }
-        }
-        :first-child {
-          margin: 30px 0 15px;
-        }
-      }
-      > .remember-id {
-        width: 100%;
-        display: block;
-        position: relative;
-        label {
-          width: 35%;
-          display: block;
-          cursor: pointer;
-          color: white;
-          position: relative;
-          z-index: 2;
-          transition: color 200ms ease-in;
-          overflow: hidden;
-          font-family: $middleFont;
-          &:before {
-            width: 16px;
-            height: 16px;
-            content: '';
-            border: 2px solid #d1d7dc;
-            background-color: #fff;
-            background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
-            background-position: -1px -1px;
-            border-radius: 15px;
-            z-index: 2;
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-8px) translateX(25px);
-            cursor: pointer;
-            transition: all 0.2s;
-          }
-        }
-
-        input:checked ~ label {
-          color: #fff;
-          &:before {
-            background-color: $subColor;
-            border-color: $subColor;
-          }
-        }
-
-        input {
-          position: absolute;
-          transform: translateY(-50%);
-          visibility: hidden;
-        }
-      }
-      hr {
-        margin: 20px 0;
-        width: 100%;
-      }
-      button {
-        width: 100%;
-        font-family: $boldFont;
-        border-radius: 7px;
-        color: white;
-        padding: 10px 0;
-        transition: all 0.3s;
-        border: 2px solid white;
-        box-shadow: 0px 0px 1px white;
-        &:hover {
-          background-color: rgba($color: $black, $alpha: 0.4);
-          transition: all 0.3s;
-          box-shadow: 0px 0px 4px white;
-        }
-      }
-    }
-  }
 }
 
 .sideBar {
@@ -155,6 +47,7 @@
       text-decoration: none;
     }
     li {
+      cursor: pointer;
       text-justify: center;
       border-bottom: 1px solid $gray01;
       color: white;
@@ -167,6 +60,11 @@
         padding: 3px 15px;
         background-color: rgba($color: white, $alpha: 0.15);
         font-family: $boldFont;
+        cursor: default;
+      }
+      &.active {
+        font-family: $boldFont;
+        background-color: rgba($color: black, $alpha: 0.2);
       }
     }
   }
@@ -191,66 +89,353 @@
   }
 }
 
-.dashboard {
-  > .row {
-    width: 100%;
-
-    &:nth-child(2) {
-      > div {
-        > div {
-          max-height: 260px;
-          overflow: auto;
+.topBar {
+  @include flex-style($justifyVal: space-between);
+  > h2 {
+    font-family: $boldFont;
+    font-size: 50px;
+    color: $gray02;
+  }
+  > div {
+    @include flex-style();
+    :first-child {
+      border-top-left-radius: 7px;
+      border-bottom-left-radius: 7px;
+    }
+    :last-child {
+      border-top-right-radius: 7px;
+      border-bottom-right-radius: 7px;
+    }
+    select {
+      padding: 4px 20px;
+      background-color: $white;
+      border: 1px solid $gray02;
+      border-right: none;
+      font-size: 16px;
+    }
+    input[type='text'] {
+      height: 36px;
+      border: 1px solid $gray02;
+      padding: 7px;
+    }
+    button {
+      height: 36px;
+      padding: 5px 20px;
+      font-size: 16px;
+      background-color: $gray02;
+      color: white;
+      > .searchIcon {
+        margin-left: 5px;
+        > svg {
+          transform: translateY(2px);
         }
       }
-    }
-
-    > div {
-      flex: 1;
-      background-color: white;
-      margin: 10px;
-      height: auto;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 1px 1px 4px $subFontColor;
-      h2 {
-        font-family: $boldFont;
-        color: $gray;
+      &.searchBtn {
+        border-right: 1px solid white;
       }
+    }
+  }
+}
+
+.pagination {
+  margin-top: 50px;
+  > li {
+    background-color: white;
+    padding: 10px 0;
+    width: 40px;
+    text-align: center;
+    border: 1px solid $borderColor;
+    cursor: pointer;
+    border-right: none;
+    font-family: $middleFont;
+    user-select: none;
+    &:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    &:last-child {
+      border-right: 1px solid $borderColor;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    &.now {
+      background-color: $gray02;
+      color: white;
+    }
+    &.active {
+      > svg > polyline {
+        stroke: $gray02;
+      }
+    }
+    &.block {
+      cursor: default;
+      > svg > polyline {
+        stroke: $gray03;
+      }
+    }
+    > svg {
+      transform: scale(1.4);
+    }
+  }
+}
+
+.table-wrap {
+  > table {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-collapse: collapse;
+    thead {
+      background-color: $thBackColor;
+    }
+    tbody {
+      background-color: rgba($color: $white, $alpha: 0.4);
+    }
+    tr {
+      > th {
+        font-weight: normal;
+        padding: 15px 0;
+      }
+      > td {
+        padding: 20px 0;
+        &.title {
+          cursor: pointer;
+          &:hover {
+            color: $mainColor;
+          }
+        }
+      }
+      > th,
+      td {
+        border-bottom: 1px solid $gray03;
+      }
+      th {
+        font-family: $middleFont;
+      }
+    }
+  }
+}
+
+.modal-background {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba($color: $gray02, $alpha: 0.4);
+  @include position-style(fixed);
+  @include flex-style();
+  .modal {
+    @include flex-style(column, $justifyVal: flex-start);
+    width: 50vw;
+    height: 700px;
+    padding: 50px;
+    background-color: white;
+    overflow-y: auto;
+    .topBar {
+      width: 100%;
       > div {
-        margin-top: 10px;
-        overflow: auto;
-        border: 1px solid $gray03;
-        &.table-wrap {
-          > table {
-            width: 100%;
-            text-align: center;
-            border-collapse: collapse;
-            thead {
-              background-color: $thBackColor;
-            }
-            tr {
-              > th,
-              td {
-                border-bottom: 1px solid $gray03;
-                padding: 10px 0;
-              }
-              th {
+        cursor: pointer;
+        > table {
+          box-shadow: 0px 0px 9px rgba($color: $gray, $alpha: 0.3);
+          border: 1px solid $borderColor;
+          border-collapse: collapse;
+          thead,
+          tbody {
+            th,
+            td {
+              border-radius: 0;
+              padding: 5px;
+              border-bottom: 1px solid $borderColor;
+              &:first-child {
                 font-family: $middleFont;
+                background-color: $thBackColor;
+              }
+              &:nth-child(2) {
+                background-color: white;
+                text-align: right;
               }
             }
           }
         }
-        &.king {
-          height: auto;
+        > svg {
+          scale: 2;
+          border-radius: 0;
+          fill: $gray;
         }
-        &.count-wrap {
-          height: 220px;
-          div {
-            font-size: 20px;
-            font-family: $middleFont;
-            &.count {
-              font-size: 50px;
-              font-family: $boldFont;
+      }
+      .viewBytes {
+        box-shadow: 0px 0px 4px rgba($color: $gray, $alpha: 0.5);
+        padding: 5px;
+        border-radius: 7px;
+        margin-left: 10px;
+        color: $gray;
+        font-family: $middleFont;
+        > span {
+          font-family: $boldFont;
+        }
+      }
+    }
+    > hr {
+      width: 100%;
+      margin: 30px 0;
+    }
+    > .title-wrap {
+      @include flex-style($justifyVal: flex-start);
+      width: 100%;
+      > svg {
+        font-size: 25px;
+        margin-right: 10px;
+        color: $gray;
+      }
+      h1 {
+        display: inline-block;
+        font-family: $boldFont;
+      }
+    }
+    > .context {
+      overflow: auto;
+      border: 1px solid $borderColor;
+      padding: 20px;
+      box-shadow: 0px 0px 4px rgba($color: $gray, $alpha: 0.2);
+      width: 100%;
+      margin-top: 10px;
+      min-height: 300px;
+      border-radius: 8px;
+    }
+    > .answer-wrap,
+    .view-answer-wrap {
+      margin-top: 30px;
+      width: 100%;
+      > .header {
+        @include flex-style($justifyVal: flex-start);
+        h2 {
+          display: inline-block;
+          font-family: $boldFont;
+        }
+        svg {
+          margin-right: 10px;
+          font-size: 25px;
+          color: $gray;
+        }
+      }
+      > .answer-area,
+      .view-answer-area {
+        margin-top: 10px;
+        resize: none;
+        width: 100%;
+        box-shadow: 0px 0px 4px rgba($color: $gray, $alpha: 0.2);
+        min-height: 200px;
+        border: 1px solid $borderColor;
+        padding: 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        &:focus {
+          outline: none;
+          border: 1px solid $gray01;
+        }
+      }
+    }
+    .footer {
+      width: 100%;
+      @include flex-style($justifyVal: space-between);
+      height: 50px;
+      margin-top: 5px;
+      .viewBytes {
+        box-shadow: 0px 0px 4px rgba($color: $gray, $alpha: 0.5);
+        padding: 5px;
+        border-radius: 7px;
+        color: $gray;
+        font-family: $middleFont;
+        > span {
+          font-family: $boldFont;
+        }
+      }
+      button {
+        background-color: $gray;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-family: $boldFont;
+        &.delBtn {
+          margin-left: 5px;
+        }
+      }
+    }
+    .go-service {
+      width: 100%;
+      text-align: right;
+      margin-top: 10px;
+      > a {
+        color: $gray01;
+        text-decoration: underline;
+        text-underline-position: under;
+      }
+    }
+    &.editor {
+      width: 70vw !important;
+      height: 80vh !important;
+      .ck.ck-editor {
+        width: 100%;
+      }
+      .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+        min-height: 500px;
+        max-height: 700px;
+        min-width: 100%;
+        // max-width: 100%;
+      }
+      > .topBar {
+        select {
+          padding: 10px;
+          border: 1px solid $borderColor;
+          border-right: none;
+        }
+        input {
+          border: 1px solid $borderColor !important;
+          font-size: 26px;
+          padding: 23px 15px !important;
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+          font-family: $boldFont;
+        }
+      }
+      .footer {
+        margin-top: 10px;
+        > div > button {
+          &:last-child {
+            margin-left: 5px;
+          }
+        }
+      }
+    }
+    &.coupon {
+      width: 500px;
+      height: 430px;
+      .topBar > h2 {
+        font-size: 30px;
+      }
+      .wrap {
+        border: 1px solid $borderColor;
+        padding: 20px;
+        width: 100%;
+        input {
+          border: 1px solid $borderColor;
+          padding: 10px 20px;
+          width: 100%;
+        }
+        p {
+          margin-top: 20px;
+          width: 100%;
+          text-align: center;
+          font-family: $middleFont;
+          &::before {
+            content: '*';
+            color: $red;
+          }
+        }
+        .footer {
+          margin-top: 20px;
+          justify-content: center;
+          > div > button {
+            &:last-child {
+              margin-left: 10px;
             }
           }
         }

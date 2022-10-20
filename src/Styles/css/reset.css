@@ -4,7 +4,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'NotoSansR', '맑은 고딕', sans-serif;
-  font-weight: normal;
 }
 
 ul,
@@ -12,14 +11,6 @@ dl,
 li,
 ol {
   list-style: none;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-size: 24px;
 }
 
 button {
@@ -36,4 +27,9 @@ select {
 input {
   border: none;
   outline: none;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }

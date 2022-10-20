@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NoticeWrite = () => {
+const PopUp = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const NoticeWrite = () => {
   );
 };
 
-export default NoticeWrite;
+export default PopUp;

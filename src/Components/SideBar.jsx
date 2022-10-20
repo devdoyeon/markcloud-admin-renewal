@@ -1,33 +1,39 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { removeCookie } from 'JS/cookie';
 import cloudLogo from 'Image/logo.png';
 
 const SideBar = () => {
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
+
   return (
     <>
       <div className='sideBar column'>
         <img src={cloudLogo} alt='마크클라우드 로고' />
         <ul className='mainMenu'>
           <Link to='/home'>
-            <li>DASHBOARD</li>
+            <li className={path === '/home' && 'active'}>DASHBOARD</li>
           </Link>
           <li className='main'>관리</li>
           <Link to='/manage'>
-            <li>회원 관리</li>
+            <li className={path === '/manage' && 'active'}>회원 관리</li>
           </Link>
           <Link to='/inquiry'>
-            <li>문의 관리</li>
+            <li className={path === '/inquiry' && 'active'}>문의 관리</li>
           </Link>
           <Link to='/notice'>
-            <li>공지 사항 관리</li>
+            <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
           <Link to='/popup'>
-            <li>팝업 관리</li>
+            <li className={path === '/popup' && 'active'}>팝업 관리</li>
           </Link>
           <li className='main'>이벤트</li>
-          <Link to='/coupon'>
-            <li>이벤트 쿠폰 발급</li>
+          <Link to='/event'>
+            <li className={path === '/coupon' && 'active'}>
+              이벤트 쿠폰 발급 내역
+            </li>
           </Link>
-          <li className='main'>서비스 바로가기</li>
+          <li className='main'>바로가기</li>
           <a
             href='https://markcloud.co.kr'
             target='_blank'
@@ -40,15 +46,23 @@ const SideBar = () => {
             rel='noopener noreferrer'>
             <li>마크뷰</li>
           </a>
-          <a
+          {/* <a
             href='https://markcloud.co.kr/mark-link'
             target='_blank'
             rel='noopener noreferrer'>
             <li>마크링크</li>
-          </a>
+          </a> */}
+          <li onClick={() => alert('준비 중입니다.')}>마크링크</li>
         </ul>
       </div>
-      <div className='logoutBtn'>
+      <div
+        className='logoutBtn'
+        onClick={() => {
+          removeCookie('myToken');
+          removeCookie('rfToken');
+          navigate('/');
+          return;
+        }}>
         로그아웃
       </div>
     </>
