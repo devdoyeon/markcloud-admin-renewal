@@ -1,15 +1,26 @@
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { removeCookie } from 'JS/cookie';
 import cloudLogo from 'Image/logo.png';
+import { commonModalSetting } from 'JS/common';
+import CommonModal from './CommonModal';
 
 const SideBar = () => {
   const path = useLocation().pathname;
   const navigate = useNavigate();
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: ''
+  })
 
   return (
     <>
       <div className='sideBar column'>
-        <img src={cloudLogo} alt='마크클라우드 로고' />
+        <Link to='/home'>
+          <img src={cloudLogo} alt='마크클라우드 로고' />
+        </Link>
         <ul className='mainMenu'>
           <Link to='/home'>
             <li className={path === '/home' && 'active'}>DASHBOARD</li>
@@ -29,7 +40,7 @@ const SideBar = () => {
           </Link>
           <li className='main'>이벤트</li>
           <Link to='/event'>
-            <li className={path === '/coupon' && 'active'}>
+            <li className={path === '/event' && 'active'}>
               이벤트 쿠폰 발급 내역
             </li>
           </Link>
@@ -52,7 +63,7 @@ const SideBar = () => {
             rel='noopener noreferrer'>
             <li>마크링크</li>
           </a> */}
-          <li onClick={() => alert('준비 중입니다.')}>마크링크</li>
+          <li onClick={() => commonModalSetting(setAlertBox, true, '', 'alert', '준비 중입니다.')}>마크링크</li>
         </ul>
       </div>
       <div
@@ -65,6 +76,7 @@ const SideBar = () => {
         }}>
         로그아웃
       </div>
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </>
   );
 };

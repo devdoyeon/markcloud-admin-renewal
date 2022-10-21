@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { changeState } from 'JS/common';
 
 const Pagination = ({ pageInfo, setPageInfo }) => {
   const [pageGroup, setPageGroup] = useState([]);
@@ -8,13 +9,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   // 부모컴포넌트의 종류에 따라 페이지 변경 함수가 달리 작용 됨
   const changePage = p => {
     if (page === p) return;
-    else {
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.page = p;
-        return clone;
-      });
-    }
+    else changeState(setPageInfo, 'page', p);
   };
   // 페이지 그룹 다르게 보이게 함
   const changePageGroup = p => {
@@ -39,11 +34,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
     for (let i = first; i < last + 1; i++) {
       arr.push(i);
     }
-    setPageGroup(prev => {
-      let clone = [...prev];
-      clone = arr;
-      return clone;
-    });
+    setPageGroup(arr);
   };
   // 페이지를 입력하여 이동할 때 사용 하는 함수
   const changePara = direction => {

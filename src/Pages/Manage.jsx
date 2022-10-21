@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import $ from 'jquery';
 import { userList, searchUser } from 'JS/API';
-import { catchError } from 'JS/common';
+import { catchError, changeState, commonModalSetting } from 'JS/common';
 import { statusArr } from 'JS/array';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import AssignCoupon from 'Components/AssignCoupon';
+import CommonModal from 'Components/CommonModal';
 
 const Manage = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -20,6 +21,12 @@ const Manage = () => {
   const [select, setSelect] = useState('all');
   const [modal, setModal] = useState(false);
   const [pk, setPk] = useState([]);
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
 
   let prevent = false;
   const navigate = useNavigate();
@@ -33,17 +40,27 @@ const Manage = () => {
     const result = await userList(pageInfo.page, pageInfo.limit);
     if (typeof result === 'object') {
       setUser(result?.data?.data);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.totalPage = result.data.meta.totalPage;
-        return clone;
-      });
-    } else return catchError(result, navigate);
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const userSearch = async () => {
-    if (!searchTxt) return alert('검색어를 입력해 주세요.');
-    if (select === 'all') return alert('검색하실 종류를 선택해 주세요.');
+    if (!searchTxt)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '검색어를 입력해 주세요.'
+      );
+    if (select === 'all')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '검색하실 종류를 선택해 주세요.'
+      );
     const result = await searchUser(
       select,
       searchTxt,
@@ -54,7 +71,7 @@ const Manage = () => {
       setUser(result?.data?.data);
       setSelect('all');
       setSearchTxt('');
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const checkAll = () => {
@@ -171,9 +188,7 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    if (modal === false) {
-      getUserList();
-    }
+    if (!modal) getUserList();
   }, [pageInfo.page, pageInfo.limit, modal]);
 
   return (
@@ -222,7 +237,13 @@ const Manage = () => {
               className='couponBtn'
               onClick={() => {
                 if (pk.length === 0)
-                  return alert('쿠폰을 발급할 대상을 선택해 주세요.');
+                  return commonModalSetting(
+                    setAlertBox,
+                    true,
+                    '',
+                    'alert',
+                    '쿠폰을 발급할 대상을 선택해 주세요.'
+                  );
                 setModal(true);
               }}>
               쿠폰 일괄 발급
@@ -258,6 +279,7 @@ const Manage = () => {
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
       {modal && <AssignCoupon setModal={setModal} pk={pk} />}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );
 };

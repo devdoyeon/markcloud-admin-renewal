@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import { getNotice, noticeMultiDelete } from 'JS/API';
+import { getNoticeList, noticeMultiDelete } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
-import { catchError } from 'JS/common';
+import { catchError, changeState, commonModalSetting } from 'JS/common';
 import NoticeDetail from 'Components/NoticeDetail';
 import NoticeWrite from 'Components/NoticeWrite';
+import CommonModal from 'Components/CommonModal';
 
 const Notice = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -20,25 +21,27 @@ const Notice = () => {
   const [modal, setModal] = useState(false);
   const [id, setId] = useState('');
   const [editor, setEditor] = useState(false);
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
 
   let prevent = false;
   const navigate = useNavigate();
 
-  const getNoticeList = async () => {
+  const getNotice = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getNotice(pageInfo.page, pageInfo.limit);
+    const result = await getNoticeList(pageInfo.page, pageInfo.limit);
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.totalPage = result.data.meta.totalPage;
-        return clone;
-      });
-    } else return catchError(result, navigate);
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const checkAll = () => {
@@ -54,33 +57,6 @@ const Notice = () => {
     } else {
       $('.notice-check').prop('checked', false);
       setIdArr([]);
-    }
-  };
-
-  const multiDel = async () => {
-    if (!idArr.length) return alert('삭제할 글을 선택해 주세요.');
-    if (
-      !window.confirm('삭제하면 복구할 수 없습니다.\n정말 삭제하시겠습니까?')
-    ) {
-      $('.notice-all-check').prop('checked', false);
-      $('.notice-check').prop('checked', false);
-      setIdArr([]);
-      return;
-    } else {
-      const data = { items: idArr };
-      const result = await noticeMultiDelete(data);
-      if (typeof result === 'object') {
-        alert('삭제되었습니다.');
-        $('.notice-all-check').prop('checked', false);
-        $('.notice-check').prop('checked', false);
-        setPageInfo(prev => {
-          const clone = { ...prev };
-          clone.page = 1;
-          return clone;
-        });
-        setIdArr([]);
-        getNoticeList();
-      } else return catchError(result, navigate);
     }
   };
 
@@ -134,9 +110,7 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    if (modal === false || editor === false) {
-      getNoticeList();
-    }
+    if (!modal || !editor) getNotice();
   }, [pageInfo.page, pageInfo.limit, modal, editor]);
 
   return (
@@ -168,7 +142,26 @@ const Notice = () => {
               }}>
               글쓰기
             </button>
-            <button onClick={() => multiDel()}>삭제</button>
+            <button
+              onClick={() => {
+                if (!idArr.length)
+                  return commonModalSetting(
+                    setAlertBox,
+                    true,
+                    '',
+                    'alert',
+                    '삭제할 글을 선택해 주세요.'
+                  );
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  '',
+                  'confirm',
+                  '삭제하면 복구할 수 없습니다.\n정말 삭제하시겠습니까?'
+                );
+              }}>
+              삭제
+            </button>
           </div>
         </div>
         <div className='table-wrap'>
@@ -204,7 +197,39 @@ const Notice = () => {
       {modal && (
         <NoticeDetail noticeId={id} setModal={setModal} setEditor={setEditor} />
       )}
-      {editor && <NoticeWrite noticeId={id} setModal={setModal} setEditor={setEditor} />}
+      {editor && (
+        <NoticeWrite noticeId={id} setModal={setModal} setEditor={setEditor} />
+      )}
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={async () => {
+            const data = { items: idArr };
+            const result = await noticeMultiDelete(data);
+            if (typeof result === 'object') {
+              commonModalSetting(
+                setAlertBox,
+                true,
+                '',
+                'alert',
+                '삭제되었습니다.'
+              );
+              $('.notice-all-check').prop('checked', false);
+              $('.notice-check').prop('checked', false);
+              changeState(setPageInfo, 'page', 1);
+              setIdArr([]);
+              getNotice();
+            } else return catchError(result, navigate, setAlertBox);
+          }}
+          failFn={() => {
+            $('.notice-all-check').prop('checked', false);
+            $('.notice-check').prop('checked', false);
+            setIdArr([]);
+            return;
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -201,7 +201,7 @@ export const answerDelete = async id => {
 
 //~ Notice
 // 공지 사항 내역 불러오기
-export const getNotice = async (page, limit) => {
+export const getNoticeList = async (page, limit) => {
   try {
     return await axios.get(
       `/api/admin/notification?page=${page}&limit=${limit}`,

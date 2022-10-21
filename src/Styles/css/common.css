@@ -36,6 +36,164 @@
   color: #333333;
 }
 
+.alert-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+}
+.alert-modal .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 230px;
+  background-color: white;
+  border-radius: 10px;
+  outline: 2px solid #cdcdcd;
+}
+.alert-modal .modal .head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  background-color: #434343;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: absolute;
+  top: 0;
+}
+.alert-modal .modal .head > svg {
+  color: white;
+  font-size: 35px;
+}
+.alert-modal .modal .content {
+  text-align: center;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  margin-top: 50px;
+  padding: 10px;
+}
+.alert-modal .modal .btn-wrap {
+  margin-top: 10px;
+}
+.alert-modal .modal .btn-wrap button {
+  padding: 10px 15px;
+  background-color: #434343;
+  color: white;
+  margin-right: 15px;
+  border-radius: 8px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.alert-modal .modal .btn-wrap button:last-child {
+  margin-right: 0;
+}
+
+/* error-home | 에러 페이지 */
+.error-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.error-home > div.oops-slide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 120%;
+  height: 200px;
+  transform: rotate(7deg);
+  margin-top: 50px;
+  background-color: #ffe509;
+  overflow: hidden;
+}
+.error-home > div.oops-slide > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 100px;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 1200s linear infinite;
+}
+.error-home > div.error-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+.error-home > div.error-wrap .error-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+.error-home > div.error-wrap .error-left img {
+  margin-top: 300px;
+}
+.error-home > div.error-wrap .error-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: 1.5;
+  margin-bottom: 150px;
+}
+.error-home > div.error-wrap .error-right > h2 {
+  margin-right: 150px;
+  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
+  font-size: 200px;
+}
+.error-home > div.error-wrap .error-right .column {
+  align-items: left;
+  line-height: 30px;
+}
+.error-home > div.error-wrap .error-right .column > p {
+  width: 100%;
+  font-size: 60px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.error-home > div.error-wrap .error-right .column > span {
+  width: 100%;
+  font-size: 30px;
+  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
+  color: #858585;
+}
+.error-home > div.error-wrap .error-right .column > a {
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  background-color: #ffe509;
+  padding: 10px;
+  border-radius: 30px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  border: 5px solid #15171a;
+  transition: all 0.3s;
+}
+.error-home > div.error-wrap .error-right .column > a:hover {
+  transition: all 0.3s;
+  background-color: #ffef61;
+}
+
 .sideBar {
   position: fixed;
   left: 0;
@@ -45,7 +203,10 @@
   height: 100vh;
   background-color: #333333;
 }
-.sideBar img {
+.sideBar > a {
+  text-align: center;
+}
+.sideBar > a img {
   width: 60%;
   margin: 30px 0;
 }
@@ -396,9 +557,10 @@
   padding: 10px 15px;
   border-radius: 5px;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  margin-right: 5px;
 }
-.modal-background .modal .footer button.delBtn {
-  margin-left: 5px;
+.modal-background .modal .footer button:last-child {
+  margin-right: 0;
 }
 .modal-background .modal .go-service {
   width: 100%;

@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import { getInquiryList } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
-import { catchError } from 'JS/common';
+import { catchError, changeState } from 'JS/common';
 import InquiryDetail from 'Components/InquiryDetail';
+import CommonModal from 'Components/CommonModal';
 
 const Inquiry = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -18,6 +19,12 @@ const Inquiry = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const [id, setId] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
 
   let prevent = false;
 
@@ -30,12 +37,8 @@ const Inquiry = () => {
     const result = await getInquiryList(select, pageInfo.page, pageInfo.limit);
     if (typeof result === 'object') {
       setList(result?.data?.data);
-      setPageInfo(prev => {
-        const clone = { ...prev };
-        clone.totalPage = result.data.meta.totalPage;
-        return clone;
-      });
-    } else return catchError(result, navigate);
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const renderTableBody = () => {
@@ -69,8 +72,8 @@ const Inquiry = () => {
   };
 
   useEffect(() => {
-    getInquiry();
-  }, [pageInfo.page, pageInfo.limit, select]);
+    if (!modal) getInquiry();
+  }, [pageInfo.page, pageInfo.limit, select, modal]);
 
   return (
     <div className='container'>
@@ -98,11 +101,7 @@ const Inquiry = () => {
               value={select}
               onChange={e => {
                 setSelect(e.target.value);
-                setPageInfo(prev => {
-                  const clone = { ...prev };
-                  clone.page = 1;
-                  return clone;
-                });
+                changeState(setPageInfo, 'page', 1);
               }}>
               <option value='all'>전체보기</option>
               <option value='no-answer'>미답변 문의</option>
@@ -130,6 +129,7 @@ const Inquiry = () => {
         )}
       </div>
       {modal ? <InquiryDetail inquiryId={id} setModal={setModal} /> : ''}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );
 };

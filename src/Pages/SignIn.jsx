@@ -5,6 +5,7 @@ import { setCookie, getCookie } from 'JS/cookie';
 import { catchError } from 'JS/common';
 import $ from 'jquery';
 import cloudLogo from 'Image/logo.png';
+import CommonModal from 'Components/CommonModal';
 
 const SignIn = () => {
   const [userId, setUserId] = useState('');
@@ -18,6 +19,12 @@ const SignIn = () => {
     wrongPw: { bool: false, failCount: 0 },
   };
   const [formCheck, setFormCheck] = useState(obj);
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
 
   const navigate = useNavigate();
 
@@ -55,7 +62,6 @@ const SignIn = () => {
     }
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
-      console.log(result);
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
@@ -77,7 +83,7 @@ const SignIn = () => {
         checkForm('wrongId', true);
       } else if (result === `wrongPw,${failCount}`) {
         checkForm('wrongPw', true, failCount);
-      } else return catchError(result, navigate);
+      } else return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -86,9 +92,7 @@ const SignIn = () => {
     else return;
   };
 
-  useEffect(() => {
-    
-  }, [formCheck])
+  useEffect(() => {}, [formCheck]);
 
   return (
     <div className='container signIn'>
@@ -155,6 +159,7 @@ const SignIn = () => {
         )}
         <button onClick={login}>로그인</button>
       </div>
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );
 };

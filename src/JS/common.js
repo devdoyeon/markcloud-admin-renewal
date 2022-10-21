@@ -3,11 +3,30 @@ import { errorList } from 'JS/array';
 
 export const changeState = (setState, column, value) => {
   setState(prev => {
-    const clone = {...prev};
+    const clone = { ...prev };
     clone[column] = value;
     return clone;
-  })
-}
+  });
+};
+
+export const commonModalSetting = async(setModal, bool, answer, mode, context) => {
+  if (bool) {
+    await setModal({
+      mode: mode,
+      context: context,
+      bool: bool,
+      answer: '',
+    });
+    return answer;
+  } else {
+    await setModal({
+      mode: '',
+      context: '',
+      bool: bool,
+    });
+    return answer;
+  }
+};
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {
   let countByte;
@@ -21,37 +40,28 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
     if (byte <= maxByte) returnLength = i + 1;
   }
   if (byte > maxByte) {
-    alert(`최대 ${maxByte}Bytes까지만 입력 가능합니다.`);
     const cutStr = text.substring(0, returnLength);
-    setText(prev => {
-      const clone = { ...prev };
-      clone[column] = cutStr;
-      return clone;
-    });
+    changeState(setText, column, cutStr);
   } else {
     if (column === 'answer') {
       return setByte(byte);
     } else if (column === 'context' || column === 'title') {
-      return setByte(prev => {
-        const clone = { ...prev };
-        clone[column] = byte;
-        return clone;
-      });
+      return changeState(setByte, column, byte);
     }
   }
 };
 
-export const catchError = (result, navigate) => {
+export const catchError = (result, navigate, setModal) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
     result === 'tokenExpired'
   ) {
-    alert(errorList[result]);
+    commonModalSetting(setModal, true, '', 'alert', errorList[result]);
     removeCookie('myToken');
     removeCookie('rfToken');
     navigate('/');
     return;
   } else if (result === 'renderErrorPage') navigate('/error');
-  else alert(errorList[result]);
+  else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
 };

@@ -29,15 +29,158 @@
   }
 }
 
+.alert-modal {
+  @include flex-style();
+  @include position-style(fixed);
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  .modal {
+    @include flex-style(column);
+    position: relative;
+    width: 500px;
+    height: 230px;
+    background-color: white;
+    border-radius: 10px;
+    outline: 2px solid $borderColor;
+    .head {
+      @include flex-style();
+      width: 100%;
+      height: 50px;
+      background-color: $gray;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      position: absolute;
+      top: 0;
+      > svg {
+        color: white;
+        font-size: 35px;
+      }
+    }
+    .content {
+      text-align: center;
+      font-family: $middleFont;
+      font-size: 20px;
+      margin-top: 50px;
+      padding: 10px;
+    }
+    .btn-wrap {
+      margin-top: 10px;
+      button {
+        padding: 10px 15px;
+        background-color: $gray;
+        color: white;
+        margin-right: 15px;
+        border-radius: 8px;
+        font-family: $middleFont;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+/* error-home | 에러 페이지 */
+.error-home {
+  @include flex-style(column, $alignVal: center);
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+
+  > div {
+    &.oops-slide {
+      @include flex-style($alignVal: center, $justifyVal: center);
+      @include position-style(relative);
+      width: 120%;
+      height: 200px;
+      transform: rotate(7deg);
+      margin-top: 50px;
+      background-color: #ffe509;
+      overflow: hidden;
+
+      > span {
+        font-family: $boldFont;
+        font-size: 100px;
+        white-space: nowrap;
+        will-change: transform;
+        animation: marquee 1200s linear infinite;
+      }
+    }
+
+    &.error-wrap {
+      @include flex-style($alignVal: center, $justifyVal: center);
+      width: 100%;
+      height: 100vh;
+
+      .error-left {
+        @include flex-style($justifyVal: flex-end);
+        flex: 1;
+
+        img {
+          margin-top: 300px;
+        }
+      }
+
+      .error-right {
+        @include flex-style($alignVal: center, $justifyVal: center);
+        flex: 1.5;
+        margin-bottom: 150px;
+
+        > h2 {
+          margin-right: 150px;
+          font-family: $thinFont;
+          font-size: 200px;
+        }
+
+        .column {
+          align-items: left;
+          line-height: 30px;
+          > p {
+            width: 100%;
+            font-size: 60px;
+            font-family: $boldFont;
+          }
+          > span {
+            width: 100%;
+            font-size: 30px;
+            font-family: $thinFont;
+            color: $subFontColor;
+          }
+          > a {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #ffe509;
+            padding: 10px;
+            border-radius: 30px;
+            font-family: $boldFont;
+            font-size: 20px;
+            border: 5px solid $black;
+            transition: all 0.3s;
+            &:hover {
+              transition: all 0.3s;
+              background-color: #ffef61;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .sideBar {
   @include position-style(fixed);
   justify-content: flex-start;
   width: 230px;
   height: 100vh;
   background-color: $gray02;
-  img {
-    width: 60%;
-    margin: 30px 0;
+  > a {
+    text-align: center;
+    img {
+      width: 60%;
+      margin: 30px 0;
+    }
   }
   > .mainMenu {
     width: 100%;
@@ -354,8 +497,9 @@
         padding: 10px 15px;
         border-radius: 5px;
         font-family: $boldFont;
-        &.delBtn {
-          margin-left: 5px;
+        margin-right: 5px;
+        &:last-child {
+          margin-right: 0;
         }
       }
     }

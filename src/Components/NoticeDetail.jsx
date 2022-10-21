@@ -4,7 +4,8 @@ import { getNoticeDetail, noticeDelete } from 'JS/API';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
 import { serviceCodeToString } from 'JS/array';
-import { byteCount, catchError } from 'JS/common';
+import { byteCount, catchError, commonModalSetting } from 'JS/common';
+import CommonModal from './CommonModal';
 
 const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({
@@ -17,6 +18,12 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const [byte, setByte] = useState({
     title: 0,
     context: 0,
+  });
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
   });
   const navigate = useNavigate();
   let prevent = false;
@@ -44,16 +51,14 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         data?.context,
         'text/html'
       ).body.innerHTML;
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const delNotice = async () => {
-    if (!window.confirm('해당 공지를 삭제하시겠습니까?')) return;
     const result = await noticeDelete(noticeId);
     if (typeof result === 'object') {
-      alert('삭제되었습니다.');
       setModal(false);
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const outClick = e => {
@@ -76,66 +81,86 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     byteCount(info.title, setInfo, setByte, 'title', 300);
   }, [info.title]);
   return (
-    <div className='modal-background'>
-      <div className='modal notice'>
-        <div className='topBar'>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>서비스 구분</th>
-                  <th>{serviceCodeToString[info.service_code]}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>작성자</td>
-                  <td>{info.admin_name}</td>
-                </tr>
-                <tr>
-                  <td>등록일자</td>
-                  <td>{info.created_at.replace('T', ' ')}</td>
-                </tr>
-              </tbody>
-            </table>
+    <>
+      <div className='modal-background'>
+        <div className='modal notice'>
+          <div className='topBar'>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>서비스 구분</th>
+                    <th>{serviceCodeToString[info.service_code]}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>작성자</td>
+                    <td>{info.admin_name}</td>
+                  </tr>
+                  <tr>
+                    <td>등록일자</td>
+                    <td>{info.created_at.replaceAll('T', ' ')}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div onClick={() => setModal(false)}>
+              <FaWindowClose />
+            </div>
           </div>
-          <div onClick={() => setModal(false)}>
-            <FaWindowClose />
+          <hr />
+          <div className='title-wrap'>
+            <AiFillNotification />
+            <h1>{info.title}</h1>
           </div>
-        </div>
-        <hr />
-        <div className='title-wrap'>
-          <AiFillNotification />
-          <h1>{info.title}</h1>
-        </div>
-        <div className='context'></div>
-        <div className='footer'>
-          <div className='viewBytes'>
-            <span>{byte.context} / 3000</span>
+          <div className='context'></div>
+          <div className='footer'>
+            <div className='viewBytes'>
+              <span>{byte.context} / 3000</span>
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  setEditor(true);
+                  setModal(false);
+                }}>
+                수정
+              </button>
+              <button
+                className='btn'
+                onClick={() =>
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    '',
+                    'confirm',
+                    '해당 공지를 삭제하시겠습니까?'
+                  )
+                }>
+                삭제
+              </button>
+            </div>
           </div>
-          <div>
-            <button
-              onClick={() => {
-                setEditor(true);
-                setModal(false);
-              }}>
-              수정
-            </button>
-            <button className='delBtn' onClick={() => delNotice()}>
-              삭제
-            </button>
+          <div className='go-service'>
+            <a
+              href={`https://markcloud.co.kr/mark-notice/${noticeId}`}
+              target='_blank'
+              rel='noopener noreferrer'>
+              실제 업로드된 모습 확인하기 &#62;&#62;
+            </a>
           </div>
-        </div>
-        <div className='go-service'>
-          <a
-            href={`https://markcloud.co.kr/mark-notice/${noticeId}`}
-            target='_blank'
-            rel='noopener noreferrer'>
-            실제 업로드된 모습 확인하기 &#62;&#62;
-          </a>
         </div>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={delNotice}
+          failFn={() => {}}
+        />
+      )}
+    </>
   );
 };
 

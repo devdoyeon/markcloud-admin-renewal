@@ -6,13 +6,19 @@ import {
   BsExclamationCircleFill,
 } from 'react-icons/bs';
 import { serviceCodeToString } from 'JS/array';
-import { byteCount, catchError } from 'JS/common';
+import {
+  byteCount,
+  catchError,
+  changeState,
+  commonModalSetting,
+} from 'JS/common';
 import {
   getInquiryDetail,
   answerRegister,
   answerEdit,
   answerDelete,
 } from 'JS/API';
+import CommonModal from './CommonModal';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
@@ -28,6 +34,13 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   });
   const [edit, setEdit] = useState(false);
   const navigate = useNavigate();
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
+  const [command, setCommand] = useState('');
 
   const getDetail = async () => {
     if (prevent) return;
@@ -55,7 +68,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         status: status_flag,
         answer: answer,
       });
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const applyAnswer = async () => {
@@ -64,17 +77,20 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    if (!info.answer) return alert('답변을 작성해 주세요.');
+    if (!info.answer)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '답변을 작성해 주세요.'
+      );
     const data = { answer: info.answer };
     const result = await answerRegister(inquiryId, data);
     if (typeof result === 'object') {
-      setInfo(prev => {
-        const clone = { ...prev };
-        clone.status = true;
-        return clone;
-      });
+      changeState(setInfo, 'status', true);
       getDetail();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const editAnswer = async () => {
@@ -83,13 +99,20 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    if (!info.answer) return alert('답변을 작성해 주세요.');
+    if (!info.answer)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '답변을 작성해 주세요.'
+      );
     const data = { answer: info.answer, service_code: info.service_code };
     const result = await answerEdit(inquiryId, data);
     if (typeof result === 'object') {
       setEdit(false);
       getDetail();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   // 요청 들어가는 거 두번인지 확인
@@ -102,7 +125,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         clone.answer = '';
         return clone;
       });
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const outClick = e => {
@@ -122,107 +145,137 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   }, [info.answer]);
 
   return (
-    <div className='modal-background'>
-      <div className='modal inquiry-detail'>
-        <div className='topBar'>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>서비스 구분</th>
-                  <th>{serviceCodeToString[info.service_code]}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>작성자</td>
-                  <td>{info.user_name}</td>
-                </tr>
-                <tr>
-                  <td>등록일자</td>
-                  <td>{info.created_at.replace('T', ' ')}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div onClick={() => setModal(false)}>
-            <FaWindowClose />
-          </div>
-        </div>
-        <hr />
-        <div className='title-wrap'>
-          <BsFillQuestionCircleFill />
-          <h1>{info.title}</h1>
-        </div>
-        <div className='context'>{info.context}</div>
-        {info.status ? (
-          <div className='view-answer-wrap'>
-            <div className='header'>
-              <BsExclamationCircleFill />
-              <h2>답변 내용</h2>
+    <>
+      <div className='modal-background'>
+        <div className='modal inquiry-detail'>
+          <div className='topBar'>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>서비스 구분</th>
+                    <th>{serviceCodeToString[info.service_code]}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>작성자</td>
+                    <td>{info.user_name}</td>
+                  </tr>
+                  <tr>
+                    <td>등록일자</td>
+                    <td>{info.created_at.replace('T', ' ')}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className='view-answer'>
-              {edit ? (
-                <textarea
-                  className='view-answer-area'
-                  value={info.answer}
-                  onChange={e =>
-                    setInfo(prev => {
-                      const clone = { ...prev };
-                      clone.answer = e.target.value;
-                      return clone;
-                    })
-                  }
-                />
-              ) : (
-                <div className='view-answer-area'>{info.answer}</div>
-              )}
+            <div onClick={() => setModal(false)}>
+              <FaWindowClose />
+            </div>
+          </div>
+          <hr />
+          <div className='title-wrap'>
+            <BsFillQuestionCircleFill />
+            <h1>{info.title}</h1>
+          </div>
+          <div className='context'>{info.context}</div>
+          {info.status ? (
+            <div className='view-answer-wrap'>
+              <div className='header'>
+                <BsExclamationCircleFill />
+                <h2>답변 내용</h2>
+              </div>
+              <div className='view-answer'>
+                {edit ? (
+                  <textarea
+                    className='view-answer-area'
+                    value={info.answer}
+                    onChange={e =>
+                      changeState(setInfo, 'answer', e.target.value)
+                    }
+                  />
+                ) : (
+                  <div className='view-answer-area'>{info.answer}</div>
+                )}
+                <div className='footer'>
+                  <div className='viewBytes'>
+                    <span>{byte}</span>/3000Bytes
+                  </div>
+                  <div>
+                    {edit ? (
+                      <>
+                        <button onClick={() => editAnswer()}>완료</button>
+                        <button
+                          className='btn'
+                          onClick={() => {
+                            setCommand('edit');
+                            commonModalSetting(
+                              setAlertBox,
+                              true,
+                              '',
+                              'confirm',
+                              '수정을 취소하시겠습니까?'
+                            );
+                          }}>
+                          취소
+                        </button>
+                      </>
+                    ) : (
+                      <button onClick={() => setEdit(true)}>수정</button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setCommand('delete');
+                        commonModalSetting(
+                          setAlertBox,
+                          true,
+                          '',
+                          'confirm',
+                          '답변을 삭제하시겠습니까?'
+                        );
+                      }}
+                      className='btn'>
+                      삭제
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className='answer-wrap'>
+              <div className='header'>
+                <BsExclamationCircleFill />
+                <h2>답변 작성</h2>
+              </div>
+              <textarea
+                className='answer-area'
+                value={info.answer}
+                onChange={e => changeState(setInfo, 'answer', e.target.value)}
+              />
               <div className='footer'>
                 <div className='viewBytes'>
-                  <span>{byte}</span>/3000Bytes
+                  <span>{byte}</span>/3000bytes
                 </div>
-                <div>
-                  {edit ? (
-                    <button onClick={() => editAnswer()}>완료</button>
-                  ) : (
-                    <button onClick={() => setEdit(true)}>수정</button>
-                  )}
-                  <button onClick={() => delAnswer()} className='delBtn'>
-                    삭제
-                  </button>
-                </div>
+                <button className='register-btn' onClick={() => applyAnswer()}>
+                  등록
+                </button>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className='answer-wrap'>
-            <div className='header'>
-              <BsExclamationCircleFill />
-              <h2>답변 작성</h2>
-            </div>
-            <textarea
-              className='answer-area'
-              value={info.answer}
-              onChange={e => {
-                setInfo(prev => {
-                  const clone = { ...prev };
-                  clone.answer = e.target.value;
-                  return clone;
-                });
-              }}
-            />
-            <div className='footer'>
-              <div className='viewBytes'>
-                <span>{byte}</span>/3000bytes
-              </div>
-              <button className='register-btn' onClick={() => applyAnswer()}>
-                등록
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (command === 'edit') setEdit(false);
+            else delAnswer();
+          }}
+          failFn={() => {}}
+        />
+      )}
+    </>
   );
 };
 

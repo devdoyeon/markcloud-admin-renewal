@@ -6,7 +6,7 @@ import {
   userCount,
   searchKing,
   getInquiryList,
-  getNotice,
+  getNoticeList,
 } from 'JS/API';
 import { catchError } from 'JS/common';
 import { FaCrown } from 'react-icons/fa';
@@ -14,6 +14,7 @@ import { MdOutlineMoodBad } from 'react-icons/md';
 import NoticeDetail from 'Components/NoticeDetail';
 import InquiryDetail from 'Components/InquiryDetail';
 import NoticeWrite from 'Components/NoticeWrite';
+import CommonModal from 'Components/CommonModal';
 
 const Home = () => {
   const [newUser, setNewUser] = useState('');
@@ -32,11 +33,16 @@ const Home = () => {
   const [editor, setEditor] = useState(false);
   const [noticeId, setNoticeId] = useState('');
   const [inquiryId, setInquiryId] = useState('');
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+    answer: '',
+  });
 
   const navigate = useNavigate();
   let prevent = false;
 
-  //@ 9
   const getInquiry = async () => {
     const date = new Date();
     const prevDate = new Date(date);
@@ -50,15 +56,14 @@ const Home = () => {
         }
       }
       setRecentInquiry(arr);
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
-  //@ 9
-  const getNoticeList = async () => {
+  const getNotice = async () => {
     const date = new Date();
     const prevDate = new Date(date);
     prevDate.setDate(date.getDate() - 7);
-    const result = await getNotice(1, 100);
+    const result = await getNoticeList(1, 100);
     if (typeof result === 'object') {
       const arr = [];
       for (let obj of result.data.data) {
@@ -67,8 +72,7 @@ const Home = () => {
         }
       }
       setRecentNotice(arr);
-      getInquiry();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 8
@@ -76,8 +80,7 @@ const Home = () => {
     const result = await searchKing('text');
     if (typeof result === 'object') {
       setTextKing(result?.data?.data);
-      getNoticeList();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 7
@@ -86,7 +89,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setImgKing(result?.data?.data);
       getTextKing();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 6
@@ -95,7 +98,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setImgToday(result?.data?.data);
       getImgKing();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 5
@@ -104,7 +107,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setImgAll(result?.data?.data);
       getTodayImgSearch();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 4
@@ -113,7 +116,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setTxtToday(result?.data?.data);
       getAllImgSearch();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 3
@@ -122,7 +125,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setTxtAll(result?.data?.data);
       getTodayTxtSearch();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 2
@@ -131,7 +134,7 @@ const Home = () => {
     if (typeof result === 'object') {
       setNewUser(result?.data?.data);
       getAllTxtSearch();
-    } else return catchError(result, navigate);
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   //@ 1
@@ -146,7 +149,7 @@ const Home = () => {
       setAllUser(result?.data?.data);
       getTodayUser();
     } else {
-      return catchError(result, navigate);
+      return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -249,10 +252,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (noticeModal === false || inquiryModal === false || editor === false) {
-      getAllUser();
-    }
-  }, [noticeModal, inquiryModal, editor]);
+    getAllUser();
+  }, []);
+
+  useEffect(() => {
+    if (!noticeModal || !editor) getNotice();
+  }, [noticeModal, editor]);
+
+  useEffect(() => {
+    if (!inquiryModal) getInquiry();
+  }, [inquiryModal]);
 
   return (
     <div className='container'>
@@ -436,6 +445,7 @@ const Home = () => {
           setEditor={setEditor}
         />
       )}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );
 };
