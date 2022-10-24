@@ -52,3 +52,46 @@ $thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
   top: $top;
   z-index: $zIndex;
 }
+
+//---------------분기점 변수 정리---------------
+$breakpoint-desktop: 1440px; //데스크탑
+$breakpoint-wide-tablet: 1180px; //태블릿 가로
+$breakpoint-tablet: 820px; //태블릿 세로
+$breakpoint-mobile: 480px; //모바일
+$breakpoint-fold: 374px; //갤럭시 폴드
+
+//--------------미디어쿼리 관련 정리---------------
+//데스크탑
+@mixin desktop {
+  @media screen and (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+//태블릿 가로
+@mixin wide-tablet {
+  @media screen and (max-width: $breakpoint-wide-tablet) {
+    @content;
+  }
+}
+
+//태블릿 세로
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+//모바일
+@mixin mobile {
+  @media screen and (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+//폴드
+@mixin fold {
+  @media screen and (max-width: $breakpoint-fold) {
+    @content;
+  }
+}

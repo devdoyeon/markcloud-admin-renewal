@@ -51,11 +51,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   };
 
   const editNotice = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
     const data = {
       service_code: info.service_code,
       title: info.title,
@@ -76,11 +71,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   };
 
   const writeNotice = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
     if (!info.title && !info.context) {
       return commonModalSetting(
         setAlertBox,
@@ -180,7 +170,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                     true,
                     '',
                     'confirm',
-                    `정말 취소하시겠습니까? 지금까지 ${
+                    `정말 취소하시겠습니까?<br />지금까지 ${
                       mode === 'edit' ? '수정' : '작성'
                     }된 내용은 반영되지 않습니다.`
                   )

@@ -72,11 +72,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   };
 
   const applyAnswer = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
     if (!info.answer)
       return commonModalSetting(
         setAlertBox,
@@ -94,11 +89,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   };
 
   const editAnswer = async () => {
-    if (prevent) return;
-    prevent = true;
-    setTimeout(() => {
-      prevent = false;
-    }, 200);
     if (!info.answer)
       return commonModalSetting(
         setAlertBox,
@@ -183,7 +173,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
             <div className='view-answer-wrap'>
               <div className='header'>
                 <BsExclamationCircleFill />
-                <h2>답변 내용</h2>
+                <h2>{edit ? '답변 수정' : '답변 내용'}</h2>
               </div>
               <div className='view-answer'>
                 {edit ? (
@@ -204,7 +194,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                   <div>
                     {edit ? (
                       <>
-                        <button onClick={() => editAnswer()}>완료</button>
+                        <button onClick={() => editAnswer()}>답변 완료</button>
                         <button
                           className='btn'
                           onClick={() => {
@@ -214,14 +204,14 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                               true,
                               '',
                               'confirm',
-                              '수정을 취소하시겠습니까?'
+                              '정말 취소하시겠습니까?<br/>지금까지 수정된 내용은 반영되지 않습니다.'
                             );
                           }}>
-                          취소
+                          답변 취소
                         </button>
                       </>
                     ) : (
-                      <button onClick={() => setEdit(true)}>수정</button>
+                      <button onClick={() => setEdit(true)}>답변 수정</button>
                     )}
                     <button
                       onClick={() => {
@@ -231,11 +221,11 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                           true,
                           '',
                           'confirm',
-                          '답변을 삭제하시겠습니까?'
+                          '답변을 삭제하시면 다시 복구할 수 없습니다.<br/>답변을 삭제하시겠습니까?'
                         );
                       }}
                       className='btn'>
-                      삭제
+                      답변 삭제
                     </button>
                   </div>
                 </div>

@@ -9,7 +9,13 @@ export const changeState = (setState, column, value) => {
   });
 };
 
-export const commonModalSetting = async(setModal, bool, answer, mode, context) => {
+export const commonModalSetting = async (
+  setModal,
+  bool,
+  answer,
+  mode,
+  context
+) => {
   if (bool) {
     await setModal({
       mode: mode,
@@ -40,6 +46,7 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
     if (byte <= maxByte) returnLength = i + 1;
   }
   if (byte > maxByte) {
+    alert(`최대 ${maxByte}Bytes까지만 입력 가능합니다.`);
     const cutStr = text.substring(0, returnLength);
     changeState(setText, column, cutStr);
   } else {
@@ -51,13 +58,13 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
   }
 };
 
-export const catchError = (result, navigate, setModal) => {
+export const catchError = async (result, navigate, setModal) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
     result === 'tokenExpired'
   ) {
-    commonModalSetting(setModal, true, '', 'alert', errorList[result]);
+    await commonModalSetting(setModal, true, '', 'alert', errorList[result]);
     removeCookie('myToken');
     removeCookie('rfToken');
     navigate('/');

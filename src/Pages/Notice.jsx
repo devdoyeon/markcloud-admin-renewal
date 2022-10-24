@@ -157,7 +157,7 @@ const Notice = () => {
                   true,
                   '',
                   'confirm',
-                  '삭제하면 복구할 수 없습니다.\n정말 삭제하시겠습니까?'
+                  '글을 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
                 );
               }}>
               삭제
@@ -168,7 +168,9 @@ const Notice = () => {
           <table>
             <colgroup>
               <col width='10%' />
+              <col width='30%' />
               <col width='20%' />
+              <col width='10%' />
             </colgroup>
             <thead>
               <tr>

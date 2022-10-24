@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from 'JS/API';
 import { setCookie, getCookie } from 'JS/cookie';
-import { catchError } from 'JS/common';
+import { catchError, commonModalSetting } from 'JS/common';
 import $ from 'jquery';
 import cloudLogo from 'Image/logo.png';
 import CommonModal from 'Components/CommonModal';
@@ -27,12 +27,6 @@ const SignIn = () => {
   });
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    //& 토큰을 가지고 있으면 홈으로 푸시
-    if (getCookie('myToken')) navigate('/home');
-    $('.input_id').focus();
-  }, []);
 
   //~ 아이디 | 비밀번호 확인해서 틀리거나 빈 부분 알려주는 함수
   const checkForm = async (checkStr, bool, failCount) => {
@@ -92,7 +86,55 @@ const SignIn = () => {
     else return;
   };
 
-  useEffect(() => {}, [formCheck]);
+  useEffect(() => {
+    //& 토큰을 가지고 있으면 홈으로 푸시
+    if (getCookie('myToken')) navigate('/home');
+    $('.input_id').focus();
+  }, []);
+
+  useEffect(() => {
+    if (formCheck.emptyBoth) {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '아이디와 비밀번호를 입력해 주세요.'
+      );
+    } else if (formCheck.emptyId) {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '아이디를 입력해 주세요.'
+      );
+    } else if (formCheck.emptyPw) {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        '비밀번호를 입력해 주세요.'
+      );
+    } else if (formCheck.wrongId) {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`
+      );
+    } else if (formCheck.wrongPw.bool) {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        '',
+        'alert',
+        `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`
+      );
+    }
+  }, [formCheck]);
 
   return (
     <div className='container signIn'>
@@ -125,38 +167,6 @@ const SignIn = () => {
           <label htmlFor='rememberId'>아이디 저장</label>
         </div>
         <hr />
-        {formCheck.emptyBoth && (
-          <span>
-            <p className='white'>아이디</p>와 <p className='white'>비밀번호</p>
-            를 입력해 주세요.
-          </span>
-        )}
-        {formCheck.emptyId && (
-          <span>
-            <p className='white'>아이디</p>를 입력해 주세요.
-          </span>
-        )}
-        {formCheck.emptyPw && (
-          <span>
-            <p className='white'>비밀번호</p>를 입력해 주세요.
-          </span>
-        )}
-        {formCheck.wrongId && (
-          <span>
-            <p className='white'>아이디 또는 비밀번호</p>가 일치하지 않습니다.
-            <br />
-            다시 입력해 주세요.
-          </span>
-        )}
-        {formCheck.wrongPw.bool && (
-          <span>
-            <p className='white'>비밀번호</p>를{' '}
-            <p className='white'>{formCheck.wrongPw.failCount}번</p>{' '}
-            틀리셨습니다.
-            <br />
-            다시 입력해 주세요.
-          </span>
-        )}
         <button onClick={login}>로그인</button>
       </div>
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}

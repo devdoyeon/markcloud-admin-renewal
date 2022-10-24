@@ -256,10 +256,6 @@
   color: #de5d60;
 }
 
-.inquiry .topBar > div > select:nth-child(2) {
-  border-right: 1px solid black;
-}
-
 .notice .topBar > div > button:nth-child(2) {
   border-right: 1px solid white;
 }
@@ -267,10 +263,31 @@
   color: white;
 }
 
-.event .topBar > div > select {
-  border-right: 1px solid black;
+@media screen and (max-width: 1440px) {
+  .dashboard > .row .title-wrap h2 {
+    font-size: 17px;
+  }
+  .dashboard > .row .title-wrap p {
+    font-size: 12px !important;
+  }
+  .manage .table-wrap > table thead th, .manage .table-wrap > table thead td, .manage .table-wrap tbody th, .manage .table-wrap tbody td {
+    white-space: nowrap;
+  }
 }
-
-.popup .topBar > div > select:last-child {
-  border-right: 1px solid black;
+@media screen and (max-width: 480px) {
+  .signIn .signInBox {
+    width: 80vw;
+    min-width: 0px;
+  }
+  .signIn .signInBox > img {
+    width: 90%;
+  }
+  .signIn .signInBox > div > label {
+    width: 55% !important;
+  }
+}
+@media screen and (max-width: 374px) {
+  .signIn .signInBox > div > label {
+    width: 100% !important;
+  }
 }

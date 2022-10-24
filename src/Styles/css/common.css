@@ -23,7 +23,7 @@
   min-height: 100vh;
 }
 .container > .content-wrap {
-  width: calc(100% - 230px);
+  min-width: calc(100% - 230px);
   margin-left: 230px;
   min-height: 100vh;
   background-color: #e7e3e0;
@@ -177,7 +177,8 @@
   font-family: "NotoSansT", "맑은 고딕", "sans-serif";
   color: #858585;
 }
-.error-home > div.error-wrap .error-right .column > a {
+.error-home > div.error-wrap .error-right .column > div {
+  cursor: pointer;
   width: 100%;
   text-align: center;
   margin-top: 50px;
@@ -189,7 +190,7 @@
   border: 5px solid #15171a;
   transition: all 0.3s;
 }
-.error-home > div.error-wrap .error-right .column > a:hover {
+.error-home > div.error-wrap .error-right .column > div:hover {
   transition: all 0.3s;
   background-color: #ffef61;
 }
@@ -204,6 +205,10 @@
   background-color: #333333;
 }
 .sideBar > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 .sideBar > a img {
@@ -239,8 +244,7 @@
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   background-color: rgba(0, 0, 0, 0.2);
 }
-
-.logoutBtn {
+.sideBar .logoutBtn {
   width: 230px;
   position: fixed;
   background-color: #434343;
@@ -254,7 +258,7 @@
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   transition: all 0.3s;
 }
-.logoutBtn:hover {
+.sideBar .logoutBtn:hover {
   transition: all 0.3s;
   background-color: #de5d60;
 }
@@ -290,6 +294,9 @@
   border: 1px solid #333333;
   border-right: none;
   font-size: 16px;
+}
+.topBar > div select:last-child {
+  border-right: 1px solid #333333;
 }
 .topBar > div input[type=text] {
   height: 36px;
@@ -636,4 +643,13 @@
 }
 .modal-background .modal.coupon .wrap .footer > div > button:last-child {
   margin-left: 10px;
+}
+
+@media screen and (max-width: 1440px) {
+  .container .content-wrap {
+    padding: 50px;
+  }
+  .table-wrap table {
+    font-size: 14px;
+  }
 }

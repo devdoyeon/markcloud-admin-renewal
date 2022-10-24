@@ -33,6 +33,7 @@ const errorHandling = async error => {
       return 'tokenError';
     case 500:
       return 'serverError';
+    case 404:
     case 504:
       return 'renderErrorPage';
     default:

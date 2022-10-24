@@ -5,7 +5,7 @@ import { applyToken } from 'JS/API';
 import { catchError, commonModalSetting } from 'JS/common';
 import CommonModal from './CommonModal';
 
-const AssignCoupon = ({ setModal, pk }) => {
+const AssignCouponModal = ({ setModal, pk }) => {
   const [days, setDays] = useState('');
   const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
@@ -33,7 +33,7 @@ const AssignCoupon = ({ setModal, pk }) => {
           true,
           '',
           'alert',
-          '이벤트 기간은 최소 1일에서 최대 30일입니다.'
+          '이벤트 기간은<br/>최소 1일에서 최대 30일입니다.'
         );
       data = { user_pk: pk, days: days };
     }
@@ -88,4 +88,4 @@ const AssignCoupon = ({ setModal, pk }) => {
   );
 };
 
-export default AssignCoupon;
+export default AssignCouponModal;

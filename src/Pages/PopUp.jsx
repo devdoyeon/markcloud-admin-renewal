@@ -29,9 +29,9 @@ const PopUp = () => {
             <thead>
               <tr>
                 <th>제목</th>
-                <th>게시 상태</th>
                 <th>게시 날짜</th>
                 <th>게시 만료일</th>
+                <th>게시 상태</th>
               </tr>
             </thead>
             <tbody></tbody>

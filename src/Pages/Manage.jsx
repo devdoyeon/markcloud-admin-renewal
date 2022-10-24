@@ -7,7 +7,7 @@ import { catchError, changeState, commonModalSetting } from 'JS/common';
 import { statusArr } from 'JS/array';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import AssignCoupon from 'Components/AssignCoupon';
+import AssignCouponModal from 'Components/AssignCouponModal';
 import CommonModal from 'Components/CommonModal';
 
 const Manage = () => {
@@ -252,6 +252,19 @@ const Manage = () => {
         </div>
         <div className='table-wrap'>
           <table>
+            <colgroup>
+              <col width='4%' />
+              <col width='8%' />
+              <col width='8%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='13%' />
+              <col width='10%' />
+              <col width='7%' />
+              <col width='10%' />
+            </colgroup>
             <thead>
               <tr>
                 <th>
@@ -278,7 +291,7 @@ const Manage = () => {
         </div>
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
-      {modal && <AssignCoupon setModal={setModal} pk={pk} />}
+      {modal && <AssignCouponModal setModal={setModal} pk={pk} />}
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );

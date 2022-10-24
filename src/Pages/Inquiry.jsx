@@ -110,6 +110,13 @@ const Inquiry = () => {
         </div>
         <div className='table-wrap'>
           <table>
+            <colgroup>
+              <col width='50%'/>
+              <col width='10%'/>
+              <col width='10%'/>
+              <col width='10%'/>
+              <col width='20%'/>
+            </colgroup>
             <thead>
               <tr>
                 <th>제목</th>

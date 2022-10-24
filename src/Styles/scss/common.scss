@@ -15,7 +15,7 @@
   min-height: 100vh;
 
   > .content-wrap {
-    width: calc(100% - 230px);
+    min-width: calc(100% - 230px);
     margin-left: 230px;
     min-height: 100vh;
     background-color: $backgroundColor;
@@ -147,7 +147,8 @@
             font-family: $thinFont;
             color: $subFontColor;
           }
-          > a {
+          > div {
+            cursor: pointer;
             width: 100%;
             text-align: center;
             margin-top: 50px;
@@ -176,6 +177,7 @@
   height: 100vh;
   background-color: $gray02;
   > a {
+    @include flex-style();
     text-align: center;
     img {
       width: 60%;
@@ -211,24 +213,23 @@
       }
     }
   }
-}
-
-.logoutBtn {
-  width: 230px;
-  position: fixed;
-  background-color: $gray;
-  border-top: 1px solid $gray01;
-  text-align: center;
-  left: 0;
-  bottom: 0;
-  padding: 10px;
-  cursor: pointer;
-  color: white;
-  font-family: $boldFont;
-  transition: all 0.3s;
-  &:hover {
+  .logoutBtn {
+    width: 230px;
+    position: fixed;
+    background-color: $gray;
+    border-top: 1px solid $gray01;
+    text-align: center;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    font-family: $boldFont;
     transition: all 0.3s;
-    background-color: $tongMainColor;
+    &:hover {
+      transition: all 0.3s;
+      background-color: $tongMainColor;
+    }
   }
 }
 
@@ -255,6 +256,9 @@
       border: 1px solid $gray02;
       border-right: none;
       font-size: 16px;
+      &:last-child {
+        border-right: 1px solid $gray02;
+      }
     }
     input[type='text'] {
       height: 36px;
@@ -584,6 +588,19 @@
           }
         }
       }
+    }
+  }
+}
+
+@include desktop {
+  .container {
+    .content-wrap {
+      padding: 50px;
+    }
+  }
+  .table-wrap {
+    table {
+      font-size: 14px;
     }
   }
 }

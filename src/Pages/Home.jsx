@@ -251,6 +251,26 @@ const Home = () => {
     }, <></>);
   };
 
+  const tableColGroup = m => {
+    if (m === 'upload')
+      return (
+        <colgroup>
+          <col width='50%' />
+          <col width='20%' />
+          <col width='30%' />
+        </colgroup>
+      );
+    else if (m === 'king')
+      return (
+        <colgroup>
+          <col width='15%' />
+          <col width='40%' />
+          <col width='30%' />
+          <col width='15%' />
+        </colgroup>
+      );
+  };
+
   useEffect(() => {
     getAllUser();
   }, []);
@@ -274,18 +294,14 @@ const Home = () => {
               <h2>최근 업로드한 공지 사항</h2>
               <p>일주일 내에 업로드한 공지 사항만 표시됩니다.</p>
             </div>
-            {recentNotice.length === 0 ? (
+            {!recentNotice.length ? (
               <div className='none-list'>
                 <MdOutlineMoodBad />
               </div>
             ) : (
               <div className='table-wrap'>
                 <table>
-                  <colgroup>
-                    <col width='50%' />
-                    <col width='20%' />
-                    <col width='30%' />
-                  </colgroup>
+                  {tableColGroup('upload')}
                   <thead>
                     <tr>
                       <th>제목</th>
@@ -303,18 +319,14 @@ const Home = () => {
               <h2>최근 업로드 된 문의 사항</h2>
               <p>일주일 내에 업로드 된 미답변 문의 사항만 표시됩니다.</p>
             </div>
-            {recentInquiry.length === 0 ? (
+            {!recentInquiry.length ? (
               <div className='none-list'>
                 <MdOutlineMoodBad />
               </div>
             ) : (
               <div className='table-wrap'>
                 <table>
-                  <colgroup>
-                    <col width='50%' />
-                    <col width='20%' />
-                    <col width='30%' />
-                  </colgroup>
+                  {tableColGroup('upload')}
                   <thead>
                     <tr>
                       <th>제목</th>
@@ -369,19 +381,14 @@ const Home = () => {
               <h2>텍스트 검색 순위</h2>
               <p>최대 다섯 명까지 표시됩니다.</p>
             </div>
-            {textKing.length === 0 ? (
+            {!textKing.length ? (
               <div className='none-list'>
                 <MdOutlineMoodBad />
               </div>
             ) : (
               <div className='table-wrap king'>
                 <table>
-                  <colgroup>
-                    <col width='15%' />
-                    <col width='40%' />
-                    <col width='30%' />
-                    <col width='15%' />
-                  </colgroup>
+                  {tableColGroup('king')}
                   <thead>
                     <tr>
                       <th>순위</th>
@@ -400,19 +407,14 @@ const Home = () => {
               <h2>이미지 검색 순위</h2>
               <p>최대 다섯 명까지 표시됩니다.</p>
             </div>
-            {imgKing.length === 0 ? (
+            {!imgKing.length ? (
               <div className='none-list'>
                 <MdOutlineMoodBad />
               </div>
             ) : (
               <div className='table-wrap king'>
                 <table>
-                  <colgroup>
-                    <col width='15%' />
-                    <col width='40%' />
-                    <col width='30%' />
-                    <col width='15%' />
-                  </colgroup>
+                  {tableColGroup('king')}
                   <thead>
                     <tr>
                       <th>순위</th>
