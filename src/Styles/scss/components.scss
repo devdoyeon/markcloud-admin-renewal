@@ -219,6 +219,9 @@
             &.count {
               font-size: 50px;
               font-family: $boldFont;
+              > svg {
+                transform: translateY(5px);
+              }
             }
           }
         }

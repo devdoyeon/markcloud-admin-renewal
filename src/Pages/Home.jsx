@@ -347,7 +347,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {newUser} / {allUser}
+                {!newUser ? <MdOutlineMoodBad /> : newUser} / {allUser}
               </div>
               <div>신규 / 전체</div>
             </div>
@@ -358,7 +358,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {txtToday} / {txtAll}
+                {!txtToday ? <MdOutlineMoodBad /> : txtToday} / {txtAll}
               </div>
               <div>오늘 / 전체</div>
             </div>
@@ -369,7 +369,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {imgToday} / {imgAll}
+                {!imgToday ? <MdOutlineMoodBad /> : imgToday} / {imgAll}
               </div>
               <div>오늘 / 전체</div>
             </div>

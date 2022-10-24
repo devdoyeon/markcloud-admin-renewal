@@ -228,6 +228,9 @@
   font-size: 50px;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
 }
+.dashboard > .row > div > div.count-wrap div.count > svg {
+  transform: translateY(5px);
+}
 
 .manage .table-wrap > table {
   width: 100%;

@@ -14,7 +14,7 @@ const Inquiry = () => {
     totalPage: 10,
     limit: 10,
   });
-  const [select, setSelect] = useState('all');
+  const [select, setSelect] = useState('no-answer');
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
@@ -103,8 +103,8 @@ const Inquiry = () => {
                 setSelect(e.target.value);
                 changeState(setPageInfo, 'page', 1);
               }}>
-              <option value='all'>전체보기</option>
               <option value='no-answer'>미답변 문의</option>
+              <option value='all'>전체보기</option>
             </select>
           </div>
         </div>
