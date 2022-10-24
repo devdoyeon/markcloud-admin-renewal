@@ -3,13 +3,13 @@ import { RiErrorWarningLine } from 'react-icons/ri';
 import { commonModalSetting } from 'JS/common';
 
 const CommonModal = ({ setModal, modal, okFn, failFn }) => {
-  const domParser = new DOMParser();
-
   useEffect(() => {
-    document.querySelector('.content').innerHTML = domParser.parseFromString(
-      modal.context,
-      'text/html'
-    ).body.innerHTML;
+    document.querySelector('.content').innerHTML =
+      new DOMParser().parseFromString(
+        modal.context,
+        'text/html'
+      ).body.innerHTML;
+    // 줄바꿈 태그 <br/> 사용하기 위해서 String2DOM 변환
   }, []);
 
   return (
