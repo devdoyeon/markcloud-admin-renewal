@@ -33,7 +33,7 @@ const SideBar = () => {
             <li className={path === '/manage' && 'active'}>회원 관리</li>
           </Link>
           <Link to='/inquiry'>
-            <li className={path === '/inquiry' && 'active'}>문의 관리</li>
+            <li className={path === '/inquiry' && 'active'}>문의 사항 관리</li>
           </Link>
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>

@@ -12,12 +12,7 @@ import {
   changeState,
   commonModalSetting,
 } from 'JS/common';
-import {
-  getInquiryDetail,
-  answerRegister,
-  answerEdit,
-  answerDelete,
-} from 'JS/API';
+import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
 import CommonModal from './CommonModal';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
@@ -81,7 +76,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         '답변을 작성해 주세요.'
       );
     const data = { answer: info.answer };
-    const result = await answerRegister(inquiryId, data);
+    const result = await answerPost(inquiryId, data);
     if (typeof result === 'object') {
       changeState(setInfo, 'status', true);
       getDetail();
@@ -126,9 +121,11 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   };
 
   useEffect(() => {
-    getDetail();
-    window.addEventListener('click', e => outClick(e));
-  }, []);
+    if (!alertBox.bool) {
+      getDetail();
+      window.addEventListener('click', e => outClick(e));
+    }
+  }, [alertBox.bool]);
 
   useEffect(() => {
     byteCount(info.answer, setInfo, setByte, 'answer', 3000);

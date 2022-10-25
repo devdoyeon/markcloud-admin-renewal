@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import CommonModal from 'Components/CommonModal';
-import { getEvent } from 'JS/API';
+import { getCouponList } from 'JS/API';
 import { catchError, changeState } from 'JS/common';
 import { statusArr } from 'JS/array';
 
@@ -29,12 +29,16 @@ const Coupon = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getEvent(pageInfo.page, pageInfo.limit);
+    const result = await getCouponList(pageInfo.page, pageInfo.limit);
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
     } else return catchError(result, navigate, setAlertBox);
   };
+
+  useEffect(() => {
+    document.title = '마크클라우드 관리자 > 쿠폰 발급 내역'
+  }, [])
 
   useEffect(() => {
     getList();

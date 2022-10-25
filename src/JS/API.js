@@ -34,6 +34,7 @@ const errorHandling = async error => {
     case 500:
       return 'serverError';
     case 404:
+      return 'notFound';
     case 504:
       return 'renderErrorPage';
     default:
@@ -53,6 +54,7 @@ const tokenReissue = async () => {
     setCookie('myToken', result.data.data.access_token, {
       path: '/',
     });
+    window.location.reload();
   } catch (error) {
     return await errorHandling(error);
   }
@@ -76,7 +78,7 @@ export const signIn = async (userId, userPw) => {
 
 //~ Home
 // 회원 Count
-export const userCount = async target => {
+export const getUserCount = async target => {
   try {
     return await axios.get(`/api/admin/users/count?target=${target}`, header());
   } catch (error) {
@@ -85,7 +87,7 @@ export const userCount = async target => {
 };
 
 // 검색 Count
-export const searchCount = async target => {
+export const getSearchCount = async target => {
   try {
     return await axios.get(
       `/api/admin/search/count?target=${target}`,
@@ -97,7 +99,7 @@ export const searchCount = async target => {
 };
 
 // 검색왕 순위
-export const searchKing = async target => {
+export const getSearchKing = async target => {
   try {
     return await axios.get(`/api/admin/search/king?target=${target}`, header());
   } catch (error) {
@@ -107,7 +109,7 @@ export const searchKing = async target => {
 
 //~ Manage
 // 회원 정보 조회
-export const userList = async (page, limit) => {
+export const getUserList = async (page, limit) => {
   try {
     return await axios.get(
       `/api/admin/users?page=${page}&limit=${limit}`,
@@ -166,7 +168,7 @@ export const getInquiryDetail = async id => {
 };
 
 // 답변 등록
-export const answerRegister = async (id, data) => {
+export const answerPost = async (id, data) => {
   try {
     return await axios.post(`/api/admin/inquiry/answer/${id}`, data, header());
   } catch (error) {
@@ -268,7 +270,7 @@ export const noticeMultiDelete = async data => {
 
 //~ Event
 // 쿠폰 발급 내역 조회
-export const getEvent = async (page, limit) => {
+export const getCouponList = async (page, limit) => {
   try {
     return await axios.get(
       `/api/admin/service/view/token?page=${page}&limit=${limit}`,

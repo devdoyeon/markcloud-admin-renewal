@@ -72,6 +72,10 @@ const Inquiry = () => {
   };
 
   useEffect(() => {
+    document.title = '마크클라우드 관리자 > 문의 사항 관리'
+  }, [])
+
+  useEffect(() => {
     if (!modal) getInquiry();
   }, [pageInfo.page, pageInfo.limit, select, modal]);
 

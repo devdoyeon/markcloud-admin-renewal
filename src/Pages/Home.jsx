@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import SideBar from 'Components/SideBar';
 import { useNavigate } from 'react-router-dom';
 import {
-  searchCount,
-  userCount,
-  searchKing,
+  getSearchCount,
+  getUserCount,
+  getSearchKing,
   getInquiryList,
   getNoticeList,
 } from 'JS/API';
@@ -77,7 +77,7 @@ const Home = () => {
 
   //@ 8
   const getTextKing = async () => {
-    const result = await searchKing('text');
+    const result = await getSearchKing('text');
     if (typeof result === 'object') {
       setTextKing(result?.data?.data);
     } else return catchError(result, navigate, setAlertBox);
@@ -85,7 +85,7 @@ const Home = () => {
 
   //@ 7
   const getImgKing = async () => {
-    const result = await searchKing('img');
+    const result = await getSearchKing('img');
     if (typeof result === 'object') {
       setImgKing(result?.data?.data);
       getTextKing();
@@ -94,7 +94,7 @@ const Home = () => {
 
   //@ 6
   const getTodayImgSearch = async () => {
-    const result = await searchCount('img_today');
+    const result = await getSearchCount('img_today');
     if (typeof result === 'object') {
       setImgToday(result?.data?.data);
       getImgKing();
@@ -103,7 +103,7 @@ const Home = () => {
 
   //@ 5
   const getAllImgSearch = async () => {
-    const result = await searchCount('img_all');
+    const result = await getSearchCount('img_all');
     if (typeof result === 'object') {
       setImgAll(result?.data?.data);
       getTodayImgSearch();
@@ -112,7 +112,7 @@ const Home = () => {
 
   //@ 4
   const getTodayTxtSearch = async () => {
-    const result = await searchCount('text_today');
+    const result = await getSearchCount('text_today');
     if (typeof result === 'object') {
       setTxtToday(result?.data?.data);
       getAllImgSearch();
@@ -121,7 +121,7 @@ const Home = () => {
 
   //@ 3
   const getAllTxtSearch = async () => {
-    const result = await searchCount('text_all');
+    const result = await getSearchCount('text_all');
     if (typeof result === 'object') {
       setTxtAll(result?.data?.data);
       getTodayTxtSearch();
@@ -130,7 +130,7 @@ const Home = () => {
 
   //@ 2
   const getTodayUser = async () => {
-    const result = await userCount('month');
+    const result = await getUserCount('month');
     if (typeof result === 'object') {
       setNewUser(result?.data?.data);
       getAllTxtSearch();
@@ -144,7 +144,7 @@ const Home = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await userCount('all');
+    const result = await getUserCount('all');
     if (typeof result === 'object') {
       setAllUser(result?.data?.data);
       getTodayUser();
@@ -273,6 +273,7 @@ const Home = () => {
 
   useEffect(() => {
     getAllUser();
+    document.title = '마크클라우드 관리자 > 홈';
   }, []);
 
   useEffect(() => {
@@ -292,7 +293,7 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드한 공지 사항</h2>
-              <p>일주일 내에 업로드한 공지 사항만 표시됩니다.</p>
+              <p>일주일 내에 업로드한 공지 사항만 표시 됩니다.</p>
             </div>
             {!recentNotice.length ? (
               <div className='none-list'>
@@ -317,7 +318,7 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드 된 문의 사항</h2>
-              <p>일주일 내에 업로드 된 미답변 문의 사항만 표시됩니다.</p>
+              <p>일주일 내에 업로드 된 미답변 문의 사항만 표시 됩니다.</p>
             </div>
             {!recentInquiry.length ? (
               <div className='none-list'>
@@ -347,7 +348,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {!newUser ? <MdOutlineMoodBad /> : newUser} / {allUser}
+                {newUser} / {allUser}
               </div>
               <div>신규 / 전체</div>
             </div>
@@ -358,7 +359,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {!txtToday ? <MdOutlineMoodBad /> : txtToday} / {txtAll}
+                {txtToday} / {txtAll}
               </div>
               <div>오늘 / 전체</div>
             </div>
@@ -369,7 +370,7 @@ const Home = () => {
             </div>
             <div className='count-wrap column'>
               <div className='count'>
-                {!imgToday ? <MdOutlineMoodBad /> : imgToday} / {imgAll}
+                {imgToday} / {imgAll}
               </div>
               <div>오늘 / 전체</div>
             </div>
@@ -379,7 +380,7 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>텍스트 검색 순위</h2>
-              <p>최대 다섯 명까지 표시됩니다.</p>
+              <p>최대 다섯 명까지 표시 됩니다.</p>
             </div>
             {!textKing.length ? (
               <div className='none-list'>
@@ -405,7 +406,7 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>이미지 검색 순위</h2>
-              <p>최대 다섯 명까지 표시됩니다.</p>
+              <p>최대 다섯 명까지 표시 됩니다.</p>
             </div>
             {!imgKing.length ? (
               <div className='none-list'>

@@ -66,7 +66,7 @@ const SignIn = () => {
         secure: true,
       });
       //@ 아이디 저장 체크 여부 확인 후 체크 되어 있으면 저장
-      if (check === true) {
+      if (check) {
         localStorage.setItem('save-id', userId);
       } else localStorage.removeItem('save-id');
       navigate('/home');
@@ -89,7 +89,12 @@ const SignIn = () => {
   useEffect(() => {
     //& 토큰을 가지고 있으면 홈으로 푸시
     if (getCookie('myToken')) navigate('/home');
-    $('.input_id').focus();
+    if (localStorage.getItem('save-id')) {
+      setUserId(localStorage.getItem('save-id'));
+      setCheck(true);
+      $('.input_pw').focus();
+    } else $('.input_id').focus();
+    document.title = '마크클라우드 관리자 로그인';
   }, []);
 
   useEffect(() => {
@@ -145,6 +150,7 @@ const SignIn = () => {
             type='text'
             placeholder='ID'
             autoComplete='off'
+            className='input_id'
             value={userId}
             onKeyDown={e => enterFn(e)}
             onChange={e => setUserId(e.target.value)}
@@ -153,6 +159,8 @@ const SignIn = () => {
             type='password'
             placeholder='PASSWORD'
             autoComplete='off'
+            className='input_pw'
+            value={userPw}
             onChange={e => setUserPw(e.target.value)}
             onKeyDown={e => enterFn(e)}
           />

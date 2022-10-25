@@ -110,6 +110,10 @@ const Notice = () => {
   };
 
   useEffect(() => {
+    document.title = '마크클라우드 관리자 > 공지 사항 관리'
+  }, [])
+
+  useEffect(() => {
     if (!modal || !editor) getNotice();
   }, [pageInfo.page, pageInfo.limit, modal, editor]);
 

@@ -1,9 +1,14 @@
 import errorImg from 'Image/error_markcloud.png';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ErrorPage = () => {
-
   const navigate = useNavigate();
+  const path = useLocation().pathname;
+
+  useEffect(() => {
+    document.title = 'Oops!'
+  }, [])
 
   return (
     <article className='error-home'>
@@ -19,9 +24,13 @@ const ErrorPage = () => {
         <div className='error-right'>
           <h2 className='error-big-txt'>:&#40;</h2>
           <div className='column'>
-            <p>404 Not Found</p>
+            <p>{path === '/error' ? 'ERROR' : '404 Not Found'}</p>
             <br />
-            <span>페이지를 찾을 수 없습니다.</span>
+            <span>
+              {path === '/error'
+                ? '오류가 발생했습니다.'
+                : '페이지를 찾을 수 없습니다.'}
+            </span>
             <div onClick={() => navigate(-1)}>이전 페이지로 돌아가기</div>
           </div>
         </div>

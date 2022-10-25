@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import $ from 'jquery';
-import { userList, searchUser } from 'JS/API';
+import { getUserList, searchUser } from 'JS/API';
 import { catchError, changeState, commonModalSetting } from 'JS/common';
 import { statusArr } from 'JS/array';
 import SideBar from 'Components/SideBar';
@@ -31,13 +31,13 @@ const Manage = () => {
   let prevent = false;
   const navigate = useNavigate();
 
-  const getUserList = async () => {
+  const userList = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await userList(pageInfo.page, pageInfo.limit);
+    const result = await getUserList(pageInfo.page, pageInfo.limit);
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
@@ -188,7 +188,11 @@ const Manage = () => {
   };
 
   useEffect(() => {
-    if (!modal) getUserList();
+    document.title = '마크클라우드 관리자 > 회원 관리';
+  }, []);
+
+  useEffect(() => {
+    if (!modal) userList();
   }, [pageInfo.page, pageInfo.limit, modal]);
 
   return (

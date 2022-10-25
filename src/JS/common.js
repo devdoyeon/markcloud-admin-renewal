@@ -9,15 +9,9 @@ export const changeState = (setState, column, value) => {
   });
 };
 
-export const commonModalSetting = async (
-  setModal,
-  bool,
-  answer,
-  mode,
-  context
-) => {
+export const commonModalSetting = (setModal, bool, answer, mode, context) => {
   if (bool) {
-    await setModal({
+    setModal({
       mode: mode,
       context: context,
       bool: bool,
@@ -25,7 +19,7 @@ export const commonModalSetting = async (
     });
     return answer;
   } else {
-    await setModal({
+    setModal({
       mode: '',
       context: '',
       bool: bool,
@@ -70,5 +64,7 @@ export const catchError = async (result, navigate, setModal) => {
     navigate('/');
     return;
   } else if (result === 'renderErrorPage') navigate('/error');
+  else if (result === 'notFound') navigate('/not-found');
+  else if (result === 'AccessTokenExpired') return;
   else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
 };
