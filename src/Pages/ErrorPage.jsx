@@ -7,8 +7,10 @@ const ErrorPage = () => {
   const path = useLocation().pathname;
 
   useEffect(() => {
-    document.title = 'Oops!'
-  }, [])
+    document.title = 'Oops!';
+    if (path === '/error') return;
+    else if (path !== '/not-found') navigate('/not-found');
+  }, []);
 
   return (
     <article className='error-home'>
@@ -31,7 +33,7 @@ const ErrorPage = () => {
                 ? '오류가 발생했습니다.'
                 : '페이지를 찾을 수 없습니다.'}
             </span>
-            <div onClick={() => navigate(-1)}>이전 페이지로 돌아가기</div>
+            <div onClick={() => navigate('/home')}>홈으로 돌아가기</div>
           </div>
         </div>
       </div>

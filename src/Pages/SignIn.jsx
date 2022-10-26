@@ -59,11 +59,11 @@ const SignIn = () => {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
-        secure: true,
+        secure: false,
       });
       setCookie('rfToken', refresh_token, {
         path: '/',
-        secure: true,
+        secure: false,
       });
       //@ 아이디 저장 체크 여부 확인 후 체크 되어 있으면 저장
       if (check) {
