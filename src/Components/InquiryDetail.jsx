@@ -100,7 +100,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
-  // 요청 들어가는 거 두번인지 확인
   const delAnswer = async () => {
     const result = await answerDelete(inquiryId);
     if (typeof result === 'object') {

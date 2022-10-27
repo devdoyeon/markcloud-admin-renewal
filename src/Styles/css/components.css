@@ -43,6 +43,15 @@
 .signIn .signInBox > .form :first-child {
   margin: 30px 0 15px;
 }
+.signIn .signInBox p {
+  color: white;
+  margin-bottom: 20px;
+  margin-top: -15px;
+  width: 100%;
+}
+.signIn .signInBox p span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
 .signIn .signInBox > .remember-id {
   width: 100%;
   display: block;
@@ -273,7 +282,10 @@
   .dashboard > .row .title-wrap p {
     font-size: 12px !important;
   }
-  .manage .table-wrap > table thead th, .manage .table-wrap > table thead td, .manage .table-wrap tbody th, .manage .table-wrap tbody td {
+  .manage .table-wrap > table thead th,
+.manage .table-wrap > table thead td,
+.manage .table-wrap tbody th,
+.manage .table-wrap tbody td {
     white-space: nowrap;
   }
 }

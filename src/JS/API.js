@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie, setCookie } from './cookie';
+import { getCookie, setCookie, removeCookie } from './cookie';
 
 const header = () => ({
   headers: {
@@ -51,6 +51,7 @@ const tokenReissue = async () => {
   };
   try {
     const result = await axios.get(`/api/users/self/token`, { headers });
+    removeCookie('myToken');
     setCookie('myToken', result.data.data.access_token, {
       path: '/',
     });

@@ -9,9 +9,9 @@ export const changeState = (setState, column, value) => {
   });
 };
 
-export const commonModalSetting = (setModal, bool, answer, mode, context) => {
+export const commonModalSetting = (setAlertBox, bool, answer, mode, context) => {
   if (bool) {
-    setModal({
+    setAlertBox({
       mode: mode,
       context: context,
       bool: bool,
@@ -19,7 +19,7 @@ export const commonModalSetting = (setModal, bool, answer, mode, context) => {
     });
     return answer;
   } else {
-    setModal({
+    setAlertBox({
       mode: '',
       context: '',
       bool: bool,

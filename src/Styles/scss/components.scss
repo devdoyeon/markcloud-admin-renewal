@@ -39,6 +39,15 @@
         margin: 30px 0 15px;
       }
     }
+    p {
+      color: white;
+      margin-bottom: 20px;
+      margin-top: -15px;
+      width: 100%;
+      span {
+        font-family: $boldFont;
+      }
+    }
     > .remember-id {
       width: 100%;
       display: block;
@@ -197,7 +206,8 @@
                   &.rank3 {
                     color: #a0522d;
                   }
-                  &.rank4, &.rank5 {
+                  &.rank4,
+                  &.rank5 {
                     color: $gray;
                   }
                 }
@@ -286,12 +296,14 @@
   }
   .manage {
     .table-wrap {
-      > table thead, tbody {
-        th, td{
+      > table thead,
+      tbody {
+        th,
+        td {
           // overflow-x: auto;
           white-space: nowrap;
         }
-      } 
+      }
     }
   }
 }

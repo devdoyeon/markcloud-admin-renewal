@@ -18,9 +18,6 @@ const SideBar = () => {
   return (
     <>
       <div className='sideBar column'>
-        <div>
-          
-        </div>
         <Link to='/home'>
           <img src={cloudLogo} alt='마크클라우드 로고' />
         </Link>

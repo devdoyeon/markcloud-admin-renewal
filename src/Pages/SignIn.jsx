@@ -25,6 +25,7 @@ const SignIn = () => {
     bool: false,
     answer: '',
   });
+  const [capsLock, setCapsLock] = useState(false);
 
   const navigate = useNavigate();
 
@@ -152,7 +153,10 @@ const SignIn = () => {
             autoComplete='off'
             className='input_id'
             value={userId}
-            onKeyDown={e => enterFn(e)}
+            onKeyDown={e => {
+              enterFn(e);
+              setCapsLock(e.getModifierState('CapsLock'));
+            }}
             onChange={e => setUserId(e.target.value)}
           />
           <input
@@ -162,9 +166,13 @@ const SignIn = () => {
             className='input_pw'
             value={userPw}
             onChange={e => setUserPw(e.target.value)}
-            onKeyDown={e => enterFn(e)}
+            onKeyDown={e => {
+              enterFn(e);
+              setCapsLock(e.getModifierState('CapsLock'));
+            }}
           />
         </div>
+        {capsLock && <p><span>CapsLock</span>이 켜져 있습니다.</p>}
         <div className='remember-id'>
           <input
             type='checkbox'
