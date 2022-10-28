@@ -224,6 +224,7 @@
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
 .dashboard > .row > div > div.king {
+  min-height: 200px;
   height: auto;
 }
 .dashboard > .row > div > div.count-wrap {
