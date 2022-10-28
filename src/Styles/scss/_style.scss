@@ -1,0 +1,97 @@
+//---------------컬러 변수 정리---------------
+$mainColor: #406178;
+$subColor: #3c8fef;
+$fontColor: #15171a;
+$subFontColor: #858585;
+$highlight_red: #ff3838;
+$gray: #434343;
+$borderColor: #cdcdcd;
+$backgroundColor: #e7e3e0;
+$thBackColor: #f5f5f5;
+$white: #ffffff;
+//각 홈페이지 메인 컬러
+$linkMainColor: #ffc200;
+$tongMainColor: #de5d60;
+//배경색,텍스트 및 선 컬러
+$footerColor: #eeeeee;
+$black: #15171a;
+$gray01: #858585;
+$gray02: #333333;
+$gray03: #cdcdcd;
+$gray04: #dddddd;
+$gray05: #f5f5f5;
+$bgColor: #fafafa;
+$red: #f74848;
+$firstStepColor: #98b9e6;
+$secondStepColor: #6f9cdb;
+$highlightColor: #3172cc;
+$powerBlue: #0b55aa;
+$lightBlue: #e6f0f9;
+$mainOpacityColor: rgba(60, 143, 239, 0.08);
+
+//---------------폰트 변수 정리---------------
+$blackFont: 'NotoSansBlack', '맑은 고딕', 'sans-serif';
+$boldFont: 'NotoSansB', '맑은 고딕', 'sans-serif';
+$middleFont: 'NotoSansM', '맑은 고딕', 'sans-serif';
+$regularFont: 'NotoSansR', '맑은 고딕', 'sans-serif';
+$lightFont: 'NotoSansL', '맑은 고딕', 'sans-serif';
+$thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
+
+//---------------display flex style mixin---------------
+@mixin flex-style($flexDirection: row, $alignVal: center, $justifyVal: center) {
+  display: flex;
+  flex-direction: $flexDirection;
+  align-items: $alignVal;
+  justify-content: $justifyVal;
+}
+
+//---------------position style mixin---------------
+@mixin position-style($position: absolute, $left: 0, $top: 0, $zIndex: null) {
+  position: $position;
+  left: $left;
+  top: $top;
+  z-index: $zIndex;
+}
+
+//---------------분기점 변수 정리---------------
+$breakpoint-desktop: 1440px; //데스크탑
+$breakpoint-wide-tablet: 1180px; //태블릿 가로
+$breakpoint-tablet: 820px; //태블릿 세로
+$breakpoint-mobile: 480px; //모바일
+$breakpoint-fold: 374px; //갤럭시 폴드
+
+//--------------미디어쿼리 관련 정리---------------
+//데스크탑
+@mixin desktop {
+  @media screen and (max-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+//태블릿 가로
+@mixin wide-tablet {
+  @media screen and (max-width: $breakpoint-wide-tablet) {
+    @content;
+  }
+}
+
+//태블릿 세로
+@mixin tablet {
+  @media screen and (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+//모바일
+@mixin mobile {
+  @media screen and (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+//폴드
+@mixin fold {
+  @media screen and (max-width: $breakpoint-fold) {
+    @content;
+  }
+}

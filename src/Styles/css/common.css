@@ -1,0 +1,655 @@
+@charset "UTF-8";
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+.container > .content-wrap {
+  min-width: calc(100% - 230px);
+  margin-left: 230px;
+  min-height: 100vh;
+  background-color: #e7e3e0;
+  right: 0;
+  padding: 90px;
+}
+.container > .content-wrap > h2 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 50px;
+  color: #333333;
+}
+
+.alert-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+}
+.alert-modal .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 500px;
+  height: 230px;
+  background-color: white;
+  border-radius: 10px;
+  outline: 2px solid #cdcdcd;
+}
+.alert-modal .modal .head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  background-color: #434343;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: absolute;
+  top: 0;
+}
+.alert-modal .modal .head > svg {
+  color: white;
+  font-size: 35px;
+}
+.alert-modal .modal .content {
+  text-align: center;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  margin-top: 50px;
+  padding: 10px;
+}
+.alert-modal .modal .btn-wrap {
+  margin-top: 10px;
+}
+.alert-modal .modal .btn-wrap button {
+  padding: 10px 15px;
+  background-color: #434343;
+  color: white;
+  margin-right: 15px;
+  border-radius: 8px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.alert-modal .modal .btn-wrap button:last-child {
+  margin-right: 0;
+}
+
+/* error-home | 에러 페이지 */
+.error-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+.error-home > div.oops-slide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 120%;
+  height: 200px;
+  transform: rotate(7deg);
+  margin-top: 50px;
+  background-color: #ffe509;
+  overflow: hidden;
+}
+.error-home > div.oops-slide > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 100px;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 1200s linear infinite;
+}
+.error-home > div.error-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+.error-home > div.error-wrap .error-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+.error-home > div.error-wrap .error-left img {
+  margin-top: 300px;
+}
+.error-home > div.error-wrap .error-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex: 1.5;
+  margin-bottom: 150px;
+}
+.error-home > div.error-wrap .error-right > h2 {
+  margin-right: 150px;
+  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
+  font-size: 200px;
+}
+.error-home > div.error-wrap .error-right .column {
+  align-items: left;
+  line-height: 30px;
+}
+.error-home > div.error-wrap .error-right .column > p {
+  width: 100%;
+  font-size: 60px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.error-home > div.error-wrap .error-right .column > span {
+  width: 100%;
+  font-size: 30px;
+  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
+  color: #858585;
+}
+.error-home > div.error-wrap .error-right .column > div {
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  margin-top: 50px;
+  background-color: #ffe509;
+  padding: 10px;
+  border-radius: 30px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 20px;
+  border: 5px solid #15171a;
+  transition: all 0.3s;
+}
+.error-home > div.error-wrap .error-right .column > div:hover {
+  transition: all 0.3s;
+  background-color: #ffef61;
+}
+
+.sideBar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  justify-content: flex-start;
+  width: 230px;
+  height: 100vh;
+  background-color: #333333;
+}
+.sideBar > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.sideBar > a img {
+  width: 60%;
+  margin: 30px 0;
+}
+.sideBar > .mainMenu {
+  width: 100%;
+  margin-bottom: 60px;
+  border-top: 1px solid #858585;
+}
+.sideBar > .mainMenu a {
+  text-decoration: none;
+}
+.sideBar > .mainMenu li {
+  cursor: pointer;
+  text-justify: center;
+  border-bottom: 1px solid #858585;
+  color: white;
+  padding: 15px;
+}
+.sideBar > .mainMenu li:hover {
+  background-color: #434343;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.sideBar > .mainMenu li.main {
+  padding: 3px 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  cursor: default;
+}
+.sideBar > .mainMenu li.active {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.sideBar .logoutBtn {
+  width: 230px;
+  position: fixed;
+  background-color: #434343;
+  border-top: 1px solid #858585;
+  text-align: center;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  transition: all 0.3s;
+}
+.sideBar .logoutBtn:hover {
+  transition: all 0.3s;
+  background-color: #de5d60;
+}
+
+.topBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.topBar > h2 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 50px;
+  color: #333333;
+}
+.topBar > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.topBar > div :first-child {
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+.topBar > div :last-child {
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+.topBar > div select {
+  padding: 4px 20px;
+  background-color: #ffffff;
+  border: 1px solid #333333;
+  border-right: none;
+  font-size: 16px;
+}
+.topBar > div select:last-child {
+  border-right: 1px solid #333333;
+}
+.topBar > div input[type=text] {
+  height: 36px;
+  border: 1px solid #333333;
+  padding: 7px;
+}
+.topBar > div button {
+  height: 36px;
+  padding: 5px 20px;
+  font-size: 16px;
+  background-color: #333333;
+  color: white;
+}
+.topBar > div button > .searchIcon {
+  margin-left: 5px;
+}
+.topBar > div button > .searchIcon > svg {
+  transform: translateY(2px);
+}
+.topBar > div button.searchBtn {
+  border-right: 1px solid white;
+}
+
+.pagination {
+  margin-top: 50px;
+}
+.pagination > li {
+  background-color: white;
+  padding: 10px 0;
+  width: 40px;
+  text-align: center;
+  border: 1px solid #cdcdcd;
+  cursor: pointer;
+  border-right: none;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  user-select: none;
+}
+.pagination > li:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.pagination > li:last-child {
+  border-right: 1px solid #cdcdcd;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.pagination > li.now {
+  background-color: #333333;
+  color: white;
+}
+.pagination > li.active > svg > polyline {
+  stroke: #333333;
+}
+.pagination > li.block {
+  cursor: default;
+}
+.pagination > li.block > svg > polyline {
+  stroke: #cdcdcd;
+}
+.pagination > li > svg {
+  transform: scale(1.4);
+}
+
+.table-wrap > table {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border-collapse: collapse;
+}
+.table-wrap > table thead {
+  background-color: #f5f5f5;
+}
+.table-wrap > table tbody {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.table-wrap > table tr > th {
+  font-weight: normal;
+  padding: 15px 0;
+}
+.table-wrap > table tr > td {
+  padding: 20px 0;
+}
+.table-wrap > table tr > td.title {
+  cursor: pointer;
+}
+.table-wrap > table tr > td.title:hover {
+  color: #406178;
+}
+.table-wrap > table tr > th,
+.table-wrap > table tr td {
+  border-bottom: 1px solid #cdcdcd;
+}
+.table-wrap > table tr th {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+
+.modal-background {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(51, 51, 51, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.modal-background .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50vw;
+  height: 700px;
+  padding: 50px;
+  background-color: white;
+  overflow-y: auto;
+}
+.modal-background .modal .topBar {
+  width: 100%;
+}
+.modal-background .modal .topBar > div {
+  cursor: pointer;
+}
+.modal-background .modal .topBar > div > table {
+  box-shadow: 0px 0px 9px rgba(67, 67, 67, 0.3);
+  border: 1px solid #cdcdcd;
+  border-collapse: collapse;
+}
+.modal-background .modal .topBar > div > table thead th,
+.modal-background .modal .topBar > div > table thead td,
+.modal-background .modal .topBar > div > table tbody th,
+.modal-background .modal .topBar > div > table tbody td {
+  border-radius: 0;
+  padding: 5px;
+  border-bottom: 1px solid #cdcdcd;
+}
+.modal-background .modal .topBar > div > table thead th:first-child,
+.modal-background .modal .topBar > div > table thead td:first-child,
+.modal-background .modal .topBar > div > table tbody th:first-child,
+.modal-background .modal .topBar > div > table tbody td:first-child {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  background-color: #f5f5f5;
+}
+.modal-background .modal .topBar > div > table thead th:nth-child(2),
+.modal-background .modal .topBar > div > table thead td:nth-child(2),
+.modal-background .modal .topBar > div > table tbody th:nth-child(2),
+.modal-background .modal .topBar > div > table tbody td:nth-child(2) {
+  background-color: white;
+  text-align: right;
+}
+.modal-background .modal .topBar > div > svg {
+  scale: 2;
+  border-radius: 0;
+  fill: #434343;
+}
+.modal-background .modal .topBar .viewBytes {
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.5);
+  padding: 5px;
+  border-radius: 7px;
+  margin-left: 10px;
+  color: #434343;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .topBar .viewBytes > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > hr {
+  width: 100%;
+  margin: 30px 0;
+}
+.modal-background .modal > .title-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+.modal-background .modal > .title-wrap > svg {
+  font-size: 25px;
+  margin-right: 10px;
+  color: #434343;
+}
+.modal-background .modal > .title-wrap h1 {
+  display: inline-block;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > .context {
+  overflow: auto;
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.2);
+  width: 100%;
+  margin-top: 10px;
+  min-height: 300px;
+  border-radius: 8px;
+}
+.modal-background .modal > .answer-wrap,
+.modal-background .modal .view-answer-wrap {
+  margin-top: 30px;
+  width: 100%;
+}
+.modal-background .modal > .answer-wrap > .header,
+.modal-background .modal .view-answer-wrap > .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.modal-background .modal > .answer-wrap > .header h2,
+.modal-background .modal .view-answer-wrap > .header h2 {
+  display: inline-block;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal > .answer-wrap > .header svg,
+.modal-background .modal .view-answer-wrap > .header svg {
+  margin-right: 10px;
+  font-size: 25px;
+  color: #434343;
+}
+.modal-background .modal > .answer-wrap > .answer-area,
+.modal-background .modal > .answer-wrap .view-answer-area,
+.modal-background .modal .view-answer-wrap > .answer-area,
+.modal-background .modal .view-answer-wrap .view-answer-area {
+  margin-top: 10px;
+  resize: none;
+  width: 100%;
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.2);
+  min-height: 200px;
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.modal-background .modal > .answer-wrap > .answer-area:focus,
+.modal-background .modal > .answer-wrap .view-answer-area:focus,
+.modal-background .modal .view-answer-wrap > .answer-area:focus,
+.modal-background .modal .view-answer-wrap .view-answer-area:focus {
+  outline: none;
+  border: 1px solid #858585;
+}
+.modal-background .modal .footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  margin-top: 5px;
+}
+.modal-background .modal .footer .viewBytes {
+  box-shadow: 0px 0px 4px rgba(67, 67, 67, 0.5);
+  padding: 5px;
+  border-radius: 7px;
+  color: #434343;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .footer .viewBytes > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal .footer button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  margin-right: 5px;
+}
+.modal-background .modal .footer button:last-child {
+  margin-right: 0;
+}
+.modal-background .modal .go-service {
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+}
+.modal-background .modal .go-service > a {
+  color: #858585;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+.modal-background .modal.editor {
+  width: 70vw !important;
+  height: 80vh !important;
+}
+.modal-background .modal.editor .ck.ck-editor {
+  width: 100%;
+}
+.modal-background .modal.editor .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+  min-height: 500px;
+  max-height: 700px;
+  min-width: 100%;
+}
+.modal-background .modal.editor > .topBar select {
+  padding: 10px;
+  border: 1px solid #cdcdcd;
+  border-right: none;
+}
+.modal-background .modal.editor > .topBar input {
+  border: 1px solid #cdcdcd !important;
+  font-size: 26px;
+  padding: 23px 15px !important;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.editor .footer {
+  margin-top: 10px;
+}
+.modal-background .modal.editor .footer > div > button:last-child {
+  margin-left: 5px;
+}
+.modal-background .modal.coupon {
+  width: 500px;
+  height: 430px;
+}
+.modal-background .modal.coupon .topBar > h2 {
+  font-size: 30px;
+}
+.modal-background .modal.coupon .wrap {
+  border: 1px solid #cdcdcd;
+  padding: 20px;
+  width: 100%;
+}
+.modal-background .modal.coupon .wrap input {
+  border: 1px solid #cdcdcd;
+  padding: 10px 20px;
+  width: 100%;
+}
+.modal-background .modal.coupon .wrap p {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.coupon .wrap p::before {
+  content: "*";
+  color: #f74848;
+}
+.modal-background .modal.coupon .wrap .footer {
+  margin-top: 20px;
+  justify-content: center;
+}
+.modal-background .modal.coupon .wrap .footer > div > button:last-child {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 1440px) {
+  .container .content-wrap {
+    padding: 50px;
+  }
+  .table-wrap table {
+    font-size: 14px;
+  }
+}
