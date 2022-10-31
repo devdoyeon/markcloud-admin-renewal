@@ -9,6 +9,7 @@ import {
   removeCache,
   getCacheSize,
 } from 'JS/API';
+import loading from 'Image/loading.gif';
 
 const USACache = () => {
   const [key, setKey] = useState([]);
@@ -27,6 +28,7 @@ const USACache = () => {
   let prevent = false;
 
   const cacheSize = useCallback(async () => {
+    setSize('');
     const result = await getCacheSize();
     setSize(result.data);
   }, [setSize]);
@@ -37,6 +39,8 @@ const USACache = () => {
     setTimeout(() => {
       prevent = false;
     }, 1000);
+    setKey([]);
+    setValue([]);
     const result = await getCacheList();
     setKey(Object.keys(result.data));
     setValue(Object.values(result.data));
@@ -108,21 +112,31 @@ const USACache = () => {
             </button>
           </div>
         </div>
-        <div className='table-wrap'>
-          <table>
-            <colgroup>
-              <col width='80%' />
-              <col width='90%' />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Key</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>{renderCacheList()}</tbody>
-          </table>
-        </div>
+        {size ? (
+          key.length ? (
+            <div className='table-wrap'>
+              <table>
+                <colgroup>
+                  <col width='80%' />
+                  <col width='20%' />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>{renderCacheList()}</tbody>
+              </table>
+            </div>
+          ) : (
+            <div className='empty-cache'>캐시가 없습니다.</div>
+          )
+        ) : (
+          <div className='loading'>
+            <img src={loading} alt='로딩' />
+          </div>
+        )}
       </div>
       {modal && <ViewCacheModal arr={arr} setModal={setModal} />}
       {alertBox.bool && (

@@ -372,7 +372,7 @@
   .modal {
     @include flex-style(column, $justifyVal: flex-start);
     width: 50vw;
-    border: 3px solid $gray;
+    border: 2px solid $gray;
     height: 700px;
     padding: 50px;
     background-color: white;

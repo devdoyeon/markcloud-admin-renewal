@@ -319,6 +319,16 @@
   font-family: $middleFont;
 }
 
+.loading {
+  @include flex-style();
+  @include position-style($top: 0, $left: 0);
+  width: 100vw;
+  height: 100vh;
+  > img {
+    position: absolute;
+  }
+}
+
 @include desktop {
   .dashboard {
     > .row {

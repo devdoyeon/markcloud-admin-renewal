@@ -61,9 +61,10 @@ export const catchError = async (result, navigate, setModal) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
-    result === 'tokenExpired'
+    result === 'tokenExpired' ||
+    result === 'accessDenied'
   ) {
-    await commonModalSetting(setModal, true, '', 'alert', errorList[result]);
+    alert(errorList[result]);
     removeCookie('myToken');
     removeCookie('rfToken');
     navigate('/');
