@@ -28,7 +28,6 @@ const USACache = () => {
   let prevent = false;
 
   const cacheSize = useCallback(async () => {
-    setSize('');
     const result = await getCacheSize();
     setSize(result.data);
   }, [setSize]);
@@ -39,6 +38,7 @@ const USACache = () => {
     setTimeout(() => {
       prevent = false;
     }, 1000);
+    setSize('');
     setKey([]);
     setValue([]);
     const result = await getCacheList();
@@ -134,7 +134,7 @@ const USACache = () => {
           )
         ) : (
           <div className='loading'>
-            <img src={loading} alt='로딩' />
+            <img src={loading} alt='로딩 아이콘' />
           </div>
         )}
       </div>
