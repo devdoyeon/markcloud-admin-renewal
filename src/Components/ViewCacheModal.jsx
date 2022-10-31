@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
-import { CopyBlock, monokai } from 'react-code-blocks';
+import { CopyBlock, monokaiSublime } from 'react-code-blocks';
 import Pagination from './Pagination';
 import { changeState } from 'JS/common';
 
@@ -9,7 +9,7 @@ const ViewCacheModal = ({ arr, setModal }) => {
     totalPage: '',
     page: 1,
   });
-  const [movePage, setMovePage] = useState('');
+  const [movePage, setMovePage] = useState(1);
 
   const outClick = e => {
     if (e.target.className === 'modal-background') {
@@ -41,7 +41,7 @@ const ViewCacheModal = ({ arr, setModal }) => {
           text={JSON.stringify(arr[pageInfo.page - 1], null, 2)}
           language={'json'}
           showLineNumbers={false}
-          theme={monokai}
+          theme={monokaiSublime}
         />
         </div>
         <div className='pagination-wrap'>
