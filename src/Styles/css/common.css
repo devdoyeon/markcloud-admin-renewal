@@ -411,6 +411,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 50vw;
+  border: 3px solid #434343;
   height: 700px;
   padding: 50px;
   background-color: white;
@@ -643,6 +644,49 @@
 }
 .modal-background .modal.coupon .wrap .footer > div > button:last-child {
   margin-left: 10px;
+}
+.modal-background .modal.cache {
+  height: 90vh;
+  padding-bottom: 0;
+}
+.modal-background .modal.cache .codeBlock {
+  width: 100%;
+}
+.modal-background .modal.cache .codeBlock > div > span > code > span {
+  font-family: "Cascadia", "NotoSansR", "sans-serif" !important;
+}
+.modal-background .modal.cache .pagination-wrap {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0;
+}
+.modal-background .modal.cache .pagination {
+  margin-top: 10px;
+}
+.modal-background .modal.cache .searchPage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+.modal-background .modal.cache .searchPage > input {
+  border: 1px solid #cdcdcd;
+  width: 50px;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
+  margin-right: 5px;
+}
+.modal-background .modal.cache .searchPage > button {
+  background-color: #434343;
+  padding: 10px;
+  color: white;
+  border-radius: 8px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  margin-left: 15px;
 }
 
 @media screen and (max-width: 1440px) {

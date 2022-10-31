@@ -36,6 +36,7 @@ $middleFont: 'NotoSansM', '맑은 고딕', 'sans-serif';
 $regularFont: 'NotoSansR', '맑은 고딕', 'sans-serif';
 $lightFont: 'NotoSansL', '맑은 고딕', 'sans-serif';
 $thinFont: 'NotoSansT', '맑은 고딕', 'sans-serif';
+$codeFont: 'Cascadia', 'NotoSansR', 'sans-serif';
 
 //---------------display flex style mixin---------------
 @mixin flex-style($flexDirection: row, $alignVal: center, $justifyVal: center) {

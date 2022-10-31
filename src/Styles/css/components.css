@@ -276,6 +276,36 @@
   color: white;
 }
 
+.usa-cache .topBar > div :first-child {
+  margin-right: 10px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.usa-cache .topBar > div :first-child > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: #3172cc;
+}
+.usa-cache .topBar > div :nth-child(2) {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 1px solid white;
+}
+.usa-cache .table-wrap tbody > tr > td.arr {
+  cursor: pointer;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  color: #3172cc;
+}
+
+.empty-cache {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  background-color: #f5f5f5;
+  font-size: 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+
 @media screen and (max-width: 1440px) {
   .dashboard > .row .title-wrap h2 {
     font-size: 17px;

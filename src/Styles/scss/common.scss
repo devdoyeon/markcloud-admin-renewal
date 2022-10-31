@@ -372,6 +372,7 @@
   .modal {
     @include flex-style(column, $justifyVal: flex-start);
     width: 50vw;
+    border: 3px solid $gray;
     height: 700px;
     padding: 50px;
     background-color: white;
@@ -586,6 +587,46 @@
               margin-left: 10px;
             }
           }
+        }
+      }
+    }
+    &.cache {
+      height: 90vh;
+      padding-bottom: 0;
+      .codeBlock {
+        width: 100%;
+        > div > span > code > span {
+          font-family: $codeFont !important;
+        }
+      }
+      .pagination-wrap {
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+        padding: 10px 0;
+      }
+      .pagination {
+        margin-top: 10px;
+      }
+      .searchPage {
+        @include flex-style();
+        margin-top: 10px;
+        > input {
+          border: 1px solid $borderColor;
+          width: 50px;
+          padding: 10px 0;
+          text-align: center;
+          border-radius: 8px;
+          margin-right: 5px;
+        }
+        > button {
+          background-color: $gray;
+          padding: 10px;
+          color: white;
+          border-radius: 8px;
+          font-family: $boldFont;
+          margin-left: 15px;
         }
       }
     }

@@ -281,3 +281,46 @@ export const getCouponList = async (page, limit) => {
     return await errorHandling(error);
   }
 };
+
+//~ USA Data Cache Management
+// 캐시 불러오기
+export const getCacheList = async () => {
+  try {
+    return await axios.get('/us/system/dump_cache?passcode=kingsan', header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 캐시 JSON 지우기
+export const removeCacheJson = async () => {
+  try {
+    return await axios.get(
+      '/us/system/manual_removal_json?passcode=kingsan',
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 캐시 지우기
+export const removeCache = async () => {
+  try {
+    return await axios.get('/us/system/clear_cache?passcode=kingsan', header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 캐시 사이즈 조회
+export const getCacheSize = async () => {
+  try {
+    return await axios.get(
+      '/us/system/get_cache_size?passcode=kingsan',
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
