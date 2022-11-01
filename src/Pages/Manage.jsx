@@ -295,7 +295,13 @@ const Manage = () => {
         </div>
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
-      {modal && <AssignCouponModal setModal={setModal} pk={pk} />}
+      {modal && (
+        <AssignCouponModal
+          setModal={setModal}
+          pk={pk}
+          setAlertBox={setAlertBox}
+        />
+      )}
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
     </div>
   );
