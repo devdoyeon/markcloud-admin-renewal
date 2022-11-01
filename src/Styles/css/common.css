@@ -101,98 +101,62 @@
 
 /* error-home | 에러 페이지 */
 .error-home {
+  width: 100%;
+  height: 100vh;
+  background: url("Image/error_bg.png") no-repeat center bottom/cover;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
 }
-.error-home > div.oops-slide {
+.error-home > div:first-child {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  transform: rotate(7.53deg) scale(1.05);
   position: relative;
-  left: 0;
-  top: 0;
-  width: 120%;
-  height: 200px;
-  transform: rotate(7deg);
-  margin-top: 50px;
+  width: 100%;
+  height: 166px;
   background-color: #ffe509;
+  margin-top: -150px;
   overflow: hidden;
 }
-.error-home > div.oops-slide > span {
-  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+.error-home > div:first-child span {
   font-size: 100px;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 1200s linear infinite;
-}
-.error-home > div.error-wrap {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-}
-.error-home > div.error-wrap .error-left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-}
-.error-home > div.error-wrap .error-left img {
-  margin-top: 300px;
-}
-.error-home > div.error-wrap .error-right {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex: 1.5;
-  margin-bottom: 150px;
-}
-.error-home > div.error-wrap .error-right > h2 {
-  margin-right: 150px;
-  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
-  font-size: 200px;
-}
-.error-home > div.error-wrap .error-right .column {
-  align-items: left;
-  line-height: 30px;
-}
-.error-home > div.error-wrap .error-right .column > p {
-  width: 100%;
-  font-size: 60px;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  animation: marquee 5000s linear infinite;
 }
-.error-home > div.error-wrap .error-right .column > span {
-  width: 100%;
-  font-size: 30px;
-  font-family: "NotoSansT", "맑은 고딕", "sans-serif";
-  color: #858585;
+.error-home .content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 70px auto 0;
 }
-.error-home > div.error-wrap .error-right .column > div {
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  margin-top: 50px;
+.error-home .content-container strong {
+  margin: 16px 0 8px;
+  font-size: 40px;
+  color: #484848;
+  line-height: 57.92px;
+}
+.error-home .content-container p {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #cecece;
+}
+.error-home .content-container a {
+  height: 45px;
+  margin-top: 10px;
+  padding: 0 30px;
   background-color: #ffe509;
-  padding: 10px;
-  border-radius: 30px;
-  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
-  font-size: 20px;
-  border: 5px solid #15171a;
-  transition: all 0.3s;
-}
-.error-home > div.error-wrap .error-right .column > div:hover {
-  transition: all 0.3s;
-  background-color: #ffef61;
+  border-radius: 45px;
+  color: #434343;
+  line-height: 45px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
 
 .sideBar {
@@ -415,6 +379,7 @@
   padding: 50px;
   background-color: white;
   overflow-y: auto;
+  box-shadow: 0px 0px 8px rgba(67, 67, 67, 0.6);
 }
 .modal-background .modal .topBar {
   width: 100%;
@@ -643,6 +608,49 @@
 }
 .modal-background .modal.coupon .wrap .footer > div > button:last-child {
   margin-left: 10px;
+}
+.modal-background .modal.cache {
+  height: 90vh;
+  padding-bottom: 0;
+}
+.modal-background .modal.cache .codeBlock {
+  width: 100%;
+}
+.modal-background .modal.cache .codeBlock > div > span > code > span {
+  font-family: "Cascadia", "NotoSansR", "sans-serif" !important;
+}
+.modal-background .modal.cache .pagination-wrap {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  padding: 10px 0;
+}
+.modal-background .modal.cache .pagination {
+  margin-top: 0;
+}
+.modal-background .modal.cache .searchPage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+.modal-background .modal.cache .searchPage > input {
+  border: 1px solid #cdcdcd;
+  width: 50px;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
+  margin-right: 5px;
+}
+.modal-background .modal.cache .searchPage > button {
+  background-color: #434343;
+  padding: 10px;
+  color: white;
+  border-radius: 8px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  margin-left: 15px;
 }
 
 @media screen and (max-width: 1440px) {

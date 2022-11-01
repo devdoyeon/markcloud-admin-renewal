@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import { applyToken } from 'JS/API';
-import { catchError, commonModalSetting } from 'JS/common';
+import { catchError } from 'JS/common';
 import CommonModal from './CommonModal';
 
 const AssignCouponModal = ({ setModal, pk }) => {
@@ -28,24 +28,12 @@ const AssignCouponModal = ({ setModal, pk }) => {
       data = { user_pk: pk };
     } else {
       if (days < 1 || days > 30)
-        return commonModalSetting(
-          setAlertBox,
-          true,
-          '',
-          'alert',
-          '이벤트 기간은<br/>최소 1일에서 최대 30일입니다.'
-        );
+        return alert('이벤트 기간은 최소 1일에서 최대 30일입니다.');
       data = { user_pk: pk, days: days };
     }
     const result = await applyToken(data);
     if (typeof result === 'object') {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        '쿠폰 발급이 완료되었습니다.'
-      );
+      alert('쿠폰 발급이 완료되었습니다.');
       setModal(false);
       setDays('');
     } else return catchError(result, navigate, setAlertBox);
@@ -80,10 +68,10 @@ const AssignCouponModal = ({ setModal, pk }) => {
             </div>
           </div>
         </div>
+        {alertBox.bool && (
+          <CommonModal setModal={setAlertBox} modal={alertBox} />
+        )}
       </div>
-      {alertBox.modal && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} />
-      )}
     </>
   );
 };

@@ -169,7 +169,6 @@ const Home = () => {
                   <br />
                 </>
               )}
-              NO.{rank}
             </td>
             <td>{user_id}</td>
             <td>{name}</td>
@@ -196,7 +195,6 @@ const Home = () => {
                   <br />
                 </>
               )}
-              NO.{rank}
             </td>
             <td>{user_id}</td>
             <td>{name}</td>

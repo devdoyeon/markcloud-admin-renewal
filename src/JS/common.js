@@ -9,7 +9,13 @@ export const changeState = (setState, column, value) => {
   });
 };
 
-export const commonModalSetting = (setAlertBox, bool, answer, mode, context) => {
+export const commonModalSetting = (
+  setAlertBox,
+  bool,
+  answer,
+  mode,
+  context
+) => {
   if (bool) {
     setAlertBox({
       mode: mode,
@@ -17,15 +23,14 @@ export const commonModalSetting = (setAlertBox, bool, answer, mode, context) => 
       bool: bool,
       answer: '',
     });
-    return answer;
   } else {
     setAlertBox({
       mode: '',
       context: '',
       bool: bool,
     });
-    return answer;
   }
+  return answer;
 };
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {
@@ -56,9 +61,10 @@ export const catchError = async (result, navigate, setModal) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
-    result === 'tokenExpired'
+    result === 'tokenExpired' ||
+    result === 'accessDenied'
   ) {
-    await commonModalSetting(setModal, true, '', 'alert', errorList[result]);
+    alert(errorList[result]);
     removeCookie('myToken');
     removeCookie('rfToken');
     navigate('/');

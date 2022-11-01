@@ -219,6 +219,7 @@
           }
         }
         &.king {
+          min-height: 200px;
           height: auto;
         }
         &.count-wrap {
@@ -278,6 +279,53 @@
         border-right: 1px solid white;
       }
     }
+  }
+}
+
+.usa-cache {
+  .topBar {
+    > div {
+      :first-child {
+        margin-right: 10px;
+        font-family: $middleFont;
+        > span {
+          font-family: $boldFont;
+          color: $highlightColor;
+        }
+      }
+      :nth-child(2) {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        border-right: 1px solid white;
+      }
+    }
+  }
+  .table-wrap {
+    tbody > tr > td {
+      &.arr {
+        cursor: pointer;
+        font-family: $middleFont;
+        color: $highlightColor;
+      }
+    }
+  }
+}
+
+.empty-cache {
+  @include flex-style();
+  height: 500px;
+  background-color: $thBackColor;
+  font-size: 20px;
+  font-family: $middleFont;
+}
+
+.loading {
+  @include flex-style();
+  @include position-style($top: 0, $left: 0);
+  width: 100vw;
+  height: 100vh;
+  > img {
+    position: absolute;
   }
 }
 

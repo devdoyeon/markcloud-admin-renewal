@@ -83,89 +83,54 @@
 
 /* error-home | 에러 페이지 */
 .error-home {
-  @include flex-style(column, $alignVal: center);
   width: 100%;
   height: 100vh;
-  overflow-x: hidden;
-
+  background: url('Image/error_bg.png') no-repeat center bottom/ cover;
+  overflow: hidden;
+  @include flex-style(column);
   > div {
-    &.oops-slide {
+    &:first-child {
       @include flex-style($alignVal: center, $justifyVal: center);
-      @include position-style(relative);
-      width: 120%;
-      height: 200px;
-      transform: rotate(7deg);
-      margin-top: 50px;
+      transform: rotate(7.53deg) scale(1.05);
+      position: relative;
+      width: 100%;
+      height: 166px;
       background-color: #ffe509;
+      margin-top: -150px;
       overflow: hidden;
 
-      > span {
-        font-family: $boldFont;
+      span {
         font-size: 100px;
         white-space: nowrap;
         will-change: transform;
-        animation: marquee 1200s linear infinite;
+        font-family: $boldFont;
+        animation: marquee 5000s linear infinite;
       }
     }
-
-    &.error-wrap {
-      @include flex-style($alignVal: center, $justifyVal: center);
-      width: 100%;
-      height: 100vh;
-
-      .error-left {
-        @include flex-style($justifyVal: flex-end);
-        flex: 1;
-
-        img {
-          margin-top: 300px;
-        }
-      }
-
-      .error-right {
-        @include flex-style($alignVal: center, $justifyVal: center);
-        flex: 1.5;
-        margin-bottom: 150px;
-
-        > h2 {
-          margin-right: 150px;
-          font-family: $thinFont;
-          font-size: 200px;
-        }
-
-        .column {
-          align-items: left;
-          line-height: 30px;
-          > p {
-            width: 100%;
-            font-size: 60px;
-            font-family: $boldFont;
-          }
-          > span {
-            width: 100%;
-            font-size: 30px;
-            font-family: $thinFont;
-            color: $subFontColor;
-          }
-          > div {
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #ffe509;
-            padding: 10px;
-            border-radius: 30px;
-            font-family: $boldFont;
-            font-size: 20px;
-            border: 5px solid $black;
-            transition: all 0.3s;
-            &:hover {
-              transition: all 0.3s;
-              background-color: #ffef61;
-            }
-          }
-        }
-      }
+  }
+  .content-container {
+    @include flex-style(column, $alignVal: center, $justifyVal: center);
+    margin: 70px auto 0;
+    strong {
+      margin: 16px 0 8px;
+      font-size: 40px;
+      color: #484848;
+      line-height: 57.92px;
+    }
+    p {
+      margin-bottom: 10px;
+      font-size: 24px;
+      color: #cecece;
+    }
+    a {
+      height: 45px;
+      margin-top: 10px;
+      padding: 0 30px;
+      background-color: #ffe509;
+      border-radius: 45px;
+      color: $gray;
+      line-height: 45px;
+      font-family: $middleFont;
     }
   }
 }
@@ -376,6 +341,7 @@
     padding: 50px;
     background-color: white;
     overflow-y: auto;
+    box-shadow: 0px 0px 8px rgba($color: $gray, $alpha: 0.6);
     .topBar {
       width: 100%;
       > div {
@@ -586,6 +552,46 @@
               margin-left: 10px;
             }
           }
+        }
+      }
+    }
+    &.cache {
+      height: 90vh;
+      padding-bottom: 0;
+      .codeBlock {
+        width: 100%;
+        > div > span > code > span {
+          font-family: $codeFont !important;
+        }
+      }
+      .pagination-wrap {
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+        padding: 10px 0;
+      }
+      .pagination {
+        margin-top: 0;
+      }
+      .searchPage {
+        @include flex-style();
+        margin-top: 10px;
+        > input {
+          border: 1px solid $borderColor;
+          width: 50px;
+          padding: 10px 0;
+          text-align: center;
+          border-radius: 8px;
+          margin-right: 5px;
+        }
+        > button {
+          background-color: $gray;
+          padding: 10px;
+          color: white;
+          border-radius: 8px;
+          font-family: $boldFont;
+          margin-left: 15px;
         }
       }
     }

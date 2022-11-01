@@ -1,13 +1,14 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from 'Pages/SignIn';
+import Home from 'Pages/Home';
 import Notice from 'Pages/Notice';
 import Manage from 'Pages/Manage';
 import Inquiry from 'Pages/Inquiry';
 import Coupon from 'Pages/Coupon';
-import Home from 'Pages/Home';
 // import PopUp from 'Pages/PopUp';
 import ErrorPage from 'Pages/ErrorPage';
+import USACache from 'Pages/USACache';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/notice' element={<Notice />} />
         {/* <Route path='/popup' element={<PopUp />} /> */}
         <Route path='/event' element={<Coupon />} />
+        <Route path='/usa-cache' element={<USACache />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </div>
