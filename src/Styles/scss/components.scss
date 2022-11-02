@@ -321,8 +321,9 @@
 
 .loading {
   @include flex-style();
-  @include position-style($top: 0, $left: 0);
-  width: 100vw;
+  @include position-style($top: 0, $left: null);
+  right: 0;
+  width: calc(100vw - 230px);
   height: 100vh;
   > img {
     position: absolute;
