@@ -64,11 +64,10 @@ export const catchError = async (result, navigate, setModal) => {
     result === 'tokenExpired' ||
     result === 'accessDenied'
   ) {
-    alert(errorList[result]);
     removeCookie('myToken');
     removeCookie('rfToken');
     navigate('/');
-    return;
+    return alert(errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
   else if (result === 'AccessTokenExpired') return;

@@ -42,7 +42,6 @@ const USACache = () => {
     setKey([]);
     setValue([]);
     const result = await getCacheList();
-    console.log(result)
     setKey(Object.keys(result.data));
     setValue(Object.values(result.data));
     cacheSize();
