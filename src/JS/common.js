@@ -45,7 +45,6 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
     if (byte <= maxByte) returnLength = i + 1;
   }
   if (byte > maxByte) {
-    // alert(`최대 ${maxByte}Bytes까지만 입력 가능합니다.`);
     const cutStr = text.substring(0, returnLength);
     changeState(setText, column, cutStr);
   } else {

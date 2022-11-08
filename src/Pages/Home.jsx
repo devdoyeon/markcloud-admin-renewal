@@ -23,6 +23,10 @@ const Home = () => {
   const [txtToday, setTxtToday] = useState('');
   const [imgAll, setImgAll] = useState('');
   const [imgToday, setImgToday] = useState('');
+  const [noticeId, setNoticeId] = useState('');
+  const [inquiryId, setInquiryId] = useState('');
+  const [state, setState] = useState('');
+
   const [textKing, setTextKing] = useState([]);
   const [imgKing, setImgKing] = useState([]);
   const [recentNotice, setRecentNotice] = useState([]);
@@ -31,8 +35,7 @@ const Home = () => {
   const [noticeModal, setNoticeModal] = useState(false);
   const [inquiryModal, setInquiryModal] = useState(false);
   const [editor, setEditor] = useState(false);
-  const [noticeId, setNoticeId] = useState('');
-  const [inquiryId, setInquiryId] = useState('');
+
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -43,98 +46,104 @@ const Home = () => {
   const navigate = useNavigate();
   let prevent = false;
 
+  //@ 10
   const getInquiry = async () => {
-    const date = new Date();
-    const prevDate = new Date(date);
-    prevDate.setDate(date.getDate() - 7);
     const result = await getInquiryList('no-answer', 1, 100);
-    if (typeof result === 'object') {
-      const arr = [];
-      for (let obj of result.data.data) {
-        if (new Date(obj.created_at) >= prevDate) {
-          arr.push(obj);
-        }
+    if (typeof result !== 'object') {
+      return catchError(result, navigate, setAlertBox);
+    }
+    const date = new Date();
+    const prevWeek = new Date(date);
+    prevWeek.setDate(date.getDate() - 7);
+    const arr = [];
+    for (let obj of result.data.data) {
+      if (new Date(obj.created_at) >= prevWeek) {
+        arr.push(obj);
       }
-      setRecentInquiry(arr);
-    } else return catchError(result, navigate, setAlertBox);
+    }
+    setRecentInquiry(arr);
   };
 
+  //@ 9
   const getNotice = async () => {
-    const date = new Date();
-    const prevDate = new Date(date);
-    prevDate.setDate(date.getDate() - 7);
     const result = await getNoticeList(1, 100);
-    if (typeof result === 'object') {
-      const arr = [];
-      for (let obj of result.data.data) {
-        if (new Date(obj.created_at) >= prevDate) {
-          arr.push(obj);
-        }
+    if (typeof result !== 'object') {
+      return catchError(result, navigate, setAlertBox);
+    }
+    const date = new Date();
+    const prevWeek = new Date(date);
+    prevWeek.setDate(date.getDate() - 7);
+    const arr = [];
+    for (let obj of result.data.data) {
+      if (new Date(obj.created_at) >= prevWeek) {
+        arr.push(obj);
       }
-      setRecentNotice(arr);
-    } else return catchError(result, navigate, setAlertBox);
+    }
+    setRecentNotice(arr);
+    getInquiry();
   };
 
   //@ 8
   const getTextKing = async () => {
     const result = await getSearchKing('text');
-    if (typeof result === 'object') {
-      setTextKing(result?.data?.data);
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTextKing(result?.data?.data);
+    getNotice();
   };
 
   //@ 7
   const getImgKing = async () => {
     const result = await getSearchKing('img');
-    if (typeof result === 'object') {
-      setImgKing(result?.data?.data);
-      getTextKing();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgKing(result?.data?.data);
+    getTextKing();
   };
 
   //@ 6
   const getTodayImgSearch = async () => {
     const result = await getSearchCount('img_today');
-    if (typeof result === 'object') {
-      setImgToday(result?.data?.data);
-      getImgKing();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgToday(result?.data?.data);
+    getImgKing();
   };
 
   //@ 5
   const getAllImgSearch = async () => {
     const result = await getSearchCount('img_all');
-    if (typeof result === 'object') {
-      setImgAll(result?.data?.data);
-      getTodayImgSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgAll(result?.data?.data);
+    getTodayImgSearch();
   };
 
   //@ 4
   const getTodayTxtSearch = async () => {
     const result = await getSearchCount('text_today');
-    if (typeof result === 'object') {
-      setTxtToday(result?.data?.data);
-      getAllImgSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTxtToday(result?.data?.data);
+    getAllImgSearch();
   };
 
   //@ 3
   const getAllTxtSearch = async () => {
     const result = await getSearchCount('text_all');
-    if (typeof result === 'object') {
-      setTxtAll(result?.data?.data);
-      getTodayTxtSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTxtAll(result?.data?.data);
+    getTodayTxtSearch();
   };
 
   //@ 2
   const getTodayUser = async () => {
     const result = await getUserCount('month');
-    if (typeof result === 'object') {
-      setNewUser(result?.data?.data);
-      getAllTxtSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setNewUser(result?.data?.data);
+    getAllTxtSearch();
   };
 
   //@ 1
@@ -145,11 +154,12 @@ const Home = () => {
       prevent = false;
     }, 200);
     const result = await getUserCount('all');
-    if (typeof result === 'object') {
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    else {
+      setState('ok');
       setAllUser(result?.data?.data);
       getTodayUser();
-    } else {
-      return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -270,17 +280,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getAllUser();
-    document.title = '마크클라우드 관리자 > 홈';
-  }, []);
-
-  useEffect(() => {
-    if (!noticeModal || !editor) getNotice();
-  }, [noticeModal, editor]);
-
-  useEffect(() => {
-    if (!inquiryModal) getInquiry();
-  }, [inquiryModal]);
+    if (state === '') {
+      getAllUser();
+      document.title = '마크클라우드 관리자 > 홈';
+    }
+    if (state === 'ok' && (!noticeModal || !editor)) getNotice();
+    if (state === 'ok' && !inquiryModal) getInquiry();
+  }, [noticeModal, editor, inquiryModal]);
 
   return (
     <div className='container'>

@@ -18,6 +18,8 @@ import CommonModal from './CommonModal';
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
   const [byte, setByte] = useState(0);
+  const [command, setCommand] = useState('');
+  const [edit, setEdit] = useState(false);
   const [info, setInfo] = useState({
     service_code: '',
     user_name: '',
@@ -27,15 +29,13 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     status: false,
     answer: '',
   });
-  const [edit, setEdit] = useState(false);
-  const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
     answer: '',
   });
-  const [command, setCommand] = useState('');
+  const navigate = useNavigate();
 
   const getDetail = async () => {
     if (prevent) return;

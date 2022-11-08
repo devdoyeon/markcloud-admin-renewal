@@ -8,9 +8,6 @@ import cloudLogo from 'Image/logo.png';
 import CommonModal from 'Components/CommonModal';
 
 const SignIn = () => {
-  const [userId, setUserId] = useState('');
-  const [userPw, setUserPw] = useState('');
-  const [check, setCheck] = useState(false);
   const obj = {
     emptyBoth: false,
     emptyId: false,
@@ -18,6 +15,10 @@ const SignIn = () => {
     wrongId: false,
     wrongPw: { bool: false, failCount: 0 },
   };
+  const [userId, setUserId] = useState('');
+  const [userPw, setUserPw] = useState('');
+  const [check, setCheck] = useState(false);
+  const [capsLock, setCapsLock] = useState(false);
   const [formCheck, setFormCheck] = useState(obj);
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -25,7 +26,6 @@ const SignIn = () => {
     bool: false,
     answer: '',
   });
-  const [capsLock, setCapsLock] = useState(false);
 
   const navigate = useNavigate();
 

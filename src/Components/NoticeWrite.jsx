@@ -22,14 +22,14 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
-  const navigate = useNavigate();
-  const [mode, setMode] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
     answer: '',
   });
+  const [mode, setMode] = useState('');
+  const navigate = useNavigate();
 
   let prevent = false;
 

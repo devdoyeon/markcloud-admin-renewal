@@ -16,11 +16,11 @@ const Notice = () => {
     totalPage: 10,
     limit: 10,
   });
+  const [id, setId] = useState('');
+  const [modal, setModal] = useState(false);
+  const [editor, setEditor] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [id, setId] = useState('');
-  const [editor, setEditor] = useState(false);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',

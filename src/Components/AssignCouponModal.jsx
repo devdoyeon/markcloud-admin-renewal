@@ -7,13 +7,13 @@ import CommonModal from './CommonModal';
 
 const AssignCouponModal = ({ setModal, pk }) => {
   const [days, setDays] = useState('');
-  const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
     answer: '',
   });
+  const navigate = useNavigate();
 
   const outClick = e => {
     if (e.target.className === 'modal-background') {

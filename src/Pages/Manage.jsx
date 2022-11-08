@@ -16,17 +16,17 @@ const Manage = () => {
     totalPage: 10,
     limit: 10,
   });
-  const [user, setUser] = useState([]);
   const [searchTxt, setSearchTxt] = useState('');
   const [select, setSelect] = useState('all');
   const [modal, setModal] = useState(false);
-  const [pk, setPk] = useState([]);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
     answer: '',
   });
+  const [user, setUser] = useState([]);
+  const [pk, setPk] = useState([]);
 
   let prevent = false;
   const navigate = useNavigate();
@@ -135,15 +135,13 @@ const Manage = () => {
             {acc}
             <tr>
               <td className='checkBoxArea'>
-                {couponCheck() ? (
+                {couponCheck() && (
                   <input
                     type='checkbox'
                     className='coupon-check'
                     value={user_pk}
                     onChange={checkEach}
                   />
-                ) : (
-                  ''
                 )}
               </td>
               <td>{user_id}</td>

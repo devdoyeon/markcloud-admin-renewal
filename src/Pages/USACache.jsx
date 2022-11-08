@@ -16,6 +16,7 @@ const USACache = () => {
   const [value, setValue] = useState([]);
   const [arr, setArr] = useState([]);
   const [size, setSize] = useState('');
+  const [delMode, setDelMode] = useState('');
   const [modal, setModal] = useState(false);
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -23,7 +24,6 @@ const USACache = () => {
     bool: false,
     answer: '',
   });
-  const [delMode, setDelMode] = useState('');
 
   let prevent = false;
 

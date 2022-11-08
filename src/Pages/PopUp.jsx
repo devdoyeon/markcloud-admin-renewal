@@ -6,8 +6,8 @@ const PopUp = () => {
   const [due, setDue] = useState('all');
 
   useEffect(() => {
-    document.title = '마크클라우드 관리자 > 팝업 관리'
-  }, [])
+    document.title = '마크클라우드 관리자 > 팝업 관리';
+  }, []);
 
   return (
     <div className='container'>

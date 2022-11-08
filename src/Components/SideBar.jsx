@@ -6,14 +6,14 @@ import { commonModalSetting } from 'JS/common';
 import CommonModal from './CommonModal';
 
 const SideBar = () => {
-  const path = useLocation().pathname;
-  const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
     answer: '',
   });
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
 
   return (
     <>

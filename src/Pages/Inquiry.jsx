@@ -15,9 +15,6 @@ const Inquiry = () => {
     limit: 10,
   });
   const [select, setSelect] = useState('no-answer');
-  const [list, setList] = useState([]);
-  const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
   const [id, setId] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -25,6 +22,9 @@ const Inquiry = () => {
     bool: false,
     answer: '',
   });
+  const [list, setList] = useState([]);
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   let prevent = false;
 
