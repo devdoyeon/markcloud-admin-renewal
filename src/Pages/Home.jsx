@@ -49,36 +49,28 @@ const Home = () => {
   //@ 10
   const getInquiry = async () => {
     const result = await getInquiryList('no-answer', 1, 100);
-    if (typeof result !== 'object') {
+    if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox);
-    }
     const date = new Date();
     const prevWeek = new Date(date);
     prevWeek.setDate(date.getDate() - 7);
     const arr = [];
-    for (let obj of result.data.data) {
-      if (new Date(obj.created_at) >= prevWeek) {
-        arr.push(obj);
-      }
-    }
+    for (let obj of result.data.data)
+      if (new Date(obj.created_at) >= prevWeek) arr.push(obj);
     setRecentInquiry(arr);
   };
 
   //@ 9
   const getNotice = async () => {
     const result = await getNoticeList(1, 100);
-    if (typeof result !== 'object') {
+    if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox);
-    }
     const date = new Date();
     const prevWeek = new Date(date);
     prevWeek.setDate(date.getDate() - 7);
     const arr = [];
-    for (let obj of result.data.data) {
-      if (new Date(obj.created_at) >= prevWeek) {
-        arr.push(obj);
-      }
-    }
+    for (let obj of result.data.data)
+      if (new Date(obj.created_at) >= prevWeek) arr.push(obj);
     setRecentNotice(arr);
     getInquiry();
   };
