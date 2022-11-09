@@ -72,8 +72,8 @@ const Inquiry = () => {
   };
 
   useEffect(() => {
-    document.title = '마크클라우드 관리자 > 문의 사항 관리'
-  }, [])
+    document.title = '마크클라우드 관리자 > 문의 사항 관리';
+  }, []);
 
   useEffect(() => {
     if (!modal) getInquiry();
@@ -115,11 +115,11 @@ const Inquiry = () => {
         <div className='table-wrap'>
           <table>
             <colgroup>
-              <col width='50%'/>
-              <col width='10%'/>
-              <col width='10%'/>
-              <col width='10%'/>
-              <col width='20%'/>
+              <col width='50%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='20%' />
             </colgroup>
             <thead>
               <tr>
@@ -133,11 +133,7 @@ const Inquiry = () => {
             <tbody>{renderTableBody()}</tbody>
           </table>
         </div>
-        {pageInfo.totalPage > 1 ? (
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
-        ) : (
-          ''
-        )}
+        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
       {modal ? <InquiryDetail inquiryId={id} setModal={setModal} /> : ''}
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}

@@ -77,7 +77,15 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
       </>
     );
   };
-  return <ul className='pagination row'>{renderPagination()}</ul>;
+  return (
+    <>
+      {pageInfo.totalPage > 1 ? (
+        <ul className='pagination row'>{renderPagination()}</ul>
+      ) : (
+        ''
+      )}
+    </>
+  );
 };
 
 export default Pagination;
