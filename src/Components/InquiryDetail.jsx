@@ -5,7 +5,7 @@ import {
   BsFillQuestionCircleFill,
   BsExclamationCircleFill,
 } from 'react-icons/bs';
-import { serviceCodeToString } from 'JS/array';
+import CommonModal from './CommonModal';
 import {
   byteCount,
   catchError,
@@ -13,7 +13,7 @@ import {
   commonModalSetting,
 } from 'JS/common';
 import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
-import CommonModal from './CommonModal';
+import { serviceCodeToString } from 'JS/array';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;

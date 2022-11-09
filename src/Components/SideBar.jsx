@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import CommonModal from './CommonModal';
+import { commonModalSetting } from 'JS/common';
 import { removeCookie } from 'JS/cookie';
 import cloudLogo from 'Image/logo.png';
-import { commonModalSetting } from 'JS/common';
-import CommonModal from './CommonModal';
 
 const SideBar = () => {
   const [alertBox, setAlertBox] = useState({

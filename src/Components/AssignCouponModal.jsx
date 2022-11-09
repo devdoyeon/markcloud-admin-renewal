@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
-import { applyToken } from 'JS/API';
-import { catchError, commonModalSetting, enterFn } from 'JS/common';
 import CommonModal from './CommonModal';
+import { catchError, commonModalSetting, enterFn } from 'JS/common';
+import { applyToken } from 'JS/API';
 
 const AssignCouponModal = ({ setModal, pk }) => {
   const [days, setDays] = useState('');

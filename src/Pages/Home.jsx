@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
-import SideBar from 'Components/SideBar';
 import { useNavigate } from 'react-router-dom';
+import { FaCrown } from 'react-icons/fa';
+import { MdOutlineMoodBad } from 'react-icons/md';
+import SideBar from 'Components/SideBar';
+import NoticeDetail from 'Components/NoticeDetail';
+import InquiryDetail from 'Components/InquiryDetail';
+import NoticeWrite from 'Components/NoticeWrite';
+import CommonModal from 'Components/CommonModal';
+import { catchError } from 'JS/common';
 import {
   getSearchCount,
   getUserCount,
@@ -8,13 +15,6 @@ import {
   getInquiryList,
   getNoticeList,
 } from 'JS/API';
-import { catchError } from 'JS/common';
-import { FaCrown } from 'react-icons/fa';
-import { MdOutlineMoodBad } from 'react-icons/md';
-import NoticeDetail from 'Components/NoticeDetail';
-import InquiryDetail from 'Components/InquiryDetail';
-import NoticeWrite from 'Components/NoticeWrite';
-import CommonModal from 'Components/CommonModal';
 
 const Home = () => {
   const [newUser, setNewUser] = useState('');

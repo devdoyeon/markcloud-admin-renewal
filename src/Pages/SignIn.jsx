@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import $ from 'jquery';
+import CommonModal from 'Components/CommonModal';
 import { signIn } from 'JS/API';
 import { setCookie, getCookie } from 'JS/cookie';
 import { catchError, commonModalSetting, enterFn } from 'JS/common';
-import $ from 'jquery';
 import cloudLogo from 'Image/logo.png';
-import CommonModal from 'Components/CommonModal';
 
 const SignIn = () => {
   const obj = {

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
-import { getNoticeDetail, noticeEdit, noticeWrite } from 'JS/API';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CommonModal from './CommonModal';
 import {
   catchError,
   byteCount,
   changeState,
   commonModalSetting,
 } from 'JS/common';
-import CommonModal from './CommonModal';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { getNoticeDetail, noticeEdit, noticeWrite } from 'JS/API';
 
 const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({

@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import { getInquiryList } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
-import { catchError, changeState } from 'JS/common';
 import InquiryDetail from 'Components/InquiryDetail';
 import CommonModal from 'Components/CommonModal';
+import { catchError, changeState } from 'JS/common';
+import { getInquiryList } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const Inquiry = () => {
   const [pageInfo, setPageInfo] = useState({

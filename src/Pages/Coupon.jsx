@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import CommonModal from 'Components/CommonModal';
-import { getCouponList } from 'JS/API';
 import { catchError, changeState } from 'JS/common';
+import { getCouponList } from 'JS/API';
 import { statusArr } from 'JS/array';
 
 const Coupon = () => {

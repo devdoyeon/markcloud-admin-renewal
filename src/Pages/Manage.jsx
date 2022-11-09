@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import $ from 'jquery';
-import { getUserList, searchUser } from 'JS/API';
+import SideBar from 'Components/SideBar';
+import Pagination from 'Components/Pagination';
+import AssignCouponModal from 'Components/AssignCouponModal';
+import CommonModal from 'Components/CommonModal';
 import {
   catchError,
   changeState,
   commonModalSetting,
   enterFn,
 } from 'JS/common';
+import { getUserList, searchUser } from 'JS/API';
 import { statusArr } from 'JS/array';
-import SideBar from 'Components/SideBar';
-import Pagination from 'Components/Pagination';
-import AssignCouponModal from 'Components/AssignCouponModal';
-import CommonModal from 'Components/CommonModal';
 
 const Manage = () => {
   const [pageInfo, setPageInfo] = useState({

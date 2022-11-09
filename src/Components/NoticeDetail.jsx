@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getNoticeDetail, noticeDelete } from 'JS/API';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
-import { serviceCodeToString } from 'JS/array';
-import { byteCount, catchError, commonModalSetting } from 'JS/common';
 import CommonModal from './CommonModal';
+import { byteCount, catchError, commonModalSetting } from 'JS/common';
+import { getNoticeDetail, noticeDelete } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({

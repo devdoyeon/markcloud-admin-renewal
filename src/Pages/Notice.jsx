@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import { getNoticeList, noticeMultiDelete } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
-import { catchError, changeState, commonModalSetting } from 'JS/common';
 import NoticeDetail from 'Components/NoticeDetail';
 import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
+import { catchError, changeState, commonModalSetting } from 'JS/common';
+import { getNoticeList, noticeMultiDelete } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const Notice = () => {
   const [pageInfo, setPageInfo] = useState({

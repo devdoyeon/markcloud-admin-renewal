@@ -1,6 +1,6 @@
-import errorIcon from 'Image/error_icon.png';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import errorIcon from 'Image/error_icon.png';
 
 const ErrorPage = () => {
   const navigate = useNavigate();

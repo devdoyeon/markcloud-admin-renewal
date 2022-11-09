@@ -1,9 +1,21 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
-export const enterFn = (e, okFn) => {
-  if (e.key === 'Enter') okFn();
-  else return;
+export const catchError = async (result, navigate, setModal) => {
+  if (
+    result === 'duplicateLogin' ||
+    result === 'tokenError' ||
+    result === 'tokenExpired' ||
+    result === 'accessDenied'
+  ) {
+    removeCookie('myToken');
+    removeCookie('rfToken');
+    navigate('/');
+    return alert(errorList[result]);
+  } else if (result === 'renderErrorPage') navigate('/error');
+  else if (result === 'notFound') navigate('/not-found');
+  else if (result === 'AccessTokenExpired') return;
+  else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
 };
 
 export const changeState = (setState, column, value) => {
@@ -12,6 +24,11 @@ export const changeState = (setState, column, value) => {
     clone[column] = value;
     return clone;
   });
+};
+
+export const enterFn = (e, okFn) => {
+  if (e.key === 'Enter') okFn();
+  else return;
 };
 
 export const commonModalSetting = (
@@ -59,21 +76,4 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
       return changeState(setByte, column, byte);
     }
   }
-};
-
-export const catchError = async (result, navigate, setModal) => {
-  if (
-    result === 'duplicateLogin' ||
-    result === 'tokenError' ||
-    result === 'tokenExpired' ||
-    result === 'accessDenied'
-  ) {
-    removeCookie('myToken');
-    removeCookie('rfToken');
-    navigate('/');
-    return alert(errorList[result]);
-  } else if (result === 'renderErrorPage') navigate('/error');
-  else if (result === 'notFound') navigate('/not-found');
-  else if (result === 'AccessTokenExpired') return;
-  else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
 };
