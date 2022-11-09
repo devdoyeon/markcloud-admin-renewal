@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from 'JS/API';
 import { setCookie, getCookie } from 'JS/cookie';
-import { catchError, commonModalSetting } from 'JS/common';
+import { catchError, commonModalSetting, enterFn } from 'JS/common';
 import $ from 'jquery';
 import cloudLogo from 'Image/logo.png';
 import CommonModal from 'Components/CommonModal';
@@ -82,11 +82,6 @@ const SignIn = () => {
     }
   };
 
-  const enterFn = e => {
-    if (e.keyCode === 13) login();
-    else return;
-  };
-
   useEffect(() => {
     //& 토큰을 가지고 있으면 홈으로 푸시
     if (getCookie('myToken')) navigate('/home');
@@ -154,7 +149,7 @@ const SignIn = () => {
             className='input_id'
             value={userId}
             onKeyDown={e => {
-              enterFn(e);
+              if (!alertBox.bool) enterFn(e, login);
               setCapsLock(e.getModifierState('CapsLock'));
             }}
             onChange={e => setUserId(e.target.value)}
@@ -167,12 +162,16 @@ const SignIn = () => {
             value={userPw}
             onChange={e => setUserPw(e.target.value)}
             onKeyDown={e => {
-              enterFn(e);
+              if (!alertBox.bool) enterFn(e, login);
               setCapsLock(e.getModifierState('CapsLock'));
             }}
           />
         </div>
-        {capsLock && <p><span>CapsLock</span>이 켜져 있습니다.</p>}
+        {capsLock && (
+          <p>
+            <span>CapsLock</span>이 켜져 있습니다.
+          </p>
+        )}
         <div className='remember-id'>
           <input
             type='checkbox'

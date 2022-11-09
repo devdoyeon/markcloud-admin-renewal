@@ -3,7 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import $ from 'jquery';
 import { getUserList, searchUser } from 'JS/API';
-import { catchError, changeState, commonModalSetting } from 'JS/common';
+import {
+  catchError,
+  changeState,
+  commonModalSetting,
+  enterFn,
+} from 'JS/common';
 import { statusArr } from 'JS/array';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
@@ -181,10 +186,6 @@ const Manage = () => {
     );
   };
 
-  const enterFn = e => {
-    if (e.keyCode === 13) userSearch();
-  };
-
   useEffect(() => {
     document.title = '마크클라우드 관리자 > 회원 관리';
   }, []);
@@ -227,9 +228,11 @@ const Manage = () => {
               placeholder='검색어를 입력하세요.'
               value={searchTxt}
               onChange={e => setSearchTxt(e.target.value)}
-              onKeyDown={e => enterFn(e)}
+              onKeyDown={e => {
+                if (!alertBox.bool) enterFn(e, userSearch);
+              }}
             />
-            <button className='searchBtn' onClick={() => userSearch()}>
+            <button className='searchBtn' onClick={userSearch}>
               검색
               <span className='searchIcon'>
                 <FaSearch />

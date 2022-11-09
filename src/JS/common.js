@@ -1,6 +1,11 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
+export const enterFn = (e, okFn) => {
+  if (e.key === 'Enter') okFn();
+  else return;
+};
+
 export const changeState = (setState, column, value) => {
   setState(prev => {
     const clone = { ...prev };

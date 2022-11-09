@@ -53,9 +53,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
         <>
           {acc}
           <li
-            onClick={() => {
-              changePage(nowPage);
-            }}
+            onClick={() => changePage(nowPage)}
             className={nowPage === page ? 'now' : ''}>
             {nowPage}
           </li>

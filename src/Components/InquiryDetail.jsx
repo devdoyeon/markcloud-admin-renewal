@@ -190,7 +190,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                   <div>
                     {edit ? (
                       <>
-                        <button onClick={() => editAnswer()}>답변 완료</button>
+                        <button onClick={editAnswer}>답변 완료</button>
                         <button
                           className='btn'
                           onClick={() => {
@@ -242,7 +242,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <div className='viewBytes'>
                   <span>{byte}</span>/3000bytes
                 </div>
-                <button className='register-btn' onClick={() => applyAnswer()}>
+                <button className='register-btn' onClick={applyAnswer}>
                   등록
                 </button>
               </div>
