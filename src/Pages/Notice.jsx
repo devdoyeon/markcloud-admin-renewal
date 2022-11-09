@@ -227,8 +227,7 @@ const Notice = () => {
           failFn={() => {
             $('.notice-all-check').prop('checked', false);
             $('.notice-check').prop('checked', false);
-            setIdArr([]);
-            return;
+            return setIdArr([]);
           }}
         />
       )}

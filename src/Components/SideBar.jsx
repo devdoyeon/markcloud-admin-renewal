@@ -82,8 +82,7 @@ const SideBar = () => {
           onClick={() => {
             removeCookie('myToken');
             removeCookie('rfToken');
-            navigate('/');
-            return;
+            return navigate('/');
           }}>
           로그아웃
         </div>

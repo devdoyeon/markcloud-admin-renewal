@@ -44,16 +44,11 @@ const SignIn = () => {
 
   const login = async () => {
     //@ 아이디, 비밀번호 Input이 비어 있는지 확인
-    if (userId.trim() === '' && userPw.trim() === '') {
-      checkForm('emptyBoth', true);
-      return;
-    } else if (userId.trim() === '') {
-      checkForm('emptyId', true);
-      return;
-    } else if (userPw.trim() === '') {
-      checkForm('emptyPw', true);
-      return;
-    }
+    if (userId.trim() === '' && userPw.trim() === '')
+      return checkForm('emptyBoth', true);
+    else if (userId.trim() === '') return checkForm('emptyId', true);
+    else if (userPw.trim() === '') return checkForm('emptyPw', true);
+
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
@@ -93,45 +88,19 @@ const SignIn = () => {
   }, []);
 
   useEffect(() => {
-    if (formCheck.emptyBoth) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디와 비밀번호를 입력해 주세요.'
-      );
-    } else if (formCheck.emptyId) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디를 입력해 주세요.'
-      );
-    } else if (formCheck.emptyPw) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '비밀번호를 입력해 주세요.'
-      );
-    } else if (formCheck.wrongId) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`
-      );
-      setUserId('')
-      setUserPw('')
+    let context;
+    if (formCheck.emptyBoth) context = '아이디와 비밀번호를 입력해 주세요.';
+    else if (formCheck.emptyId) context = '아이디를 입력해 주세요.';
+    else if (formCheck.emptyPw) context = '비밀번호를 입력해 주세요.';
+    else if (formCheck.wrongId) {
+      context = `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`;
+      setUserId('');
+      setUserPw('');
     } else if (formCheck.wrongPw.bool) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`
-      );
-      setUserPw('')
+      context = `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`;
+      setUserPw('');
     }
+    commonModalSetting(setAlertBox, true, 'alert', context);
   }, [formCheck]);
 
   return (

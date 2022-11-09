@@ -208,9 +208,9 @@ const Manage = () => {
                   return clone;
                 });
               }}>
-              <option value='10'>10개씩 보기</option>
-              <option value='30'>30개씩 보기</option>
-              <option value='50'>50개씩 보기</option>
+              <option value='10'>10명씩 보기</option>
+              <option value='30'>30명씩 보기</option>
+              <option value='50'>50명씩 보기</option>
             </select>
             <select value={select} onChange={e => setSelect(e.target.value)}>
               <option value='all'>전체 보기</option>
