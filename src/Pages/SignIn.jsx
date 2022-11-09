@@ -121,6 +121,8 @@ const SignIn = () => {
         'alert',
         `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`
       );
+      setUserId('')
+      setUserPw('')
     } else if (formCheck.wrongPw.bool) {
       commonModalSetting(
         setAlertBox,
@@ -128,6 +130,7 @@ const SignIn = () => {
         'alert',
         `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`
       );
+      setUserPw('')
     }
   }, [formCheck]);
 
