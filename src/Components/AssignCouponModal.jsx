@@ -11,7 +11,6 @@ const AssignCouponModal = ({ setModal, pk }) => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const navigate = useNavigate();
 
@@ -31,7 +30,6 @@ const AssignCouponModal = ({ setModal, pk }) => {
         return commonModalSetting(
           setAlertBox,
           true,
-          '',
           'alert',
           '이벤트 기간은<br/>최소 1일에서 최대 30일입니다.'
         );

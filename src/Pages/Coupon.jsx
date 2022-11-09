@@ -18,7 +18,6 @@ const Coupon = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const navigate = useNavigate();
   let prevent = false;

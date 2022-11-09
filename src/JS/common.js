@@ -34,7 +34,6 @@ export const enterFn = (e, okFn) => {
 export const commonModalSetting = (
   setAlertBox,
   bool,
-  answer,
   mode,
   context
 ) => {
@@ -43,7 +42,6 @@ export const commonModalSetting = (
       mode: mode,
       context: context,
       bool: bool,
-      answer: '',
     });
   } else {
     setAlertBox({
@@ -52,7 +50,6 @@ export const commonModalSetting = (
       bool: bool,
     });
   }
-  return answer;
 };
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {

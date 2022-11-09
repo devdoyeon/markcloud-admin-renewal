@@ -20,7 +20,6 @@ const Inquiry = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const [list, setList] = useState([]);
   const [modal, setModal] = useState(false);

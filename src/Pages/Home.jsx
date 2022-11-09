@@ -40,7 +40,6 @@ const Home = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
 
   const navigate = useNavigate();

@@ -28,7 +28,6 @@ const Manage = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const [user, setUser] = useState([]);
   const [pk, setPk] = useState([]);
@@ -54,7 +53,6 @@ const Manage = () => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '검색어를 입력해 주세요.'
       );
@@ -62,7 +60,6 @@ const Manage = () => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '검색하실 종류를 선택해 주세요.'
       );
@@ -245,7 +242,6 @@ const Manage = () => {
                   return commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'alert',
                     '쿠폰을 발급할 대상을 선택해 주세요.'
                   );

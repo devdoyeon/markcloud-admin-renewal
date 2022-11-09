@@ -10,7 +10,6 @@ const SideBar = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const path = useLocation().pathname;
   const navigate = useNavigate();
@@ -71,7 +70,6 @@ const SideBar = () => {
               commonModalSetting(
                 setAlertBox,
                 true,
-                '',
                 'alert',
                 '서비스 준비 중입니다.'
               )

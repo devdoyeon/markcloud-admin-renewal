@@ -26,7 +26,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const [mode, setMode] = useState('');
   const navigate = useNavigate();
@@ -61,7 +60,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '성공적으로 수정 되었습니다.'
       );
@@ -75,7 +73,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '제목과 내용을 입력해 주세요.'
       );
@@ -83,7 +80,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '제목을 입력해 주세요.'
       );
@@ -91,7 +87,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '내용을 입력해 주세요.'
       );
@@ -168,7 +163,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                   commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'confirm',
                     `정말 취소하시겠습니까?<br />지금까지 ${
                       mode === 'edit' ? '수정' : '작성'

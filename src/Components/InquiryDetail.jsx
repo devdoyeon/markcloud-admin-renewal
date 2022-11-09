@@ -27,13 +27,11 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     title: '',
     context: '',
     status: false,
-    answer: '',
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const navigate = useNavigate();
 
@@ -71,7 +69,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '답변을 작성해 주세요.'
       );
@@ -88,7 +85,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '답변을 작성해 주세요.'
       );
@@ -198,7 +194,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                             commonModalSetting(
                               setAlertBox,
                               true,
-                              '',
                               'confirm',
                               '정말 취소하시겠습니까?<br/>지금까지 수정된 내용은 반영되지 않습니다.'
                             );
@@ -215,7 +210,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                         commonModalSetting(
                           setAlertBox,
                           true,
-                          '',
                           'confirm',
                           '답변을 삭제하시면 다시 복구할 수 없습니다.<br/>답변을 삭제하시겠습니까?'
                         );

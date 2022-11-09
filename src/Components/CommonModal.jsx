@@ -17,12 +17,12 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
         if (modal.mode === 'confirm') {
           okFn();
           commonModalSetting(setModal, false);
-        } else commonModalSetting(setModal, false, false);
+        } else commonModalSetting(setModal, false);
       } else if (e.key === 'Escape') {
         if (modal.mode === 'confirm') {
           failFn();
           commonModalSetting(setModal, false);
-        } else commonModalSetting(setModal, false, false);
+        } else commonModalSetting(setModal, false);
       } else return;
     };
   }, []);
@@ -40,7 +40,7 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
               if (modal.mode === 'confirm') {
                 okFn();
                 commonModalSetting(setModal, false);
-              } else commonModalSetting(setModal, false, false);
+              } else commonModalSetting(setModal, false);
             }}>
             확인
           </button>

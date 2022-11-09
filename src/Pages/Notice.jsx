@@ -25,7 +25,6 @@ const Notice = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
 
   let prevent = false;
@@ -152,14 +151,12 @@ const Notice = () => {
                   return commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'alert',
                     '삭제할 글을 선택해 주세요.'
                   );
                 commonModalSetting(
                   setAlertBox,
                   true,
-                  '',
                   'confirm',
                   '글을 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
                 );
@@ -217,7 +214,6 @@ const Notice = () => {
               commonModalSetting(
                 setAlertBox,
                 true,
-                '',
                 'alert',
                 '삭제되었습니다.'
               );

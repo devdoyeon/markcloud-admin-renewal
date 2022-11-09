@@ -23,7 +23,6 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const navigate = useNavigate();
   let prevent = false;
@@ -133,7 +132,6 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
                   commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'confirm',
                     '해당 공지를 삭제하시겠습니까?'
                   )

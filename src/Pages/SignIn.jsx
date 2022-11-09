@@ -24,7 +24,6 @@ const SignIn = () => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
 
   const navigate = useNavigate();
@@ -98,7 +97,6 @@ const SignIn = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '아이디와 비밀번호를 입력해 주세요.'
       );
@@ -106,7 +104,6 @@ const SignIn = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '아이디를 입력해 주세요.'
       );
@@ -114,7 +111,6 @@ const SignIn = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '비밀번호를 입력해 주세요.'
       );
@@ -122,7 +118,6 @@ const SignIn = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`
       );
@@ -130,7 +125,6 @@ const SignIn = () => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`
       );
