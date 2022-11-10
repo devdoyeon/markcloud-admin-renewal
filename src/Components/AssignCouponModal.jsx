@@ -67,7 +67,7 @@ const AssignCouponModal = ({ setModal, pk }) => {
               onKeyDown={e => enterFn(e, couponIssue)}
               maxLength={2}
             />
-            <p>미입력 시 30일로 발급 됩니다.</p>
+            <p>미입력 시 30일로 발급됩니다.</p>
             <div className='footer'>
               <div>
                 <button onClick={couponIssue}>발급</button>
