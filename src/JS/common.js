@@ -15,7 +15,7 @@ export const catchError = async (result, navigate, setModal) => {
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
   else if (result === 'AccessTokenExpired') return;
-  else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
+  else commonModalSetting(setModal, true, 'alert', errorList[result]);
 };
 
 export const changeState = (setState, column, value) => {
