@@ -27,6 +27,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     title: '',
     context: '',
     status: false,
+    answer: '',
   });
   const [alertBox, setAlertBox] = useState({
     mode: '',
