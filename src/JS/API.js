@@ -292,11 +292,11 @@ export const getCacheList = async () => {
   }
 };
 
-// 캐시 JSON 지우기
-export const removeCacheJson = async () => {
+// 캐시 사이즈 조회
+export const getCacheSize = async () => {
   try {
     return await axios.get(
-      '/us/system/manual_removal_json?passcode=kingsan',
+      '/us/system/get_cache_size?passcode=kingsan',
       header()
     );
   } catch (error) {
@@ -313,11 +313,11 @@ export const removeCache = async () => {
   }
 };
 
-// 캐시 사이즈 조회
-export const getCacheSize = async () => {
+// 캐시 JSON 지우기
+export const removeCacheJson = async () => {
   try {
     return await axios.get(
-      '/us/system/get_cache_size?passcode=kingsan',
+      '/us/system/manual_removal_json?passcode=kingsan',
       header()
     );
   } catch (error) {
