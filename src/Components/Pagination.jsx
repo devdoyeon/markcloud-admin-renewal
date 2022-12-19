@@ -38,7 +38,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
     }
     setPageGroup(arr);
   };
-  // 페이지를 입력하여 이동할 때 사용 하는 함수
+
   const changePara = direction => {
     if (!direction) return;
     changePage(
@@ -55,7 +55,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   }, [pageInfo]);
 
   const renderPagination = () => {
-    const prevCheck = page > 10;
+    const prevCheck = page >= 11;
     const middle = pageGroup.reduce((acc, nowPage) => {
       return (
         <>
@@ -68,24 +68,19 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
         </>
       );
     }, <></>);
-    const nextCheck = page < totalPage;
+    const nextCheck =
+      totalPage >= 11 ? (pageGroup.includes(totalPage) ? false : true) : true;
     return (
       <>
         <li
           onClick={() => changePara(prevCheck ? 'prev' : null)}
-          className={`prev ${page >= 11 ? 'active' : 'block'}`}>
+          className={`prev ${prevCheck ? 'active' : 'block'}`}>
           <GrFormPrevious />
         </li>
         {middle}
         <li
           onClick={() => changePara(nextCheck ? 'next' : null)}
-          className={`next ${
-            totalPage >= 11
-              ? pageGroup.includes(totalPage)
-                ? 'block'
-                : 'active'
-              : 'block'
-          }`}>
+          className={`next ${nextCheck ? 'active' : 'block'}`}>
           <GrFormNext />
         </li>
       </>
