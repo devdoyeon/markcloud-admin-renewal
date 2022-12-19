@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import { changeState } from 'JS/common';
 
+//= 페이지네이션 적용 시 스타일 수정 필요
+
 const Pagination = ({ pageInfo, setPageInfo }) => {
   const [pageGroup, setPageGroup] = useState([]);
   const { totalPage, page } = pageInfo;
-
   // 부모컴포넌트의 종류에 따라 페이지 변경 함수가 달리 작용 됨
   const changePage = p => {
     if (page === p) return;
@@ -14,19 +15,20 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   // 페이지 그룹 다르게 보이게 함
   const changePageGroup = p => {
     const arr = [];
-    let first = p - 4;
-    let last = p + 4;
-    // 현재 페이지가 5보다 작을 때
-    if (p <= 5) {
-      first = 1;
-      last = 9;
-    }
-    // 현재 페이지가 totalPage에서 4를 뺀 값보다 크거나 같을 때
-    if (p >= totalPage - 4) {
-      first = totalPage - 8;
-      last = totalPage;
-    }
-    // totalPage가 10보다 작을 때
+    let first =
+      p % 10 === 0
+        ? p - 9
+        : parseInt(p / 10) === 0
+        ? 1
+        : parseInt(p / 10) * 10 + 1;
+    let last =
+      p % 10 === 0
+        ? p
+        : parseInt(p / 10) === 0
+        ? 10
+        : parseInt(p / 10) * 10 + 10 > totalPage
+        ? totalPage
+        : parseInt(p / 10) * 10 + 10;
     if (totalPage < 10) {
       first = 1;
       last = totalPage;
@@ -39,7 +41,13 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   // 페이지를 입력하여 이동할 때 사용 하는 함수
   const changePara = direction => {
     if (!direction) return;
-    changePage(direction === 'prev' ? page - 1 : page + 1);
+    changePage(
+      direction === 'prev'
+        ? page - 10
+        : page + 10 > totalPage
+        ? totalPage
+        : page + 10
+    );
   };
 
   useEffect(() => {
@@ -47,7 +55,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
   }, [pageInfo]);
 
   const renderPagination = () => {
-    const prevCheck = page > 1;
+    const prevCheck = page > 10;
     const middle = pageGroup.reduce((acc, nowPage) => {
       return (
         <>
@@ -65,13 +73,19 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
       <>
         <li
           onClick={() => changePara(prevCheck ? 'prev' : null)}
-          className={`prev ${page === 1 ? 'block' : 'active'}`}>
+          className={`prev ${page >= 11 ? 'active' : 'block'}`}>
           <GrFormPrevious />
         </li>
         {middle}
         <li
           onClick={() => changePara(nextCheck ? 'next' : null)}
-          className={`next ${totalPage === page ? 'block' : 'active'}`}>
+          className={`next ${
+            totalPage >= 11
+              ? pageGroup.includes(totalPage)
+                ? 'block'
+                : 'active'
+              : 'block'
+          }`}>
           <GrFormNext />
         </li>
       </>
