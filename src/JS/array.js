@@ -6,7 +6,8 @@ export const errorList = {
   duplicateLogin: '중복 로그인 되었습니다.\n다시 로그인해 주세요.',
   refresh: '새로 고침 후 다시 시도해 주세요.',
   addDays: '날짜 입력 형식이 잘못되었습니다.\n다시 입력해 주세요.',
-  dataPasses: '이벤트 쿠폰 발급 가능 기한이 초과되었습니다.\n다시 입력해 주세요.',
+  dataPasses:
+    '이벤트 쿠폰 발급 가능 기한이 초과되었습니다.\n다시 입력해 주세요.',
 };
 
 export const statusArr = {
@@ -21,5 +22,6 @@ export const statusArr = {
 
 export const serviceCodeToString = {
   100: '마크클라우드',
-  110: '마크뷰'
-}
+  110: '마크뷰',
+  120: '그룹웨어',
+};

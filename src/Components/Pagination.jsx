@@ -69,7 +69,7 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
       );
     }, <></>);
     const nextCheck =
-      totalPage >= 11 ? (pageGroup.includes(totalPage) ? false : true) : true;
+      totalPage >= 11 ? (pageGroup.includes(totalPage) ? false : true) : false;
     return (
       <>
         <li
