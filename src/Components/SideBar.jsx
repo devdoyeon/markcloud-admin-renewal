@@ -76,6 +76,17 @@ const SideBar = () => {
             }>
             마크링크
           </li>
+          <li
+            onClick={() =>
+              commonModalSetting(
+                setAlertBox,
+                true,
+                'alert',
+                '서비스 준비 중입니다.'
+              )
+            }>
+            마크그룹웨어
+          </li>
         </ul>
         <div
           className='logoutBtn'
