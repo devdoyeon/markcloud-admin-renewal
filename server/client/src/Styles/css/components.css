@@ -1,0 +1,359 @@
+@charset "UTF-8";
+.signIn {
+  background-color: #434343;
+}
+.signIn .signInBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 4px solid white;
+  padding: 50px;
+  min-width: 400px;
+  min-height: 500px;
+}
+.signIn .signInBox h2 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: white;
+  letter-spacing: 3px;
+}
+.signIn .signInBox > .form {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.signIn .signInBox > .form > input {
+  width: 100%;
+  height: 46px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 5px;
+  color: white;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  transition: all 0.3s;
+}
+.signIn .signInBox > .form > input::placeholder {
+  color: white;
+}
+.signIn .signInBox > .form > input:focus {
+  background-color: rgba(21, 23, 26, 0.4);
+  transition: all 0.3s;
+}
+.signIn .signInBox > .form :first-child {
+  margin: 30px 0 15px;
+}
+.signIn .signInBox p {
+  color: white;
+  margin-bottom: 20px;
+  margin-top: -15px;
+  width: 100%;
+}
+.signIn .signInBox p span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.signIn .signInBox > .remember-id {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+.signIn .signInBox > .remember-id label {
+  width: 35%;
+  display: block;
+  cursor: pointer;
+  color: white;
+  position: relative;
+  z-index: 2;
+  transition: color 200ms ease-in;
+  overflow: hidden;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.signIn .signInBox > .remember-id label:before {
+  width: 16px;
+  height: 16px;
+  content: "";
+  border: 2px solid #d1d7dc;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+  background-position: -1px -1px;
+  border-radius: 15px;
+  z-index: 2;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-8px) translateX(25px);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.signIn .signInBox > .remember-id input:checked ~ label {
+  color: #fff;
+}
+.signIn .signInBox > .remember-id input:checked ~ label:before {
+  background-color: #3c8fef;
+  border-color: #3c8fef;
+}
+.signIn .signInBox > .remember-id input {
+  position: absolute;
+  transform: translateY(-50%);
+  visibility: hidden;
+}
+.signIn .signInBox hr {
+  margin: 20px 0;
+  width: 100%;
+}
+.signIn .signInBox > span {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  border-radius: 10px;
+}
+.signIn .signInBox > span > p {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  display: inline-block;
+}
+.signIn .signInBox button {
+  width: 100%;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 7px;
+  color: white;
+  padding: 10px 0;
+  transition: all 0.3s;
+  border: 2px solid white;
+  box-shadow: 0px 0px 1px white;
+}
+.signIn .signInBox button:hover {
+  background-color: rgba(21, 23, 26, 0.4);
+  transition: all 0.3s;
+  box-shadow: 0px 0px 4px white;
+}
+
+.dashboard > .row {
+  width: 100%;
+  align-items: flex-start;
+}
+.dashboard > .row:nth-child(2) > div > div {
+  max-height: 260px;
+  overflow: auto;
+}
+.dashboard > .row > div {
+  flex: 1;
+  background-color: white;
+  margin: 10px;
+  height: auto;
+  min-height: 270px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px #858585;
+}
+.dashboard > .row > div .title-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  margin-top: 0;
+}
+.dashboard > .row > div .title-wrap h2 {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: #434343;
+}
+.dashboard > .row > div .title-wrap p {
+  font-size: 14px;
+  color: #333333;
+}
+.dashboard > .row > div .title-wrap p::before {
+  color: #f74848;
+}
+.dashboard > .row > div > div {
+  margin-top: 10px;
+  overflow: auto;
+  border: 1px solid #cdcdcd;
+}
+.dashboard > .row > div > div.none-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+.dashboard > .row > div > div.none-list > svg {
+  font-size: 100px;
+  color: #dddddd;
+}
+.dashboard > .row > div > div.table-wrap {
+  max-height: 200px;
+}
+.dashboard > .row > div > div.table-wrap > table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+.dashboard > .row > div > div.table-wrap > table thead {
+  background-color: #f5f5f5;
+}
+.dashboard > .row > div > div.table-wrap > table tr:last-child > td {
+  border-bottom: none;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th,
+.dashboard > .row > div > div.table-wrap > table tr td {
+  border-bottom: 1px solid #cdcdcd;
+  padding: 5px 0;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th .crown,
+.dashboard > .row > div > div.table-wrap > table tr td .crown {
+  font-size: 30px;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th .crown.rank1,
+.dashboard > .row > div > div.table-wrap > table tr td .crown.rank1 {
+  color: #ffd700;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th .crown.rank2,
+.dashboard > .row > div > div.table-wrap > table tr td .crown.rank2 {
+  color: #c0c0c0;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th .crown.rank3,
+.dashboard > .row > div > div.table-wrap > table tr td .crown.rank3 {
+  color: #a0522d;
+}
+.dashboard > .row > div > div.table-wrap > table tr > th .crown.rank4, .dashboard > .row > div > div.table-wrap > table tr > th .crown.rank5,
+.dashboard > .row > div > div.table-wrap > table tr td .crown.rank4,
+.dashboard > .row > div > div.table-wrap > table tr td .crown.rank5 {
+  color: #434343;
+}
+.dashboard > .row > div > div.table-wrap > table tr th {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.dashboard > .row > div > div.king {
+  min-height: 200px;
+  height: auto;
+}
+.dashboard > .row > div > div.king > table tr:last-child {
+  border-bottom: 1px solid #dddddd;
+}
+.dashboard > .row > div > div.count-wrap {
+  height: 200px;
+}
+.dashboard > .row > div > div.count-wrap div {
+  font-size: 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.dashboard > .row > div > div.count-wrap div.count {
+  font-size: 50px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.dashboard > .row > div > div.count-wrap div.count > svg {
+  transform: translateY(5px);
+}
+
+.manage .table-wrap > table {
+  width: 100%;
+}
+.manage .table-wrap > table .checkBoxArea {
+  padding: 10px;
+}
+.manage .table-wrap > table th,
+.manage .table-wrap > table td {
+  padding: 20px;
+}
+.manage .table-wrap > table th > .couponBtn,
+.manage .table-wrap > table td > .couponBtn {
+  background-color: #333333;
+  padding: 5px 20px;
+  color: white;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 6px;
+}
+.manage .table-wrap > table th.user,
+.manage .table-wrap > table td.user {
+  color: #3172cc;
+}
+.manage .table-wrap > table th.resign,
+.manage .table-wrap > table td.resign {
+  color: #de5d60;
+}
+
+.notice .topBar > div > button:nth-child(2) {
+  border-right: 1px solid white;
+}
+.notice .topBar > div > button:nth-child(2) a {
+  color: white;
+}
+
+.usa-cache .topBar > div :first-child {
+  margin-right: 10px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.usa-cache .topBar > div :first-child > span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: #3172cc;
+}
+.usa-cache .topBar > div :nth-child(2) {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: 1px solid white;
+}
+.usa-cache .table-wrap tbody > tr > td.arr {
+  cursor: pointer;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  color: #3172cc;
+}
+
+.empty-cache {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  background-color: #f5f5f5;
+  font-size: 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+
+.loading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100vw - 230px);
+  height: 100vh;
+}
+.loading > img {
+  position: absolute;
+}
+
+@media screen and (max-width: 1440px) {
+  .dashboard > .row .title-wrap h2 {
+    font-size: 17px;
+  }
+  .dashboard > .row .title-wrap p {
+    font-size: 12px !important;
+  }
+  .manage .table-wrap > table thead th,
+.manage .table-wrap > table thead td,
+.manage .table-wrap tbody th,
+.manage .table-wrap tbody td {
+    white-space: nowrap;
+  }
+}
+@media screen and (max-width: 480px) {
+  .signIn .signInBox {
+    width: 80vw;
+    min-width: 0px;
+  }
+  .signIn .signInBox > img {
+    width: 90%;
+  }
+  .signIn .signInBox > div > label {
+    width: 55% !important;
+  }
+}
+@media screen and (max-width: 374px) {
+  .signIn .signInBox > div > label {
+    width: 100% !important;
+  }
+}
