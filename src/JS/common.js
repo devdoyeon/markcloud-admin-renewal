@@ -1,6 +1,23 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
+export const catchError = async (result, navigate, setModal) => {
+  if (
+    result === 'duplicateLogin' ||
+    result === 'tokenError' ||
+    result === 'tokenExpired' ||
+    result === 'accessDenied'
+  ) {
+    removeCookie('myToken');
+    removeCookie('rfToken');
+    navigate('/');
+    return alert(errorList[result]);
+  } else if (result === 'renderErrorPage') navigate('/error');
+  else if (result === 'notFound') navigate('/not-found');
+  else if (result === 'AccessTokenExpired') return;
+  else commonModalSetting(setModal, true, 'alert', errorList[result]);
+};
+
 export const changeState = (setState, column, value) => {
   setState(prev => {
     const clone = { ...prev };
@@ -9,10 +26,14 @@ export const changeState = (setState, column, value) => {
   });
 };
 
+export const enterFn = (e, okFn) => {
+  if (e.key === 'Enter') okFn();
+  else return;
+};
+
 export const commonModalSetting = (
   setAlertBox,
   bool,
-  answer,
   mode,
   context
 ) => {
@@ -21,7 +42,6 @@ export const commonModalSetting = (
       mode: mode,
       context: context,
       bool: bool,
-      answer: '',
     });
   } else {
     setAlertBox({
@@ -30,7 +50,6 @@ export const commonModalSetting = (
       bool: bool,
     });
   }
-  return answer;
 };
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {
@@ -45,7 +64,6 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
     if (byte <= maxByte) returnLength = i + 1;
   }
   if (byte > maxByte) {
-    // alert(`최대 ${maxByte}Bytes까지만 입력 가능합니다.`);
     const cutStr = text.substring(0, returnLength);
     changeState(setText, column, cutStr);
   } else {
@@ -55,22 +73,4 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
       return changeState(setByte, column, byte);
     }
   }
-};
-
-export const catchError = async (result, navigate, setModal) => {
-  if (
-    result === 'duplicateLogin' ||
-    result === 'tokenError' ||
-    result === 'tokenExpired' ||
-    result === 'accessDenied'
-  ) {
-    alert(errorList[result]);
-    removeCookie('myToken');
-    removeCookie('rfToken');
-    navigate('/');
-    return;
-  } else if (result === 'renderErrorPage') navigate('/error');
-  else if (result === 'notFound') navigate('/not-found');
-  else if (result === 'AccessTokenExpired') return;
-  else commonModalSetting(setModal, true, '', 'alert', errorList[result]);
 };

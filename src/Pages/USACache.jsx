@@ -16,14 +16,13 @@ const USACache = () => {
   const [value, setValue] = useState([]);
   const [arr, setArr] = useState([]);
   const [size, setSize] = useState('');
+  const [delMode, setDelMode] = useState('');
   const [modal, setModal] = useState(false);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
-  const [delMode, setDelMode] = useState('');
 
   let prevent = false;
 
@@ -42,7 +41,6 @@ const USACache = () => {
     setKey([]);
     setValue([]);
     const result = await getCacheList();
-    console.log(result)
     setKey(Object.keys(result.data));
     setValue(Object.values(result.data));
     cacheSize();
@@ -90,7 +88,6 @@ const USACache = () => {
                 commonModalSetting(
                   setAlertBox,
                   true,
-                  '',
                   'confirm',
                   '전체 캐시를 삭제하시겠습니까?<br/>삭제된 캐시는 복구할 수 없습니다.'
                 );
@@ -103,7 +100,6 @@ const USACache = () => {
                 commonModalSetting(
                   setAlertBox,
                   true,
-                  '',
                   'confirm',
                   'JSON을 삭제하시겠습니까?<br/>삭제된 파일은 복구할 수 없습니다.'
                 );
@@ -145,30 +141,17 @@ const USACache = () => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={async () => {
-            if (delMode === 'all') {
-              const result = await removeCache();
-              if (typeof result === 'object') {
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  '',
-                  'alert',
-                  '성공적으로 삭제되었습니다.'
-                );
-                cacheList();
-              }
-            } else if (delMode === 'json') {
-              const result = await removeCacheJson();
-              if (typeof result === 'object') {
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  '',
-                  'alert',
-                  '성공적으로 삭제되었습니다.'
-                );
-                cacheList();
-              }
+            let result;
+            if (delMode === 'all') result = await removeCache();
+            else result = await removeCacheJson();
+            if (typeof result === 'object') {
+              commonModalSetting(
+                setAlertBox,
+                true,
+                'alert',
+                '성공적으로 삭제되었습니다.'
+              );
+              cacheList();
             }
           }}
           failFn={() => {}}

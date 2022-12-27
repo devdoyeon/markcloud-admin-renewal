@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import { CopyBlock, monokaiSublime } from 'react-code-blocks';
 import Pagination from './Pagination';
-import { changeState } from 'JS/common';
+import { changeState, enterFn } from 'JS/common';
 
 const ViewCacheModal = ({ arr, setModal }) => {
   const [pageInfo, setPageInfo] = useState({
@@ -16,10 +16,6 @@ const ViewCacheModal = ({ arr, setModal }) => {
       setModal(false);
       window.removeEventListener('click', outClick);
     }
-  };
-
-  const enterFn = e => {
-    if (e.key === 'Enter') changeState(setPageInfo, 'page', Number(movePage));
   };
 
   useEffect(() => {
@@ -37,12 +33,12 @@ const ViewCacheModal = ({ arr, setModal }) => {
           </div>
         </div>
         <div className='codeBlock'>
-        <CopyBlock
-          text={JSON.stringify(arr[pageInfo.page - 1], null, 2)}
-          language={'json'}
-          showLineNumbers={false}
-          theme={monokaiSublime}
-        />
+          <CopyBlock
+            text={JSON.stringify(arr[pageInfo.page - 1], null, 2)}
+            language={'json'}
+            showLineNumbers={false}
+            theme={monokaiSublime}
+          />
         </div>
         <div className='pagination-wrap'>
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
@@ -51,7 +47,11 @@ const ViewCacheModal = ({ arr, setModal }) => {
               type='text'
               defaultValue={pageInfo.page}
               onChange={e => setMovePage(Number(e.target.value))}
-              onKeyDown={e => enterFn(e)}
+              onKeyDown={e =>
+                enterFn(e, () =>
+                  changeState(setPageInfo, 'page', Number(movePage))
+                )
+              }
             />
             /{pageInfo.totalPage}
             <button

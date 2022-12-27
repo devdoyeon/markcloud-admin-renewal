@@ -1,6 +1,6 @@
-import errorIcon from 'Image/error_icon.png';
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import errorIcon from 'Image/error_icon.png';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const ErrorPage = () => {
     <article className='error-home'>
       <div className='oops-slide'>
         <span className='oops-txt'>
-          {new Array(2000).fill(0).reduce(acc => `${acc} Oops!`, '')}
+          {new Array(3500).fill(0).reduce(acc => `${acc} Oops!`, '')}
         </span>
       </div>
       <div className='content-container'>

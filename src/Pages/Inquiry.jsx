@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import { getInquiryList } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
-import { catchError, changeState } from 'JS/common';
 import InquiryDetail from 'Components/InquiryDetail';
 import CommonModal from 'Components/CommonModal';
+import { catchError, changeState } from 'JS/common';
+import { getInquiryList } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const Inquiry = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -15,16 +15,15 @@ const Inquiry = () => {
     limit: 10,
   });
   const [select, setSelect] = useState('no-answer');
-  const [list, setList] = useState([]);
-  const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
   const [id, setId] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
+  const [list, setList] = useState([]);
+  const [modal, setModal] = useState(false);
+  const navigate = useNavigate();
 
   let prevent = false;
 
@@ -72,8 +71,8 @@ const Inquiry = () => {
   };
 
   useEffect(() => {
-    document.title = '마크클라우드 관리자 > 문의 사항 관리'
-  }, [])
+    document.title = '마크클라우드 관리자 > 문의 사항 관리';
+  }, []);
 
   useEffect(() => {
     if (!modal) getInquiry();
@@ -115,11 +114,11 @@ const Inquiry = () => {
         <div className='table-wrap'>
           <table>
             <colgroup>
-              <col width='50%'/>
-              <col width='10%'/>
-              <col width='10%'/>
-              <col width='10%'/>
-              <col width='20%'/>
+              <col width='50%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='10%' />
+              <col width='20%' />
             </colgroup>
             <thead>
               <tr>
@@ -133,11 +132,7 @@ const Inquiry = () => {
             <tbody>{renderTableBody()}</tbody>
           </table>
         </div>
-        {pageInfo.totalPage > 1 ? (
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
-        ) : (
-          ''
-        )}
+        <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
       {modal ? <InquiryDetail inquiryId={id} setModal={setModal} /> : ''}
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}

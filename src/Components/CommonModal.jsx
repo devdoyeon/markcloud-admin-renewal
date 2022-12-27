@@ -4,12 +4,27 @@ import { commonModalSetting } from 'JS/common';
 
 const CommonModal = ({ setModal, modal, okFn, failFn }) => {
   useEffect(() => {
+    if (modal.context === undefined || modal.context === 'undefined')
+      setModal(false);
     document.querySelector('.content').innerHTML =
       new DOMParser().parseFromString(
         modal.context,
         'text/html'
       ).body.innerHTML;
     // 줄바꿈 태그 <br/> 사용하기 위해서 String2DOM 변환
+    window.onkeydown = e => {
+      if (e.key === 'Enter') {
+        if (modal.mode === 'confirm') {
+          okFn();
+          commonModalSetting(setModal, false);
+        } else commonModalSetting(setModal, false);
+      } else if (e.key === 'Escape') {
+        if (modal.mode === 'confirm') {
+          failFn();
+          commonModalSetting(setModal, false);
+        } else commonModalSetting(setModal, false);
+      } else return;
+    };
   }, []);
 
   return (
@@ -25,7 +40,7 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
               if (modal.mode === 'confirm') {
                 okFn();
                 commonModalSetting(setModal, false);
-              } else commonModalSetting(setModal, false, false);
+              } else commonModalSetting(setModal, false);
             }}>
             확인
           </button>

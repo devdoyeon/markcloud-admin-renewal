@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
-import { getNoticeList, noticeMultiDelete } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
-import { catchError, changeState, commonModalSetting } from 'JS/common';
 import NoticeDetail from 'Components/NoticeDetail';
 import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
+import { catchError, changeState, commonModalSetting } from 'JS/common';
+import { getNoticeList, noticeMultiDelete } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const Notice = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -16,16 +16,15 @@ const Notice = () => {
     totalPage: 10,
     limit: 10,
   });
+  const [id, setId] = useState('');
+  const [modal, setModal] = useState(false);
+  const [editor, setEditor] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
-  const [modal, setModal] = useState(false);
-  const [id, setId] = useState('');
-  const [editor, setEditor] = useState(false);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
 
   let prevent = false;
@@ -152,14 +151,12 @@ const Notice = () => {
                   return commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'alert',
                     '삭제할 글을 선택해 주세요.'
                   );
                 commonModalSetting(
                   setAlertBox,
                   true,
-                  '',
                   'confirm',
                   '글을 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
                 );
@@ -217,7 +214,6 @@ const Notice = () => {
               commonModalSetting(
                 setAlertBox,
                 true,
-                '',
                 'alert',
                 '삭제되었습니다.'
               );
@@ -231,8 +227,7 @@ const Notice = () => {
           failFn={() => {
             $('.notice-all-check').prop('checked', false);
             $('.notice-check').prop('checked', false);
-            setIdArr([]);
-            return;
+            return setIdArr([]);
           }}
         />
       )}

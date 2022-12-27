@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import CommonModal from './CommonModal';
+import { commonModalSetting } from 'JS/common';
 import { removeCookie } from 'JS/cookie';
 import cloudLogo from 'Image/logo.png';
-import { commonModalSetting } from 'JS/common';
-import CommonModal from './CommonModal';
 
 const SideBar = () => {
-  const path = useLocation().pathname;
-  const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
+  const path = useLocation().pathname;
+  const navigate = useNavigate();
 
   return (
     <>
@@ -71,7 +70,6 @@ const SideBar = () => {
               commonModalSetting(
                 setAlertBox,
                 true,
-                '',
                 'alert',
                 '서비스 준비 중입니다.'
               )
@@ -84,8 +82,7 @@ const SideBar = () => {
           onClick={() => {
             removeCookie('myToken');
             removeCookie('rfToken');
-            navigate('/');
-            return;
+            return navigate('/');
           }}>
           로그아웃
         </div>

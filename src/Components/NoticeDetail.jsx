@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getNoticeDetail, noticeDelete } from 'JS/API';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
-import { serviceCodeToString } from 'JS/array';
-import { byteCount, catchError, commonModalSetting } from 'JS/common';
 import CommonModal from './CommonModal';
+import { byteCount, catchError, commonModalSetting } from 'JS/common';
+import { getNoticeDetail, noticeDelete } from 'JS/API';
+import { serviceCodeToString } from 'JS/array';
 
 const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({
@@ -23,7 +23,6 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
   const navigate = useNavigate();
   let prevent = false;
@@ -133,7 +132,6 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
                   commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'confirm',
                     '해당 공지를 삭제하시겠습니까?'
                   )

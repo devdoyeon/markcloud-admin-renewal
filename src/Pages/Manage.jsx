@@ -2,13 +2,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import $ from 'jquery';
-import { getUserList, searchUser } from 'JS/API';
-import { catchError, changeState, commonModalSetting } from 'JS/common';
-import { statusArr } from 'JS/array';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import AssignCouponModal from 'Components/AssignCouponModal';
 import CommonModal from 'Components/CommonModal';
+import {
+  catchError,
+  changeState,
+  commonModalSetting,
+  enterFn,
+} from 'JS/common';
+import { getUserList, searchUser } from 'JS/API';
+import { statusArr } from 'JS/array';
 
 const Manage = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -16,17 +21,16 @@ const Manage = () => {
     totalPage: 10,
     limit: 10,
   });
-  const [user, setUser] = useState([]);
   const [searchTxt, setSearchTxt] = useState('');
   const [select, setSelect] = useState('all');
   const [modal, setModal] = useState(false);
-  const [pk, setPk] = useState([]);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
+  const [user, setUser] = useState([]);
+  const [pk, setPk] = useState([]);
 
   let prevent = false;
   const navigate = useNavigate();
@@ -49,7 +53,6 @@ const Manage = () => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '검색어를 입력해 주세요.'
       );
@@ -57,7 +60,6 @@ const Manage = () => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '검색하실 종류를 선택해 주세요.'
       );
@@ -135,15 +137,13 @@ const Manage = () => {
             {acc}
             <tr>
               <td className='checkBoxArea'>
-                {couponCheck() ? (
+                {couponCheck() && (
                   <input
                     type='checkbox'
                     className='coupon-check'
                     value={user_pk}
                     onChange={checkEach}
                   />
-                ) : (
-                  ''
                 )}
               </td>
               <td>{user_id}</td>
@@ -183,10 +183,6 @@ const Manage = () => {
     );
   };
 
-  const enterFn = e => {
-    if (e.keyCode === 13) userSearch();
-  };
-
   useEffect(() => {
     document.title = '마크클라우드 관리자 > 회원 관리';
   }, []);
@@ -212,9 +208,9 @@ const Manage = () => {
                   return clone;
                 });
               }}>
-              <option value='10'>10개씩 보기</option>
-              <option value='30'>30개씩 보기</option>
-              <option value='50'>50개씩 보기</option>
+              <option value='10'>10명씩 보기</option>
+              <option value='30'>30명씩 보기</option>
+              <option value='50'>50명씩 보기</option>
             </select>
             <select value={select} onChange={e => setSelect(e.target.value)}>
               <option value='all'>전체 보기</option>
@@ -229,9 +225,11 @@ const Manage = () => {
               placeholder='검색어를 입력하세요.'
               value={searchTxt}
               onChange={e => setSearchTxt(e.target.value)}
-              onKeyDown={e => enterFn(e)}
+              onKeyDown={e => {
+                if (!alertBox.bool) enterFn(e, userSearch);
+              }}
             />
-            <button className='searchBtn' onClick={() => userSearch()}>
+            <button className='searchBtn' onClick={userSearch}>
               검색
               <span className='searchIcon'>
                 <FaSearch />
@@ -244,7 +242,6 @@ const Manage = () => {
                   return commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'alert',
                     '쿠폰을 발급할 대상을 선택해 주세요.'
                   );

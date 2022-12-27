@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
-import SideBar from 'Components/SideBar';
 import { useNavigate } from 'react-router-dom';
+import { FaCrown } from 'react-icons/fa';
+import { MdOutlineMoodBad } from 'react-icons/md';
+import SideBar from 'Components/SideBar';
+import NoticeDetail from 'Components/NoticeDetail';
+import InquiryDetail from 'Components/InquiryDetail';
+import NoticeWrite from 'Components/NoticeWrite';
+import CommonModal from 'Components/CommonModal';
+import { catchError } from 'JS/common';
 import {
   getSearchCount,
   getUserCount,
@@ -8,13 +15,6 @@ import {
   getInquiryList,
   getNoticeList,
 } from 'JS/API';
-import { catchError } from 'JS/common';
-import { FaCrown } from 'react-icons/fa';
-import { MdOutlineMoodBad } from 'react-icons/md';
-import NoticeDetail from 'Components/NoticeDetail';
-import InquiryDetail from 'Components/InquiryDetail';
-import NoticeWrite from 'Components/NoticeWrite';
-import CommonModal from 'Components/CommonModal';
 
 const Home = () => {
   const [newUser, setNewUser] = useState('');
@@ -23,6 +23,10 @@ const Home = () => {
   const [txtToday, setTxtToday] = useState('');
   const [imgAll, setImgAll] = useState('');
   const [imgToday, setImgToday] = useState('');
+  const [noticeId, setNoticeId] = useState('');
+  const [inquiryId, setInquiryId] = useState('');
+  const [state, setState] = useState('');
+
   const [textKing, setTextKing] = useState([]);
   const [imgKing, setImgKing] = useState([]);
   const [recentNotice, setRecentNotice] = useState([]);
@@ -31,110 +35,98 @@ const Home = () => {
   const [noticeModal, setNoticeModal] = useState(false);
   const [inquiryModal, setInquiryModal] = useState(false);
   const [editor, setEditor] = useState(false);
-  const [noticeId, setNoticeId] = useState('');
-  const [inquiryId, setInquiryId] = useState('');
+
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
 
   const navigate = useNavigate();
   let prevent = false;
 
+  //@ 10
   const getInquiry = async () => {
-    const date = new Date();
-    const prevDate = new Date(date);
-    prevDate.setDate(date.getDate() - 7);
     const result = await getInquiryList('no-answer', 1, 100);
-    if (typeof result === 'object') {
-      const arr = [];
-      for (let obj of result.data.data) {
-        if (new Date(obj.created_at) >= prevDate) {
-          arr.push(obj);
-        }
-      }
-      setRecentInquiry(arr);
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    const arr = [];
+    for (let obj of result.data.data) arr.push(obj);
+    setRecentInquiry(arr);
   };
 
+  //@ 9
   const getNotice = async () => {
-    const date = new Date();
-    const prevDate = new Date(date);
-    prevDate.setDate(date.getDate() - 7);
     const result = await getNoticeList(1, 100);
-    if (typeof result === 'object') {
-      const arr = [];
-      for (let obj of result.data.data) {
-        if (new Date(obj.created_at) >= prevDate) {
-          arr.push(obj);
-        }
-      }
-      setRecentNotice(arr);
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    const arr = [];
+    for (let obj of result.data.data) arr.push(obj);
+    setRecentNotice(arr);
+    getInquiry();
   };
 
   //@ 8
   const getTextKing = async () => {
     const result = await getSearchKing('text');
-    if (typeof result === 'object') {
-      setTextKing(result?.data?.data);
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTextKing(result?.data?.data);
+    getNotice();
   };
 
   //@ 7
   const getImgKing = async () => {
     const result = await getSearchKing('img');
-    if (typeof result === 'object') {
-      setImgKing(result?.data?.data);
-      getTextKing();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgKing(result?.data?.data);
+    getTextKing();
   };
 
   //@ 6
   const getTodayImgSearch = async () => {
     const result = await getSearchCount('img_today');
-    if (typeof result === 'object') {
-      setImgToday(result?.data?.data);
-      getImgKing();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgToday(result?.data?.data);
+    getImgKing();
   };
 
   //@ 5
   const getAllImgSearch = async () => {
     const result = await getSearchCount('img_all');
-    if (typeof result === 'object') {
-      setImgAll(result?.data?.data);
-      getTodayImgSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setImgAll(result?.data?.data);
+    getTodayImgSearch();
   };
 
   //@ 4
   const getTodayTxtSearch = async () => {
     const result = await getSearchCount('text_today');
-    if (typeof result === 'object') {
-      setTxtToday(result?.data?.data);
-      getAllImgSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTxtToday(result?.data?.data);
+    getAllImgSearch();
   };
 
   //@ 3
   const getAllTxtSearch = async () => {
     const result = await getSearchCount('text_all');
-    if (typeof result === 'object') {
-      setTxtAll(result?.data?.data);
-      getTodayTxtSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setTxtAll(result?.data?.data);
+    getTodayTxtSearch();
   };
 
   //@ 2
   const getTodayUser = async () => {
     const result = await getUserCount('month');
-    if (typeof result === 'object') {
-      setNewUser(result?.data?.data);
-      getAllTxtSearch();
-    } else return catchError(result, navigate, setAlertBox);
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    setNewUser(result?.data?.data);
+    getAllTxtSearch();
   };
 
   //@ 1
@@ -145,11 +137,12 @@ const Home = () => {
       prevent = false;
     }, 200);
     const result = await getUserCount('all');
-    if (typeof result === 'object') {
+    if (typeof result !== 'object')
+      return catchError(result, navigate, setAlertBox);
+    else {
+      setState('ok');
       setAllUser(result?.data?.data);
       getTodayUser();
-    } else {
-      return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -206,47 +199,51 @@ const Home = () => {
   };
 
   const noticeListRender = () => {
-    return recentNotice.reduce((acc, { title, admin_name, created_at, id }) => {
-      return (
-        <>
-          {acc}
-          <tr>
-            <td
-              onClick={() => {
-                setNoticeId(id);
-                setNoticeModal(true);
-              }}
-              className='title'>
-              {title}
-            </td>
-            <td>{admin_name}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        </>
-      );
-    }, <></>);
+    return recentNotice
+      .slice(0, 5)
+      .reduce((acc, { title, admin_name, created_at, id }) => {
+        return (
+          <>
+            {acc}
+            <tr>
+              <td
+                onClick={() => {
+                  setNoticeId(id);
+                  setNoticeModal(true);
+                }}
+                className='title'>
+                {title}
+              </td>
+              <td>{admin_name}</td>
+              <td>{created_at.replaceAll('T', ' ')}</td>
+            </tr>
+          </>
+        );
+      }, <></>);
   };
 
   const inquiryListRender = () => {
-    return recentInquiry.reduce((acc, { title, user_name, created_at, id }) => {
-      return (
-        <>
-          {acc}
-          <tr>
-            <td
-              onClick={() => {
-                setInquiryId(id);
-                setInquiryModal(true);
-              }}
-              className='title'>
-              {title}
-            </td>
-            <td>{user_name}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        </>
-      );
-    }, <></>);
+    return recentInquiry
+      .slice(0, 5)
+      .reduce((acc, { title, user_name, created_at, id }) => {
+        return (
+          <>
+            {acc}
+            <tr>
+              <td
+                onClick={() => {
+                  setInquiryId(id);
+                  setInquiryModal(true);
+                }}
+                className='title'>
+                {title}
+              </td>
+              <td>{user_name}</td>
+              <td>{created_at.replaceAll('T', ' ')}</td>
+            </tr>
+          </>
+        );
+      }, <></>);
   };
 
   const tableColGroup = m => {
@@ -270,17 +267,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getAllUser();
-    document.title = '마크클라우드 관리자 > 홈';
-  }, []);
-
-  useEffect(() => {
-    if (!noticeModal || !editor) getNotice();
-  }, [noticeModal, editor]);
-
-  useEffect(() => {
-    if (!inquiryModal) getInquiry();
-  }, [inquiryModal]);
+    if (state === '') {
+      getAllUser();
+      document.title = '마크클라우드 관리자 > 홈';
+    }
+    if (state === 'ok' && (!noticeModal || !editor)) getNotice();
+    if (state === 'ok' && !inquiryModal) getInquiry();
+  }, [noticeModal, editor, inquiryModal]);
 
   return (
     <div className='container'>
@@ -291,7 +284,6 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드한 공지 사항</h2>
-              <p>일주일 내에 업로드한 공지 사항만 표시 됩니다.</p>
             </div>
             {!recentNotice.length ? (
               <div className='none-list'>
@@ -316,7 +308,6 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드 된 문의 사항</h2>
-              <p>일주일 내에 업로드 된 미답변 문의 사항만 표시 됩니다.</p>
             </div>
             {!recentInquiry.length ? (
               <div className='none-list'>

@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import $ from 'jquery';
+import CommonModal from 'Components/CommonModal';
 import { signIn } from 'JS/API';
 import { setCookie, getCookie } from 'JS/cookie';
-import { catchError, commonModalSetting } from 'JS/common';
-import $ from 'jquery';
+import { catchError, commonModalSetting, enterFn } from 'JS/common';
 import cloudLogo from 'Image/logo.png';
-import CommonModal from 'Components/CommonModal';
 
 const SignIn = () => {
-  const [userId, setUserId] = useState('');
-  const [userPw, setUserPw] = useState('');
-  const [check, setCheck] = useState(false);
   const obj = {
     emptyBoth: false,
     emptyId: false,
@@ -18,14 +15,16 @@ const SignIn = () => {
     wrongId: false,
     wrongPw: { bool: false, failCount: 0 },
   };
+  const [userId, setUserId] = useState('');
+  const [userPw, setUserPw] = useState('');
+  const [check, setCheck] = useState(false);
+  const [capsLock, setCapsLock] = useState(false);
   const [formCheck, setFormCheck] = useState(obj);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
-  const [capsLock, setCapsLock] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,16 +44,11 @@ const SignIn = () => {
 
   const login = async () => {
     //@ 아이디, 비밀번호 Input이 비어 있는지 확인
-    if (userId.trim() === '' && userPw.trim() === '') {
-      checkForm('emptyBoth', true);
-      return;
-    } else if (userId.trim() === '') {
-      checkForm('emptyId', true);
-      return;
-    } else if (userPw.trim() === '') {
-      checkForm('emptyPw', true);
-      return;
-    }
+    if (userId.trim() === '' && userPw.trim() === '')
+      return checkForm('emptyBoth', true);
+    else if (userId.trim() === '') return checkForm('emptyId', true);
+    else if (userPw.trim() === '') return checkForm('emptyPw', true);
+
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
       const { access_token, refresh_token } = result?.data?.data;
@@ -82,11 +76,6 @@ const SignIn = () => {
     }
   };
 
-  const enterFn = e => {
-    if (e.keyCode === 13) login();
-    else return;
-  };
-
   useEffect(() => {
     //& 토큰을 가지고 있으면 홈으로 푸시
     if (getCookie('myToken')) navigate('/home');
@@ -99,47 +88,19 @@ const SignIn = () => {
   }, []);
 
   useEffect(() => {
-    if (formCheck.emptyBoth) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        '아이디와 비밀번호를 입력해 주세요.'
-      );
-    } else if (formCheck.emptyId) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        '아이디를 입력해 주세요.'
-      );
-    } else if (formCheck.emptyPw) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        '비밀번호를 입력해 주세요.'
-      );
-    } else if (formCheck.wrongId) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`
-      );
+    let context;
+    if (formCheck.emptyBoth) context = '아이디와 비밀번호를 입력해 주세요.';
+    else if (formCheck.emptyId) context = '아이디를 입력해 주세요.';
+    else if (formCheck.emptyPw) context = '비밀번호를 입력해 주세요.';
+    else if (formCheck.wrongId) {
+      context = `아이디 혹은 비밀번호가 일치하지 않습니다.<br/>다시 입력해 주세요.`;
+      setUserId('');
+      setUserPw('');
     } else if (formCheck.wrongPw.bool) {
-      commonModalSetting(
-        setAlertBox,
-        true,
-        '',
-        'alert',
-        `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`
-      );
+      context = `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`;
+      setUserPw('');
     }
+    commonModalSetting(setAlertBox, true, 'alert', context);
   }, [formCheck]);
 
   return (
@@ -154,7 +115,7 @@ const SignIn = () => {
             className='input_id'
             value={userId}
             onKeyDown={e => {
-              enterFn(e);
+              if (!alertBox.bool) enterFn(e, login);
               setCapsLock(e.getModifierState('CapsLock'));
             }}
             onChange={e => setUserId(e.target.value)}
@@ -167,12 +128,16 @@ const SignIn = () => {
             value={userPw}
             onChange={e => setUserPw(e.target.value)}
             onKeyDown={e => {
-              enterFn(e);
+              if (!alertBox.bool) enterFn(e, login);
               setCapsLock(e.getModifierState('CapsLock'));
             }}
           />
         </div>
-        {capsLock && <p><span>CapsLock</span>이 켜져 있습니다.</p>}
+        {capsLock && (
+          <p>
+            <span>CapsLock</span>이 켜져 있습니다.
+          </p>
+        )}
         <div className='remember-id'>
           <input
             type='checkbox'

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
-import { getNoticeDetail, noticeEdit, noticeWrite } from 'JS/API';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CommonModal from './CommonModal';
 import {
   catchError,
   byteCount,
   changeState,
   commonModalSetting,
 } from 'JS/common';
-import CommonModal from './CommonModal';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { getNoticeDetail, noticeEdit, noticeWrite } from 'JS/API';
 
 const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({
@@ -22,14 +22,13 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
-  const navigate = useNavigate();
-  const [mode, setMode] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
+  const [mode, setMode] = useState('');
+  const navigate = useNavigate();
 
   let prevent = false;
 
@@ -61,7 +60,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '성공적으로 수정 되었습니다.'
       );
@@ -75,7 +73,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '제목과 내용을 입력해 주세요.'
       );
@@ -83,7 +80,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '제목을 입력해 주세요.'
       );
@@ -91,7 +87,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '내용을 입력해 주세요.'
       );
@@ -168,7 +163,6 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                   commonModalSetting(
                     setAlertBox,
                     true,
-                    '',
                     'confirm',
                     `정말 취소하시겠습니까?<br />지금까지 ${
                       mode === 'edit' ? '수정' : '작성'

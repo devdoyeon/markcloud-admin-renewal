@@ -5,7 +5,7 @@ import {
   BsFillQuestionCircleFill,
   BsExclamationCircleFill,
 } from 'react-icons/bs';
-import { serviceCodeToString } from 'JS/array';
+import CommonModal from './CommonModal';
 import {
   byteCount,
   catchError,
@@ -13,11 +13,13 @@ import {
   commonModalSetting,
 } from 'JS/common';
 import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
-import CommonModal from './CommonModal';
+import { serviceCodeToString } from 'JS/array';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
   const [byte, setByte] = useState(0);
+  const [command, setCommand] = useState('');
+  const [edit, setEdit] = useState(false);
   const [info, setInfo] = useState({
     service_code: '',
     user_name: '',
@@ -27,15 +29,12 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     status: false,
     answer: '',
   });
-  const [edit, setEdit] = useState(false);
-  const navigate = useNavigate();
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
-    answer: '',
   });
-  const [command, setCommand] = useState('');
+  const navigate = useNavigate();
 
   const getDetail = async () => {
     if (prevent) return;
@@ -71,7 +70,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '답변을 작성해 주세요.'
       );
@@ -88,7 +86,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
       return commonModalSetting(
         setAlertBox,
         true,
-        '',
         'alert',
         '답변을 작성해 주세요.'
       );
@@ -190,7 +187,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                   <div>
                     {edit ? (
                       <>
-                        <button onClick={() => editAnswer()}>답변 완료</button>
+                        <button onClick={editAnswer}>답변 완료</button>
                         <button
                           className='btn'
                           onClick={() => {
@@ -198,7 +195,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                             commonModalSetting(
                               setAlertBox,
                               true,
-                              '',
                               'confirm',
                               '정말 취소하시겠습니까?<br/>지금까지 수정된 내용은 반영되지 않습니다.'
                             );
@@ -215,7 +211,6 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                         commonModalSetting(
                           setAlertBox,
                           true,
-                          '',
                           'confirm',
                           '답변을 삭제하시면 다시 복구할 수 없습니다.<br/>답변을 삭제하시겠습니까?'
                         );
@@ -242,7 +237,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <div className='viewBytes'>
                   <span>{byte}</span>/3000bytes
                 </div>
-                <button className='register-btn' onClick={() => applyAnswer()}>
+                <button className='register-btn' onClick={applyAnswer}>
                   등록
                 </button>
               </div>
