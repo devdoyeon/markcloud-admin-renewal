@@ -412,6 +412,9 @@
       margin-top: 10px;
       min-height: 300px;
       border-radius: 8px;
+      img {
+        width: 100%;
+      }
     }
     > .answer-wrap,
     .view-answer-wrap {
