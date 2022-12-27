@@ -181,7 +181,6 @@
           }
         }
         &.table-wrap {
-          max-height: 200px;
           > table {
             width: 100%;
             text-align: center;
@@ -228,6 +227,9 @@
           > table {
             tr {
               &:last-child {
+                border-bottom: none;
+              }
+              &:first-child {
                 border-bottom: 1px solid $gray04;
               }
             }

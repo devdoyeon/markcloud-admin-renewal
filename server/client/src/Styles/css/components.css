@@ -182,9 +182,6 @@
   font-size: 100px;
   color: #dddddd;
 }
-.dashboard > .row > div > div.table-wrap {
-  max-height: 200px;
-}
 .dashboard > .row > div > div.table-wrap > table {
   width: 100%;
   text-align: center;
@@ -230,6 +227,9 @@
   height: auto;
 }
 .dashboard > .row > div > div.king > table tr:last-child {
+  border-bottom: none;
+}
+.dashboard > .row > div > div.king > table tr:first-child {
   border-bottom: 1px solid #dddddd;
 }
 .dashboard > .row > div > div.count-wrap {
