@@ -50,12 +50,8 @@ const Home = () => {
     const result = await getInquiryList('no-answer', 1, 100);
     if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox);
-    const date = new Date();
-    const prevWeek = new Date(date);
-    prevWeek.setDate(date.getDate() - 7);
     const arr = [];
-    for (let obj of result.data.data)
-      if (new Date(obj.created_at) >= prevWeek) arr.push(obj);
+    for (let obj of result.data.data) arr.push(obj);
     setRecentInquiry(arr);
   };
 
@@ -64,12 +60,8 @@ const Home = () => {
     const result = await getNoticeList(1, 100);
     if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox);
-    const date = new Date();
-    const prevWeek = new Date(date);
-    prevWeek.setDate(date.getDate() - 7);
     const arr = [];
-    for (let obj of result.data.data)
-      if (new Date(obj.created_at) >= prevWeek) arr.push(obj);
+    for (let obj of result.data.data) arr.push(obj);
     setRecentNotice(arr);
     getInquiry();
   };
@@ -207,47 +199,51 @@ const Home = () => {
   };
 
   const noticeListRender = () => {
-    return recentNotice.reduce((acc, { title, admin_name, created_at, id }) => {
-      return (
-        <>
-          {acc}
-          <tr>
-            <td
-              onClick={() => {
-                setNoticeId(id);
-                setNoticeModal(true);
-              }}
-              className='title'>
-              {title}
-            </td>
-            <td>{admin_name}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        </>
-      );
-    }, <></>);
+    return recentNotice
+      .slice(0, 5)
+      .reduce((acc, { title, admin_name, created_at, id }) => {
+        return (
+          <>
+            {acc}
+            <tr>
+              <td
+                onClick={() => {
+                  setNoticeId(id);
+                  setNoticeModal(true);
+                }}
+                className='title'>
+                {title}
+              </td>
+              <td>{admin_name}</td>
+              <td>{created_at.replaceAll('T', ' ')}</td>
+            </tr>
+          </>
+        );
+      }, <></>);
   };
 
   const inquiryListRender = () => {
-    return recentInquiry.reduce((acc, { title, user_name, created_at, id }) => {
-      return (
-        <>
-          {acc}
-          <tr>
-            <td
-              onClick={() => {
-                setInquiryId(id);
-                setInquiryModal(true);
-              }}
-              className='title'>
-              {title}
-            </td>
-            <td>{user_name}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        </>
-      );
-    }, <></>);
+    return recentInquiry
+      .slice(0, 5)
+      .reduce((acc, { title, user_name, created_at, id }) => {
+        return (
+          <>
+            {acc}
+            <tr>
+              <td
+                onClick={() => {
+                  setInquiryId(id);
+                  setInquiryModal(true);
+                }}
+                className='title'>
+                {title}
+              </td>
+              <td>{user_name}</td>
+              <td>{created_at.replaceAll('T', ' ')}</td>
+            </tr>
+          </>
+        );
+      }, <></>);
   };
 
   const tableColGroup = m => {
@@ -288,7 +284,6 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드한 공지 사항</h2>
-              <p>일주일 내에 업로드한 공지 사항만 표시 됩니다.</p>
             </div>
             {!recentNotice.length ? (
               <div className='none-list'>
@@ -313,7 +308,6 @@ const Home = () => {
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드 된 문의 사항</h2>
-              <p>일주일 내에 업로드 된 미답변 문의 사항만 표시 됩니다.</p>
             </div>
             {!recentInquiry.length ? (
               <div className='none-list'>

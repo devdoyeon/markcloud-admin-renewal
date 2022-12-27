@@ -164,7 +164,6 @@
   color: #333333;
 }
 .dashboard > .row > div .title-wrap p::before {
-  content: "*";
   color: #f74848;
 }
 .dashboard > .row > div > div {
@@ -184,7 +183,7 @@
   color: #dddddd;
 }
 .dashboard > .row > div > div.table-wrap {
-  height: 200px;
+  max-height: 200px;
 }
 .dashboard > .row > div > div.table-wrap > table {
   width: 100%;
@@ -193,6 +192,9 @@
 }
 .dashboard > .row > div > div.table-wrap > table thead {
   background-color: #f5f5f5;
+}
+.dashboard > .row > div > div.table-wrap > table tr:last-child > td {
+  border-bottom: none;
 }
 .dashboard > .row > div > div.table-wrap > table tr > th,
 .dashboard > .row > div > div.table-wrap > table tr td {
@@ -226,6 +228,9 @@
 .dashboard > .row > div > div.king {
   min-height: 200px;
   height: auto;
+}
+.dashboard > .row > div > div.king > table tr:last-child {
+  border-bottom: 1px solid #dddddd;
 }
 .dashboard > .row > div > div.count-wrap {
   height: 200px;

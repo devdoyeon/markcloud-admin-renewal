@@ -164,7 +164,6 @@
           font-size: 14px;
           color: $gray02;
           &::before {
-            content: '*';
             color: $red;
           }
         }
@@ -182,7 +181,7 @@
           }
         }
         &.table-wrap {
-          height: 200px;
+          max-height: 200px;
           > table {
             width: 100%;
             text-align: center;
@@ -191,6 +190,11 @@
               background-color: $thBackColor;
             }
             tr {
+              &:last-child {
+                > td {
+                  border-bottom: none;
+                }
+              }
               > th,
               td {
                 border-bottom: 1px solid $gray03;
@@ -221,6 +225,13 @@
         &.king {
           min-height: 200px;
           height: auto;
+          > table {
+            tr {
+              &:last-child {
+                border-bottom: 1px solid $gray04;
+              }
+            }
+          }
         }
         &.count-wrap {
           height: 200px;
