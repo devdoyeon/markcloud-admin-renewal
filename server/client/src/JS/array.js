@@ -23,5 +23,6 @@ export const statusArr = {
 export const serviceCodeToString = {
   100: '마크클라우드',
   110: '마크뷰',
-  120: '그룹웨어',
+  120: '마크그룹웨어',
+  130: '마크링크',
 };

@@ -34,6 +34,12 @@ const SideBar = () => {
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
+          <Link to='/service'>
+            <li className={path === '/service' && 'active'}>서비스 관리</li>
+          </Link>
+          <Link to='/product'>
+            <li className={path === '/product' && 'active'}>상품 관리</li>
+          </Link>
           <Link to='/usa-cache'>
             <li className={path === '/usa-cache' && 'active'}>해외 데이터 캐시 관리</li>
           </Link>
@@ -75,6 +81,17 @@ const SideBar = () => {
               )
             }>
             마크링크
+          </li>
+          <li
+            onClick={() =>
+              commonModalSetting(
+                setAlertBox,
+                true,
+                'alert',
+                '서비스 준비 중입니다.'
+              )
+            }>
+            마크그룹웨어
           </li>
         </ul>
         <div

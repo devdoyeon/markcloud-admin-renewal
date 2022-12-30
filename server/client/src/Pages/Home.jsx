@@ -154,14 +154,9 @@ const Home = () => {
           {acc}
           <tr>
             <td>
-              {rank <= 3 && (
-                <>
-                  <span className={`crown rank${rank}`}>
-                    <FaCrown />
-                  </span>
-                  <br />
-                </>
-              )}
+              <span className={`crown rank${rank}`}>
+                <FaCrown />
+              </span>
             </td>
             <td>{user_id}</td>
             <td>{name}</td>
@@ -180,14 +175,9 @@ const Home = () => {
           {acc}
           <tr>
             <td>
-              {rank <= 3 && (
-                <>
-                  <span className={`crown rank${rank}`}>
-                    <FaCrown />
-                  </span>
-                  <br />
-                </>
-              )}
+              <span className={`crown rank${rank}`}>
+                <FaCrown />
+              </span>
             </td>
             <td>{user_id}</td>
             <td>{name}</td>

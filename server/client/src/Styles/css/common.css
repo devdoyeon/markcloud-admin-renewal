@@ -460,6 +460,9 @@
   min-height: 300px;
   border-radius: 8px;
 }
+.modal-background .modal > .context img {
+  width: 100%;
+}
 .modal-background .modal > .answer-wrap,
 .modal-background .modal .view-answer-wrap {
   margin-top: 30px;
