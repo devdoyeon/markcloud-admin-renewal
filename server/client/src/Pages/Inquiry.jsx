@@ -4,7 +4,7 @@ import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import InquiryDetail from 'Components/InquiryDetail';
 import CommonModal from 'Components/CommonModal';
-import { catchError, changeState } from 'JS/common';
+import { catchError, changeState, maskingInfo } from 'JS/common';
 import { getInquiryList } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
 
@@ -59,7 +59,7 @@ const Inquiry = () => {
                 {title}
               </td>
               <td>{created_at.split('T')[0]}</td>
-              <td>{user_name}</td>
+              <td>{maskingInfo('name', user_name)}</td>
               <td>{status_flag ? '완료' : '미답변'}</td>
               <td>{serviceCodeToString[service_code]}</td>
             </tr>

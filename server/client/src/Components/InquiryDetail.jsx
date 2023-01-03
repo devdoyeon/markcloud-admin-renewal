@@ -11,6 +11,8 @@ import {
   catchError,
   changeState,
   commonModalSetting,
+  maskingInfo,
+  outClick,
 } from 'JS/common';
 import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
@@ -109,17 +111,10 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
-  };
-
   useEffect(() => {
     if (!alertBox.bool) {
       getDetail();
-      window.addEventListener('click', e => outClick(e));
+      window.addEventListener('click', e => outClick(e, setModal));
     }
   }, [alertBox.bool]);
 
@@ -143,7 +138,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <tbody>
                   <tr>
                     <td>작성자</td>
-                    <td>{info.user_name}</td>
+                    <td>{maskingInfo('name', info.user_name)}</td>
                   </tr>
                   <tr>
                     <td>등록일자</td>

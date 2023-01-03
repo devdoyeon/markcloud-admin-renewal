@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import CommonModal from './CommonModal';
-import { catchError, commonModalSetting, enterFn } from 'JS/common';
+import { catchError, commonModalSetting, enterFn, outClick } from 'JS/common';
 import { applyToken } from 'JS/API';
 
 const AssignCouponModal = ({ setModal, pk }) => {
@@ -13,13 +13,6 @@ const AssignCouponModal = ({ setModal, pk }) => {
     bool: false,
   });
   const navigate = useNavigate();
-
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
-  };
 
   const couponIssue = async () => {
     let data = {};
@@ -44,7 +37,7 @@ const AssignCouponModal = ({ setModal, pk }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('click', e => outClick(e));
+    window.addEventListener('click', e => outClick(e, setModal));
   });
 
   return (

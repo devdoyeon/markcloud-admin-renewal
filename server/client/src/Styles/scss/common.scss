@@ -299,6 +299,9 @@
     border-collapse: collapse;
     thead {
       background-color: $thBackColor;
+      tr {
+        cursor: default;
+      }
     }
     tbody {
       background-color: rgba($color: $white, $alpha: 0.4);
@@ -310,11 +313,11 @@
       }
       > td {
         padding: 20px 0;
-        &.title {
-          cursor: pointer;
-          &:hover {
-            color: $mainColor;
-          }
+      }
+      cursor: pointer;
+      &:hover {
+        td {
+          color: $mainColor;
         }
       }
       > th,
@@ -595,6 +598,158 @@
           border-radius: 8px;
           font-family: $boldFont;
           margin-left: 15px;
+        }
+      }
+    }
+    &.service {
+      width: 500px;
+      height: 300px;
+      position: relative;
+      > h2 {
+        @include position-style($top: 0);
+        width: 100%;
+        background-color: $gray;
+        color: white;
+        padding: 15px 30px;
+      }
+      > .serviceInput {
+        width: 100%;
+        margin-top: 50px;
+        > .row {
+          width: 320px;
+          justify-content: space-between;
+          span {
+            font-family: $boldFont;
+            color: $gray;
+          }
+          input {
+            margin-left: 10px;
+            width: 70%;
+            border: 1px solid $gray;
+            padding: 5px 10px;
+            &:last-child {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+      > .btn-wrap {
+        margin-top: 30px;
+        > button {
+          border-radius: 6px;
+          padding: 10px 25px;
+          background-color: $gray;
+          color: white;
+          margin-right: 20px;
+          font-family: $boldFont;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    &.product {
+      width: 500px;
+      height: 370px;
+      position: relative;
+      > h2 {
+        @include position-style();
+        width: 100%;
+        color: white;
+        background-color: $gray;
+        padding: 15px 30px;
+      }
+      > .productInput {
+        margin-top: 60px;
+        .row {
+          justify-content: space-between;
+          width: 300px;
+          margin-bottom: 5px;
+          select {
+            border: none;
+            box-shadow: 0 0 3px rgba($color: $gray, $alpha: 0.3);
+            width: 200px;
+            background-color: white;
+            padding: 5px 10px;
+          }
+          input {
+            width: 200px;
+            padding: 5px 10px;
+            box-shadow: 0 0 3px rgba($color: $gray, $alpha: 0.3);
+          }
+          &:last-child {
+            margin-bottom: none;
+          }
+        }
+      }
+      > .btn-wrap {
+        margin-top: 30px;
+        button {
+          padding: 10px 20px;
+          background-color: $gray;
+          color: white;
+          margin-right: 10px;
+          font-size: 16px;
+          font-family: $boldFont;
+          border-radius: 8px;
+          &:last-child {
+            margin-right: none;
+          }
+        }
+      }
+    }
+    &.personnel {
+      width: 50%;
+      height: 600px;
+      justify-content: center;
+      position: relative;
+      .topBar {
+        @include position-style($top: 0);
+        padding: 15px 30px;
+        h3 {
+          font-size: 30px;
+          color: $gray;
+        }
+      }
+      .personnelInput {
+        margin-top: 20px;
+        border-radius: 16px;
+        box-shadow: 0 0 10px rgba($color: $gray, $alpha: 0.2);
+        width: 80%;
+        height: 90%;
+        > .row {
+          width: 90%;
+          margin-bottom: 30px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          span {
+            text-align: left;
+            width: 100px;
+            font-family: $boldFont;
+            color: $gray;
+          }
+          > .row {
+            width: 100%;
+            .infoInput {
+              width: calc(100% - 100px);
+            }
+          }
+          .name,
+          .gender,
+          .birth,
+          .department {
+            width: 47.5%;
+          }
+          .blank {
+            width: 5%;
+          }
+          .infoInput {
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba($color: $gray, $alpha: 0.4);
+            width: calc(100% - 100px);
+            padding: 10px 5px;
+          }
         }
       }
     }

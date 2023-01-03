@@ -31,12 +31,7 @@ export const enterFn = (e, okFn) => {
   else return;
 };
 
-export const commonModalSetting = (
-  setAlertBox,
-  bool,
-  mode,
-  context
-) => {
+export const commonModalSetting = (setAlertBox, bool, mode, context) => {
   if (bool) {
     setAlertBox({
       mode: mode,
@@ -72,5 +67,30 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
     } else if (column === 'context' || column === 'title') {
       return changeState(setByte, column, byte);
     }
+  }
+};
+
+export const outClick = (e, setModal) => {
+  if (e.target.className === 'modal-background') {
+    setModal(false);
+    window.removeEventListener('click', outClick);
+  }
+};
+
+export const maskingInfo = (type, str) => {
+  if (type === 'email')
+    return `${str.split('@')[0].slice(0, 2)}${'*'.repeat(
+      str.split('@')[0].length - 2
+    )}@${str.split('@')[1]}`;
+  else if (type === 'phone')
+    return `${str.split('-')[0]}-****-${str.split('-')[2]}`;
+  else if (type === 'name') {
+    if (str.length === 2) return `${str.slice(0, 1)}*`;
+    else if (str.length === 3) return `${str.slice(0, 1)}*${str.slice(2)}`;
+    else if (str.length >= 4) return `${str.slice(0, 1)}**${str.slice(3)}`;
+  } else if (type === 'id') {
+    if (str.length <= 6)
+      return `${str.slice(0, 2)}${'*'.repeat(str.length - 2)}`;
+    else return `${str.slice(0, 4)}${'*'.repeat(str.length - 4)}`;
   }
 };

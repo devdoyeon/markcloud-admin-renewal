@@ -164,6 +164,7 @@
           font-size: 14px;
           color: $gray02;
           &::before {
+            content: '*';
             color: $red;
           }
         }
@@ -226,6 +227,12 @@
           height: auto;
           > table {
             tr {
+              cursor: auto;
+              &:hover {
+                td {
+                  color: black;
+                }
+              }
               &:last-child {
                 border-bottom: none;
               }
@@ -261,21 +268,40 @@
       .checkBoxArea {
         padding: 10px;
       }
-      th,
-      td {
-        padding: 20px;
-        > .couponBtn {
-          background-color: $gray02;
-          padding: 5px 20px;
-          color: white;
-          font-family: $boldFont;
-          border-radius: 6px;
+      thead {
+        tr {
+          cursor: default;
         }
-        &.user {
-          color: $highlightColor;
+      }
+      tr {
+        cursor: pointer;
+        th,
+        td {
+          padding: 20px;
+          > .couponBtn {
+            background-color: $gray02;
+            padding: 5px 20px;
+            color: white;
+            font-family: $boldFont;
+            border-radius: 6px;
+          }
+          &.user {
+            color: $highlightColor;
+          }
+          &.resign {
+            color: $tongMainColor;
+          }
         }
-        &.resign {
-          color: $tongMainColor;
+        &:hover {
+          td {
+            color: $mainColor;
+            &.user {
+              color: $highlightColor;
+            }
+            &.resign {
+              color: $tongMainColor;
+            }
+          }
         }
       }
     }
@@ -290,6 +316,66 @@
           color: white;
         }
         border-right: 1px solid white;
+      }
+    }
+  }
+}
+
+.service {
+  .topBar {
+    > button {
+      color: white;
+      background-color: $gray;
+      padding: 10px 30px;
+      font-size: 15px;
+      border-radius: 8px;
+      font-family: $boldFont;
+    }
+  }
+  .service-wrap {
+    @include flex-style();
+    flex-wrap: wrap;
+    margin-top: 100px;
+    .serviceBox {
+      cursor: pointer;
+      position: relative;
+      span {
+        @include position-style($top: 0, $left: 10px);
+        display: inline-block;
+        color: $gray01;
+        font-size: 14px;
+      }
+      @include flex-style(column);
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba($color: $gray, $alpha: 0.4);
+      margin: 30px;
+      width: 35%;
+      height: 150px;
+      font-family: $boldFont;
+      font-size: 32px;
+      color: $gray;
+      transition: all 0.3s;
+      &:hover {
+        transition: all 0.3s;
+        box-shadow: 0 0 10px rgba($color: $gray, $alpha: 0.7);
+      }
+    }
+  }
+}
+
+.product {
+  .table-wrap {
+    tbody > tr {
+      cursor: pointer;
+      &:hover {
+        > td {
+          color: $mainColor;
+        }
+      }
+      > .price {
+        text-align: right;
+        transform: translateX(-120px);
       }
     }
   }
@@ -319,6 +405,19 @@
         cursor: pointer;
         font-family: $middleFont;
         color: $highlightColor;
+      }
+    }
+  }
+}
+
+.event {
+  .table-wrap {
+    tr {
+      cursor: auto;
+      &:hover {
+        td {
+          color: black;
+        }
       }
     }
   }

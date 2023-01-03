@@ -6,11 +6,13 @@ import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import AssignCouponModal from 'Components/AssignCouponModal';
 import CommonModal from 'Components/CommonModal';
+import PersonnelModal from 'Components/PersonnelModal';
 import {
   catchError,
   changeState,
   commonModalSetting,
   enterFn,
+  maskingInfo
 } from 'JS/common';
 import { getUserList, searchUser } from 'JS/API';
 import { statusArr } from 'JS/array';
@@ -23,12 +25,14 @@ const Manage = () => {
   });
   const [searchTxt, setSearchTxt] = useState('');
   const [select, setSelect] = useState('all');
-  const [modal, setModal] = useState(false);
+  const [couponModal, setCouponModal] = useState(false);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
   });
+  const [info, setInfo] = useState({});
+  const [editModal, setEditModal] = useState(false);
   const [user, setUser] = useState([]);
   const [pk, setPk] = useState([]);
 
@@ -101,6 +105,7 @@ const Manage = () => {
           user_id,
           name,
           department,
+          gender,
           voucher_name,
           voucher_status,
           event_name,
@@ -132,10 +137,26 @@ const Manage = () => {
           }
         };
 
+        const birth = '2002-11-26';
+        const phone = '010-5647-9689';
+        const email = 'doyeonyou@naver.com';
+
         return (
           <>
             {acc}
-            <tr>
+            <tr
+              onClick={() => {
+                setInfo({
+                  id: maskingInfo('id', user_id),
+                  name: maskingInfo('name', name),
+                  department: department,
+                  gender: gender,
+                  birth: '2002-11-26',
+                  phone: maskingInfo('phone', phone),
+                  email: maskingInfo('email', email),
+                });
+                setEditModal(true);
+              }}>
               <td className='checkBoxArea'>
                 {couponCheck() && (
                   <input
@@ -146,8 +167,8 @@ const Manage = () => {
                   />
                 )}
               </td>
-              <td>{user_id}</td>
-              <td>{name}</td>
+              <td>{maskingInfo('id', user_id)}</td>
+              <td>{maskingInfo('name', name)}</td>
               <td>{department}</td>
               <td>{voucher_name}</td>
               <td>{statusArr[voucher_status]}</td>
@@ -162,7 +183,7 @@ const Manage = () => {
                   <button
                     className='couponBtn'
                     onClick={() => {
-                      setModal(true);
+                      setCouponModal(true);
                       setPk(prev => {
                         const clone = [...prev];
                         clone.push(user_pk);
@@ -188,8 +209,8 @@ const Manage = () => {
   }, []);
 
   useEffect(() => {
-    if (!modal) userList();
-  }, [pageInfo.page, pageInfo.limit, modal]);
+    if (!couponModal) userList();
+  }, [pageInfo.page, pageInfo.limit, couponModal]);
 
   return (
     <div className='container'>
@@ -245,7 +266,7 @@ const Manage = () => {
                     'alert',
                     '쿠폰을 발급할 대상을 선택해 주세요.'
                   );
-                setModal(true);
+                setCouponModal(true);
               }}>
               쿠폰 일괄 발급
             </button>
@@ -292,14 +313,15 @@ const Manage = () => {
         </div>
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
-      {modal && (
+      {couponModal && (
         <AssignCouponModal
-          setModal={setModal}
+          setCouponModal={setCouponModal}
           pk={pk}
           setAlertBox={setAlertBox}
         />
       )}
       {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {editModal && <PersonnelModal setEditModal={setEditModal} info={info} />}
     </div>
   );
 };

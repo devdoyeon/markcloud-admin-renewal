@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
 import CommonModal from './CommonModal';
-import { byteCount, catchError, commonModalSetting } from 'JS/common';
+import { byteCount, catchError, commonModalSetting, outClick } from 'JS/common';
 import { getNoticeDetail, noticeDelete } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
 
@@ -60,16 +60,9 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
-  };
-
   useEffect(() => {
     getDetail();
-    window.addEventListener('click', e => outClick(e));
+    window.addEventListener('click', e => outClick(e, setModal));
   }, []);
 
   useEffect(() => {

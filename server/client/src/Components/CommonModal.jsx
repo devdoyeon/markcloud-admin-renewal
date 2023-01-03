@@ -35,12 +35,10 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
         </div>
         <div className='content'></div>
         <div className='btn-wrap'>
-          <button
+        <button
             onClick={() => {
-              if (modal.mode === 'confirm') {
-                okFn();
-                commonModalSetting(setModal, false);
-              } else commonModalSetting(setModal, false);
+              okFn();
+              commonModalSetting(setModal, false);
             }}>
             확인
           </button>

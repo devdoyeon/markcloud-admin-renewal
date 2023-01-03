@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import { CopyBlock, monokaiSublime } from 'react-code-blocks';
 import Pagination from './Pagination';
-import { changeState, enterFn } from 'JS/common';
+import { changeState, enterFn, outClick } from 'JS/common';
 
 const ViewCacheModal = ({ arr, setModal }) => {
   const [pageInfo, setPageInfo] = useState({
@@ -11,15 +11,8 @@ const ViewCacheModal = ({ arr, setModal }) => {
   });
   const [movePage, setMovePage] = useState(1);
 
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
-  };
-
   useEffect(() => {
-    window.addEventListener('click', e => outClick(e));
+    window.addEventListener('click', e => outClick(e, setModal));
     changeState(setPageInfo, 'totalPage', arr.length);
   }, []);
 
