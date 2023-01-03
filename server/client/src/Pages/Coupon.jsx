@@ -36,8 +36,8 @@ const Coupon = () => {
   };
 
   useEffect(() => {
-    document.title = '마크클라우드 관리자 > 쿠폰 발급 내역'
-  }, [])
+    document.title = '마크클라우드 관리자 > 쿠폰 발급 내역';
+  }, []);
 
   useEffect(() => {
     getList();
@@ -120,7 +120,9 @@ const Coupon = () => {
           <Pagination setPageInfo={setPageInfo} pageInfo={pageInfo} />
         )}
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </div>
   );
 };

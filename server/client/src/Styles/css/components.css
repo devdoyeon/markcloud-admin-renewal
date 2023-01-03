@@ -350,6 +350,26 @@
   box-shadow: 0 0 10px rgba(67, 67, 67, 0.7);
 }
 
+.adminManage .table-wrap tbody > tr {
+  cursor: default;
+}
+.adminManage .table-wrap tbody > tr:hover > td {
+  color: black;
+}
+.adminManage .table-wrap tbody > tr td button {
+  background-color: #434343;
+  color: white;
+  padding: 5px 15px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 8px;
+}
+.adminManage .table-wrap tbody > tr td.resign {
+  color: #de5d60;
+}
+.adminManage .table-wrap tbody > tr td.user {
+  color: #3172cc;
+}
+
 .product .table-wrap tbody > tr {
   cursor: pointer;
 }

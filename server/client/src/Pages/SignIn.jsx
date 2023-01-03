@@ -150,7 +150,9 @@ const SignIn = () => {
         <hr />
         <button onClick={login}>로그인</button>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </div>
   );
 };

@@ -421,7 +421,7 @@ const Home = () => {
           setEditor={setEditor}
         />
       )}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}}/>}
     </div>
   );
 };

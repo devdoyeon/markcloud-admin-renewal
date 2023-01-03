@@ -364,6 +364,34 @@
   }
 }
 
+.adminManage {
+  .table-wrap {
+    tbody > tr {
+      cursor: default;
+      &:hover {
+        > td {
+          color: black;
+        }
+      }
+      td {
+        button {
+          background-color: $gray;
+          color: white;
+          padding: 5px 15px;
+          font-family: $boldFont;
+          border-radius: 8px;
+        }
+        &.resign {
+          color: $tongMainColor;
+        }
+        &.user {
+          color: $highlightColor;
+        }
+      }
+    }
+  }
+}
+
 .product {
   .table-wrap {
     tbody > tr {

@@ -109,8 +109,8 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    document.title = '마크클라우드 관리자 > 공지 사항 관리'
-  }, [])
+    document.title = '마크클라우드 관리자 > 공지 사항 관리';
+  }, []);
 
   useEffect(() => {
     if (!modal || !editor) getNotice();
@@ -211,12 +211,7 @@ const Notice = () => {
             const data = { items: idArr };
             const result = await noticeMultiDelete(data);
             if (typeof result === 'object') {
-              commonModalSetting(
-                setAlertBox,
-                true,
-                'alert',
-                '삭제되었습니다.'
-              );
+              commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
               $('.notice-all-check').prop('checked', false);
               $('.notice-check').prop('checked', false);
               changeState(setPageInfo, 'page', 1);

@@ -12,7 +12,7 @@ import {
   changeState,
   commonModalSetting,
   enterFn,
-  maskingInfo
+  maskingInfo,
 } from 'JS/common';
 import { getUserList, searchUser } from 'JS/API';
 import { statusArr } from 'JS/array';
@@ -137,7 +137,6 @@ const Manage = () => {
           }
         };
 
-        const birth = '2002-11-26';
         const phone = '010-5647-9689';
         const email = 'doyeonyou@naver.com';
 
@@ -320,7 +319,9 @@ const Manage = () => {
           setAlertBox={setAlertBox}
         />
       )}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
       {editModal && <PersonnelModal setEditModal={setEditModal} info={info} />}
     </div>
   );

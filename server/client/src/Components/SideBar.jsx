@@ -28,6 +28,11 @@ const SideBar = () => {
           <Link to='/manage'>
             <li className={path === '/manage' && 'active'}>회원 관리</li>
           </Link>
+          <Link to='/admin-manage'>
+            <li className={path === '/admin-manage' && 'active'}>
+              관리자 관리
+            </li>
+          </Link>
           <Link to='/inquiry'>
             <li className={path === '/inquiry' && 'active'}>문의 사항 관리</li>
           </Link>
@@ -41,7 +46,9 @@ const SideBar = () => {
             <li className={path === '/product' && 'active'}>상품 관리</li>
           </Link>
           <Link to='/usa-cache'>
-            <li className={path === '/usa-cache' && 'active'}>해외 데이터 캐시 관리</li>
+            <li className={path === '/usa-cache' && 'active'}>
+              해외 데이터 캐시 관리
+            </li>
           </Link>
           {/* <Link to='/popup'>
             <li className={path === '/popup' && 'active'}>팝업 관리</li>

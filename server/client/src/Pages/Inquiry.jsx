@@ -135,7 +135,9 @@ const Inquiry = () => {
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>
       {modal ? <InquiryDetail inquiryId={id} setModal={setModal} /> : ''}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </div>
   );
 };
