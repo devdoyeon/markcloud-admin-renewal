@@ -1,7 +1,33 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { changeState } from 'JS/common';
+import { createService, editService } from 'JS/API';
 
 const ServiceModal = ({ mode, setModal, info, setInfo }) => {
+  const [origin, setOrigin] = useState('');
+
+  const newService = async () => {
+    const result = await createService(info);
+    if (typeof result === 'object') {
+      setInfo({
+        service_code: '',
+        service_name: '',
+      });
+      setModal(false);
+    }
+  };
+
+  const modifyService = async () => {
+    const result = await editService(origin, info);
+    if (typeof result === 'object') {
+      console.log(result);
+    }
+  };
+
+  useEffect(() => {
+    if (mode === 'edit') setOrigin(info.service_code);
+    else return;
+  }, [mode]);
+
   return (
     <div className='modal-background'>
       <div className='modal service'>
@@ -12,9 +38,9 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
             <input
               type='text'
               placeholder='서비스 코드를 입력해 주세요.'
-              value={info?.code}
+              value={info?.service_code}
               onChange={e =>
-                changeState(setInfo, 'code', Number(e.target.value))
+                changeState(setInfo, 'service_code', Number(e.target.value))
               }
             />
           </div>
@@ -23,20 +49,29 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
             <input
               type='text'
               placeholder='서비스명을 입력해 주세요.'
-              value={info?.name}
-              onChange={e => changeState(setInfo, 'name', e.target.value)}
+              value={info?.service_name}
+              onChange={e =>
+                changeState(setInfo, 'service_name', e.target.value)
+              }
             />
           </div>
         </div>
         <div className='btn-wrap row'>
-          {mode === 'apply' || <button>수정</button>}
-          <button>{mode === 'apply' ? '등록' : '삭제'}</button>
+          {mode === 'apply' || <button onClick={modifyService}>수정</button>}
+          <button
+            onClick={() => {
+              if (mode === 'apply') {
+                newService();
+              }
+            }}>
+            {mode === 'apply' ? '등록' : '삭제'}
+          </button>
           <button
             onClick={() => {
               setModal(false);
               setInfo({
-                code: '',
-                name: '',
+                service_code: '',
+                service_name: '',
               });
             }}>
             닫기

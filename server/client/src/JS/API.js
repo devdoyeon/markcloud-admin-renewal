@@ -324,3 +324,31 @@ export const removeCacheJson = async () => {
     return await errorHandling(error);
   }
 };
+
+//~ 서비스 관리
+// 서비스 목록 불러오기
+export const getServices = async () => {
+  try {
+    return await axios.get(`/api/admin/service`, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 서비스 생성
+export const createService = async data => {
+  try {
+    return await axios.post('/api/admin/service', data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 서비스 수정
+export const editService = async (code, data) => {
+  try {
+    return await axios.post(`/api/admin/service/edit/${code}`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};

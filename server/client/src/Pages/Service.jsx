@@ -1,28 +1,34 @@
 import { useState, useEffect } from 'react';
 import SideBar from 'Components/SideBar';
 import ServiceModal from 'Components/ServiceModal';
+import { getServices } from 'JS/API';
 
 const Service = () => {
   const [mode, setMode] = useState('apply');
   const [modal, setModal] = useState(false);
+  const [list, setList] = useState({});
   const [info, setInfo] = useState({
-    code: '',
-    name: '',
+    service_code: '',
+    service_name: '',
   });
+  let prevent = false;
 
   const getKeyByValue = (obj, value) => {
     return Object.keys(obj).find(key => obj[key] === value);
   };
 
-  const serviceObj = {
-    100: 'MarkCloud',
-    110: 'MarkView',
-    120: 'MarkGroupWare',
-    130: 'MarkLink',
+  const serviceList = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getServices();
+    if (typeof result === 'object') setList(result?.data?.data);
   };
 
   const renderServiceList = () => {
-    return Object.values(serviceObj).reduce((acc, service) => {
+    return Object.values(list).reduce((acc, service) => {
       return (
         <>
           {acc}
@@ -30,19 +36,23 @@ const Service = () => {
             className='serviceBox'
             onClick={() => {
               setInfo({
-                code: getKeyByValue(serviceObj, service),
-                name: service,
+                service_code: getKeyByValue(list, service),
+                service_name: service,
               });
               setMode('edit');
               setModal(true);
             }}>
-            <span>서비스 코드: {getKeyByValue(serviceObj, service)}</span>
+            <span>서비스 코드: {getKeyByValue(list, service)}</span>
             {service}
           </div>
         </>
       );
     }, <></>);
   };
+
+  useEffect(() => {
+    if (!modal) serviceList();
+  }, [modal]);
 
   return (
     <>
