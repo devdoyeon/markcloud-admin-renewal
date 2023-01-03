@@ -63,6 +63,7 @@
       font-size: 20px;
       margin-top: 50px;
       padding: 10px;
+      
     }
     .btn-wrap {
       margin-top: 10px;
@@ -412,6 +413,9 @@
       margin-top: 10px;
       min-height: 300px;
       border-radius: 8px;
+      img {
+        width: 100%;
+      }
     }
     > .answer-wrap,
     .view-answer-wrap {
