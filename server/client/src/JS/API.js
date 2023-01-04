@@ -380,3 +380,21 @@ export const applyMerchant = async data => {
     return await errorHandling(error);
   }
 };
+
+// 상품 수정
+export const editMerchant = async (id, data) => {
+  try {
+    return await axios.post(`/api/admin/merchants/edit/${id}`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 상품 삭제
+export const deleteMerchant = async id => {
+  try {
+    return await axios.post(`/api/admin/merchants/delete/${id}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
