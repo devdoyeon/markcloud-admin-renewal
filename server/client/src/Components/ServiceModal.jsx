@@ -20,7 +20,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         '서비스 코드를 입력해 주세요.'
       );
     else if (info?.service_name.trim() === '')
-      commonModalSetting(
+      return commonModalSetting(
         setAlertBox,
         true,
         'alert',

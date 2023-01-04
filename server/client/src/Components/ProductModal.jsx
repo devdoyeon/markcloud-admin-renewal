@@ -33,14 +33,19 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
 
   const newMerchant = async () => {
     if (info.merchant_code.trim() === '')
-      commonModalSetting(
+      return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '상품 코드를 입력해 주세요.'
       );
     else if (info.merchant_name.trim() === '')
-      commonModalSetting(setAlertBox, true, 'alert', '상품명을 입력해 주세요.');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '상품명을 입력해 주세요.'
+      );
     else {
       const obj = { ...info };
       if (!obj.merchant_price) obj.merchant_price = '0';
