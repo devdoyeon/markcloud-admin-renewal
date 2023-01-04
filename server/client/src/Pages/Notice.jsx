@@ -21,6 +21,7 @@ const Notice = () => {
   const [editor, setEditor] = useState(false);
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -40,6 +41,25 @@ const Notice = () => {
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+    } else return catchError(result, navigate, setAlertBox);
+  };
+
+  const deleteNotices = async () => {
+    const data = { items: idArr };
+    const result = await noticeMultiDelete(data);
+    if (typeof result === 'object') {
+      commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
+      $('.notice-all-check').prop('checked', false);
+      $('.notice-check').prop('checked', false);
+      changeState(setPageInfo, 'page', 1);
+      setIdArr([]);
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
     } else return catchError(result, navigate, setAlertBox);
   };
 
@@ -154,12 +174,15 @@ const Notice = () => {
                     'alert',
                     '삭제할 글을 선택해 주세요.'
                   );
-                commonModalSetting(
-                  setAlertBox,
-                  true,
-                  'confirm',
-                  '글을 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
-                );
+                else {
+                  setAlert('deleteConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '글을 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
+                  );
+                }
               }}>
               삭제
             </button>
@@ -207,22 +230,10 @@ const Notice = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={async () => {
-            const data = { items: idArr };
-            const result = await noticeMultiDelete(data);
-            if (typeof result === 'object') {
-              commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
-              $('.notice-all-check').prop('checked', false);
-              $('.notice-check').prop('checked', false);
-              changeState(setPageInfo, 'page', 1);
-              setIdArr([]);
-              getNotice();
-            } else return catchError(result, navigate, setAlertBox);
-          }}
-          failFn={() => {
-            $('.notice-all-check').prop('checked', false);
-            $('.notice-check').prop('checked', false);
-            return setIdArr([]);
+          okFn={() => {
+            if (alert === 'deleteConfirm') deleteNotices();
+            else if (alert === 'completeDelete') getNotice();
+            else return;
           }}
         />
       )}

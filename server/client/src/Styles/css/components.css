@@ -339,11 +339,12 @@
 }
 .service .service-wrap .serviceBox span {
   position: absolute;
-  left: 10px;
-  top: 0;
+  left: 15px;
+  top: 10px;
   display: inline-block;
   color: #858585;
   font-size: 14px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
 }
 .service .service-wrap .serviceBox:hover {
   transition: all 0.3s;

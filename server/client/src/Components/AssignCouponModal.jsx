@@ -5,7 +5,7 @@ import CommonModal from './CommonModal';
 import { catchError, commonModalSetting, enterFn, outClick } from 'JS/common';
 import { applyToken } from 'JS/API';
 
-const AssignCouponModal = ({ setModal, pk }) => {
+const AssignCouponModal = ({ setCouponModal, pk }) => {
   const [days, setDays] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -31,13 +31,13 @@ const AssignCouponModal = ({ setModal, pk }) => {
     const result = await applyToken(data);
     if (typeof result === 'object') {
       alert('쿠폰 발급이 완료되었습니다.');
-      setModal(false);
+      setCouponModal(false);
       setDays('');
     } else return catchError(result, navigate, setAlertBox);
   };
 
   useEffect(() => {
-    window.addEventListener('click', e => outClick(e, setModal));
+    window.addEventListener('click', e => outClick(e, setCouponModal));
   });
 
   return (
@@ -46,7 +46,7 @@ const AssignCouponModal = ({ setModal, pk }) => {
         <div className='modal coupon'>
           <div className='topBar'>
             <h2>쿠폰 발급</h2>
-            <div onClick={() => setModal(false)}>
+            <div onClick={() => setCouponModal(false)}>
               <FaWindowClose />
             </div>
           </div>
@@ -64,13 +64,13 @@ const AssignCouponModal = ({ setModal, pk }) => {
             <div className='footer'>
               <div>
                 <button onClick={couponIssue}>발급</button>
-                <button onClick={() => setModal(false)}>취소</button>
+                <button onClick={() => setCouponModal(false)}>취소</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && <CommonModal setCouponModal={setAlertBox} modal={alertBox} />}
     </>
   );
 };

@@ -35,6 +35,9 @@ const errorHandling = async error => {
       return 'serverError';
     case 404:
       return 'notFound';
+    case 501:
+      if (detail === 'IntegrityError') return 'integrityError';
+      break;
     case 504:
       return 'renderErrorPage';
     default:
@@ -390,7 +393,8 @@ export const editMerchant = async (id, data) => {
   }
 };
 
-export const deleteMerchants = async arr => {
+// 상품 다중 삭제
+export const productMultiDelete = async arr => {
   try {
     return await axios.post(`/api/admin/merchants/delete`, arr, header());
   } catch (error) {

@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CommonModal from './CommonModal';
-import { changeState, commonModalSetting, enterFn } from 'JS/common';
+import {
+  changeState,
+  commonModalSetting,
+  enterFn,
+  catchError,
+  outClick
+} from 'JS/common';
 import { createService, editService, deleteService } from 'JS/API';
 
 const ServiceModal = ({ mode, setModal, info, setInfo }) => {
@@ -10,6 +17,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
     context: '',
     bool: false,
   });
+  const navigate = useNavigate();
 
   const newService = async () => {
     if (info?.service_code.trim() === '')
@@ -34,7 +42,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
           service_name: '',
         });
         setModal(false);
-      }
+      } else return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -46,7 +54,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         service_name: '',
       });
       setModal(false);
-    }
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const removeService = async () => {
@@ -57,13 +65,17 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         service_name: '',
       });
       setModal(false);
-    }
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   useEffect(() => {
     if (mode === 'edit') setOrigin(info.service_code);
     else return;
   }, [mode]);
+
+  useEffect(() => {
+    window.addEventListener('click', e => outClick(e, setModal));
+  }, [])
 
   return (
     <>

@@ -1,7 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CommonModal from './CommonModal';
-import { changeState, commonModalSetting, outClick } from 'JS/common';
-import { getServices, applyMerchant, editMerchant } from 'JS/API';
+import {
+  changeState,
+  commonModalSetting,
+  outClick,
+  enterFn,
+  catchError,
+} from 'JS/common';
+import {
+  getServices,
+  applyMerchant,
+  editMerchant,
+  deleteMerchant,
+} from 'JS/API';
 
 const ProductModal = ({ setModal, mode, productInfo }) => {
   const [services, setServices] = useState([]);
@@ -11,14 +23,16 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     service_code: 100,
     merchant_code: '',
     merchant_name: '',
-    merchant_price: '',
+    merchant_price: 0,
   });
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
   });
   let prevent = false;
+  const navigate = useNavigate();
 
   const serviceList = async () => {
     if (prevent) return;
@@ -30,7 +44,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     if (typeof result === 'object') {
       setServices(Object.keys(result?.data?.data));
       setServiceInfo(result?.data?.data);
-    }
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const newMerchant = async () => {
@@ -62,7 +76,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
           merchant_price: '',
         });
         setModal(false);
-      }
+      } else return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -95,8 +109,18 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
           merchant_price: '',
         });
         setModal(false);
-      }
+      } else return catchError(result, navigate, setAlertBox);
     }
+  };
+
+  const comma = str => {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+  };
+
+  const unComma = str => {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
   };
 
   useEffect(() => {
@@ -142,6 +166,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'merchant_code', e.target.value)
                 }
+                onKeyDown={e =>
+                  enterFn(e, mode === 'apply' ? newMerchant : modifyMerchant)
+                }
               />
             </div>
             <div className='row'>
@@ -153,18 +180,26 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'merchant_name', e.target.value)
                 }
+                onKeyDown={e =>
+                  enterFn(e, mode === 'apply' ? newMerchant : modifyMerchant)
+                }
               />
             </div>
             <div className='row'>
               <span>상품 가격</span>
               <input
                 type='text'
-                value={Number(
-                  info.merchant_price.replaceAll(',', '')
-                ).toLocaleString()}
+                value={info.merchant_price}
                 placeholder='상품 가격을 입력해 주세요.'
                 onChange={e =>
-                  changeState(setInfo, 'merchant_price', e.target.value)
+                  changeState(
+                    setInfo,
+                    'merchant_price',
+                    comma(unComma(e.target.value))
+                  )
+                }
+                onKeyDown={e =>
+                  enterFn(e, mode === 'apply' ? newMerchant : modifyMerchant)
                 }
               />
             </div>
@@ -173,7 +208,22 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
             <button onClick={mode === 'apply' ? newMerchant : modifyMerchant}>
               {mode === 'apply' ? '등록' : '수정'}
             </button>
-            {mode === 'edit' ? <button>삭제</button> : ''}
+            {mode === 'edit' ? (
+              <button
+                onClick={() => {
+                  setAlert('deleteConfirm');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '정말 삭제하시겠습니까?<br/>삭제된 서비스는 복구할 수 없습니다.'
+                  );
+                }}>
+                삭제
+              </button>
+            ) : (
+              ''
+            )}
             <button onClick={() => setModal(false)}>닫기</button>
           </div>
         </div>
@@ -182,7 +232,30 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
+          okFn={async () => {
+            if (alert === 'deleteConfirm') {
+              const result = await deleteMerchant(info?.id);
+              if (typeof result === 'object') {
+                setAlert('completeDelete');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'alert',
+                  '정상적으로 삭제되었습니다.'
+                );
+                return;
+              }
+            } else if (alert === 'completeDelete') {
+              setInfo({
+                id: 0,
+                service_code: 100,
+                merchant_code: '',
+                merchant_name: '',
+                merchant_price: '',
+              });
+              setModal(false);
+            } else return;
+          }}
           failFn={() => {}}
         />
       )}

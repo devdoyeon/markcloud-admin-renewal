@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import ServiceModal from 'Components/ServiceModal';
+import CommonModal from 'Components/CommonModal';
 import { getServices } from 'JS/API';
+import { catchError } from 'JS/common';
 
 const Service = () => {
   const [mode, setMode] = useState('apply');
@@ -12,6 +15,12 @@ const Service = () => {
     service_name: '',
   });
   let prevent = false;
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+  });
+  const navigate = useNavigate();
 
   const getKeyByValue = (obj, value) => {
     return Object.keys(obj).find(key => obj[key] === value);
@@ -25,6 +34,7 @@ const Service = () => {
     }, 200);
     const result = await getServices();
     if (typeof result === 'object') setList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox);
   };
 
   const renderServiceList = () => {
@@ -82,6 +92,9 @@ const Service = () => {
         />
       ) : (
         ''
+      )}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
       )}
     </>
   );

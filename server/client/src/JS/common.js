@@ -90,7 +90,8 @@ export const maskingInfo = (type, str) => {
     else if (str.length >= 4) return `${str.slice(0, 1)}**${str.slice(3)}`;
   } else if (type === 'id') {
     if (str.length <= 6)
-      return `${str.slice(0, 2)}${'*'.repeat(Number(str.length) - 2)}`;
+      if (str.length < 3) return str;
+      else return `${str.slice(0, 2)}${'*'.repeat(Number(str.length) - 2)}`;
     else return `${str.slice(0, 4)}${'*'.repeat(Number(str.length) - 4)}`;
   }
 };

@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import $ from 'jquery';
 import SideBar from 'Components/SideBar';
 import CommonModal from 'Components/CommonModal';
 import ProductModal from '../Components/ProductModal';
-import { commonModalSetting } from 'JS/common';
-import { getMerchant } from 'JS/API';
+import { commonModalSetting, changeState, catchError } from 'JS/common';
+import { getMerchant, productMultiDelete } from 'JS/API';
 
 const Product = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -15,6 +16,7 @@ const Product = () => {
   const [modal, setModal] = useState(false);
   const [productArr, setProductArr] = useState([]);
   const [merchantArr, setMerchantArr] = useState([]);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -23,8 +25,9 @@ const Product = () => {
   const [productInfo, setProductInfo] = useState({});
   const [mode, setMode] = useState('');
   let prevent = false;
+  const navigate = useNavigate();
 
-  const getList = async () => {
+  const getProduct = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
@@ -32,6 +35,7 @@ const Product = () => {
     }, 200);
     const result = await getMerchant();
     if (typeof result === 'object') setMerchantArr(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox);
   };
 
   const checkAll = () => {
@@ -48,6 +52,26 @@ const Product = () => {
       $('.product-check').prop('checked', false);
       setProductArr([]);
     }
+  };
+
+  const deleteMultiple = async () => {
+    const data = { items: productArr }; // 데이터
+    const result = await productMultiDelete(data); // API 호출
+    if (typeof result === 'object') {
+      $('.product-all-check').prop('checked', false);
+      $('.product-check').prop('checked', false);
+      changeState(setPageInfo, 'page', 1); // 페이지 리셋
+      setProductArr([]);
+      getProduct(); // 상품 리스트 불러오기
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
+      return;
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const renderTableBody = () => {
@@ -91,7 +115,7 @@ const Product = () => {
                   type='checkbox'
                   className='product-check'
                   onChange={checkEach}
-                  value={merchant_code}
+                  value={id}
                 />
               </td>
               <td onClick={onModal}>{service_code}</td>
@@ -109,7 +133,7 @@ const Product = () => {
   };
 
   useEffect(() => {
-    if (!modal) getList();
+    if (!modal) getProduct();
   }, [modal]);
 
   return (
@@ -151,15 +175,17 @@ const Product = () => {
                       'alert',
                       '삭제하실 서비스를 선택해 주세요.'
                     );
-                  else
+                  else {
+                    setAlert('multipleDelete');
                     commonModalSetting(
                       setAlertBox,
                       true,
                       'confirm',
                       '서비스를 삭제하면 다시 복구할 수 없습니다.<br/>정말 삭제하시겠습니까?'
                     );
+                  }
                 }}>
-                삭제
+                일괄 삭제
               </button>
             </div>
           </div>
@@ -189,17 +215,10 @@ const Product = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={async () => {
-            // const data = { items: productArr }; // 데이터
-            // const result = await productMultiDelete(data); // API 호출
-            // if (typeof result === 'object') {
-            commonModalSetting(setAlertBox, true, 'alert', '삭제되었습니다.');
-            $('.product-all-check').prop('checked', false);
-            $('.product-check').prop('checked', false);
-            // changeState(setPageInfo, 'page', 1); // 페이지 리셋
-            setProductArr([]);
-            // getProduct(); // 상품 리스트 불러오기
-            // } else return catchError(result, navigate, setAlertBox);
+          okFn={() => {
+            if (alert === 'multipleDelete') deleteMultiple();
+            else if (alert === 'completeDelete') setModal(false);
+            else return;
           }}
           failFn={() => {
             $('.product-all-check').prop('checked', false);

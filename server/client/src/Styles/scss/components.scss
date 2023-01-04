@@ -340,10 +340,11 @@
       cursor: pointer;
       position: relative;
       span {
-        @include position-style($top: 0, $left: 10px);
+        @include position-style($top: 10px, $left: 15px);
         display: inline-block;
         color: $gray01;
         font-size: 14px;
+        font-family: $middleFont;
       }
       @include flex-style(column);
       background-color: white;

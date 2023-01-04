@@ -19,6 +19,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -56,7 +57,13 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const delNotice = async () => {
     const result = await noticeDelete(noticeId);
     if (typeof result === 'object') {
-      setModal(false);
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
     } else return catchError(result, navigate, setAlertBox);
   };
 
@@ -121,14 +128,15 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
               </button>
               <button
                 className='btn'
-                onClick={() =>
+                onClick={() => {
+                  setAlert('deleteConfirm');
                   commonModalSetting(
                     setAlertBox,
                     true,
                     'confirm',
                     '해당 공지를 삭제하시겠습니까?'
-                  )
-                }>
+                  );
+                }}>
                 삭제
               </button>
             </div>
@@ -147,7 +155,11 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={delNotice}
+          okFn={() => {
+            if (alert === 'deleteConfirm') delNotice();
+            else if (alert === 'completeDelete') setModal(false);
+            else return;
+          }}
           failFn={() => {}}
         />
       )}
