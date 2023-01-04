@@ -63,7 +63,6 @@
       font-size: 20px;
       margin-top: 50px;
       padding: 10px;
-      
     }
     .btn-wrap {
       margin-top: 10px;
@@ -243,6 +242,7 @@
           transform: translateY(2px);
         }
       }
+      &.deleteBtn,
       &.searchBtn {
         border-right: 1px solid white;
       }
@@ -750,6 +750,72 @@
             box-shadow: 0 0 5px rgba($color: $gray, $alpha: 0.4);
             width: calc(100% - 100px);
             padding: 10px 5px;
+          }
+        }
+      }
+    }
+    &.applyAdmin {
+      .topBar {
+        h2 {
+          font-size: 35px;
+        }
+      }
+      button {
+        background-color: $gray;
+        color: white;
+        padding: 10px 15px;
+        font-family: $boldFont;
+        border-radius: 10px;
+        &.duplicateCheck {
+          width: 80px;
+          margin-left: 10px;
+        }
+        &.applyBtn {
+          margin-top: 100px;
+          padding: 10px 30px;
+          font-size: 16px;
+        }
+      }
+      .infoInput {
+        margin-top: 100px;
+        align-items: flex-start;
+        > .column {
+          align-items: flex-start;
+          &:first-child {
+            margin-right: 70px;
+          }
+          > .row {
+            margin-bottom: 20px;
+            span {
+              width: 100px;
+            }
+            input,
+            select {
+              &.idInput {
+                width: 200px;
+              }
+              box-shadow: 0 0 3px $gray03;
+              width: 290px;
+              padding: 10px 15px;
+              border-radius: 10px;
+              border: none;
+              background-color: white;
+            }
+            input[type='radio'] {
+              box-shadow: none;
+              width: 30px;
+            }
+            .genderBox {
+              cursor: pointer;
+              width: 135px;
+              box-shadow: 0 0 3px $gray03;
+              padding: 10px 15px;
+              margin-right: 20px;
+              border-radius: 10px;
+              &:last-child {
+                margin-right: 0;
+              }
+            }
           }
         }
       }

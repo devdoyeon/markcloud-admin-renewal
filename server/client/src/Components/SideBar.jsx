@@ -30,7 +30,7 @@ const SideBar = () => {
           </Link>
           <Link to='/admin-manage'>
             <li className={path === '/admin-manage' && 'active'}>
-              관리자 관리
+              관리자 계정 관리
             </li>
           </Link>
           <Link to='/inquiry'>

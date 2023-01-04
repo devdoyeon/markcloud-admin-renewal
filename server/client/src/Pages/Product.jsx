@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import $ from 'jquery';
 import SideBar from 'Components/SideBar';
 import CommonModal from 'Components/CommonModal';
 import ProductModal from '../Components/ProductModal';
 import { commonModalSetting } from 'JS/common';
+import { getMerchant } from 'JS/API';
 
 const Product = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -13,6 +14,7 @@ const Product = () => {
   });
   const [modal, setModal] = useState(false);
   const [productArr, setProductArr] = useState([]);
+  const [merchantArr, setMerchantArr] = useState([]);
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -20,57 +22,20 @@ const Product = () => {
   });
   const [productInfo, setProductInfo] = useState({});
   const [mode, setMode] = useState('');
+  let prevent = false;
 
-  const merchantArr = [
-    {
-      service_code: 110,
-      product_code: 'MVEVT',
-      product_name: '마크뷰 이벤트',
-      price: 0,
-    },
-    {
-      service_code: 110,
-      product_code: 'MV001',
-      product_name: '마크뷰 1일권',
-      price: 16000,
-    },
-    {
-      service_code: 110,
-      product_code: 'MV007',
-      product_name: '마크뷰 7일권',
-      price: 56000,
-    },
-    {
-      service_code: 110,
-      product_code: 'MV030',
-      product_name: '마크뷰 30일권',
-      price: 200000,
-    },
-    {
-      service_code: 110,
-      product_code: 'MV180',
-      product_name: '마크뷰 180일권',
-      price: 1200000,
-    },
-    {
-      service_code: 110,
-      product_code: 'MV365',
-      product_name: '마크뷰 365일권',
-      price: 2000000,
-    },
-    {
-      service_code: 120,
-      product_code: 'GW180',
-      product_name: '마크그룹웨어 180일권',
-      price: 1200000,
-    },
-    {
-      service_code: 120,
-      product_code: 'GW365',
-      product_name: '마크그룹웨어 365일권',
-      price: 2000000,
-    },
-  ];
+  const getList = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getMerchant();
+    if (typeof result === 'object') {
+      setMerchantArr(result?.data?.data)
+      console.log(result);
+    }
+  };
 
   const checkAll = () => {
     let arr = [];
@@ -104,7 +69,7 @@ const Product = () => {
       }
     };
     return merchantArr.reduce(
-      (acc, { service_code, product_code, product_name, price }) => {
+      (acc, { service_code, merchant_code, merchant_name, merchant_price }) => {
         return (
           <>
             {acc}
@@ -113,9 +78,9 @@ const Product = () => {
                 setMode('edit');
                 setProductInfo({
                   service_code: service_code,
-                  product_code: product_code,
-                  product_name: product_name,
-                  price: price.toLocaleString(),
+                  merchant_code: merchant_code,
+                  merchant_name: merchant_name,
+                  merchant_price: merchant_price.toLocaleString(),
                 });
                 setModal(true);
               }}>
@@ -125,13 +90,13 @@ const Product = () => {
                   type='checkbox'
                   className='product-check'
                   onChange={checkEach}
-                  value={product_code}
+                  value={merchant_code}
                 />
               </td>
               <td>{service_code}</td>
-              <td>{product_code}</td>
-              <td>{product_name}</td>
-              <td className='price'>{price.toLocaleString()}원</td>
+              <td>{merchant_code}</td>
+              <td>{merchant_name}</td>
+              <td className='price'>{merchant_price.toLocaleString()}원</td>
             </tr>
           </>
         );
@@ -139,6 +104,10 @@ const Product = () => {
       <></>
     );
   };
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   return (
     <>

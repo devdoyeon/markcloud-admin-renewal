@@ -4,9 +4,9 @@ import { changeState } from 'JS/common';
 const ProductModal = ({ setModal, mode, productInfo }) => {
   const [info, setInfo] = useState({
     service_code: 100,
-    product_code: '',
-    product_name: '',
-    price: '',
+    merchant_code: '',
+    merchant_name: '',
+    merchant_price: '',
   });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
               value={info.product_code}
               placeholder='상품 코드를 입력해 주세요.'
               onChange={e =>
-                changeState(setInfo, 'product_code', e.target.value)
+                changeState(setInfo, 'merchant_code', e.target.value)
               }
             />
           </div>
@@ -49,7 +49,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
               value={info.product_name}
               placeholder='상품명을 입력해 주세요.'
               onChange={e =>
-                changeState(setInfo, 'product_name', e.target.value)
+                changeState(setInfo, 'merchant_name', e.target.value)
               }
             />
           </div>
@@ -59,7 +59,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
               type='text'
               value={Number(info.price.replaceAll(',', '')).toLocaleString()}
               placeholder='상품 가격을 입력해 주세요.'
-              onChange={e => changeState(setInfo, 'price', e.target.value)}
+              onChange={e =>
+                changeState(setInfo, 'merchant_price', e.target.value)
+              }
             />
           </div>
         </div>

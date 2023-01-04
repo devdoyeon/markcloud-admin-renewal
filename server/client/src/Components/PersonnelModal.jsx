@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
-import { outClick } from '../JS/common';
+import { outClick } from 'JS/common';
 
 const PersonnelModal = ({ setEditModal, info }) => {
   useEffect(() => {

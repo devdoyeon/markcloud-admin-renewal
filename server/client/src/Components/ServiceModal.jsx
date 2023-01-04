@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { changeState } from 'JS/common';
-import { createService, editService } from 'JS/API';
+import { createService, editService, deleteService } from 'JS/API';
 
 const ServiceModal = ({ mode, setModal, info, setInfo }) => {
   const [origin, setOrigin] = useState('');
@@ -19,7 +19,22 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
   const modifyService = async () => {
     const result = await editService(origin, info);
     if (typeof result === 'object') {
-      console.log(result);
+      setInfo({
+        service_code: '',
+        service_name: '',
+      });
+      setModal(false);
+    }
+  };
+
+  const removeService = async () => {
+    const result = await deleteService(info.service_code);
+    if (typeof result === 'object') {
+      setInfo({
+        service_code: '',
+        service_name: '',
+      });
+      setModal(false);
     }
   };
 
@@ -40,7 +55,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
               placeholder='서비스 코드를 입력해 주세요.'
               value={info?.service_code}
               onChange={e =>
-                changeState(setInfo, 'service_code', Number(e.target.value))
+                changeState(setInfo, 'service_code', e.target.value)
               }
             />
           </div>
@@ -58,12 +73,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         </div>
         <div className='btn-wrap row'>
           {mode === 'apply' || <button onClick={modifyService}>수정</button>}
-          <button
-            onClick={() => {
-              if (mode === 'apply') {
-                newService();
-              }
-            }}>
+          <button onClick={mode === 'apply' ? newService : removeService}>
             {mode === 'apply' ? '등록' : '삭제'}
           </button>
           <button

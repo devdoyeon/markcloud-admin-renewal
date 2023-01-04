@@ -5,6 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 import SideBar from 'Components/SideBar';
 import CommonModal from 'Components/CommonModal';
 import Pagination from 'Components/Pagination';
+import AdminApplyModal from 'Components/AdminApplyModal';
 import { getUserList } from 'JS/API';
 import {
   enterFn,
@@ -28,6 +29,7 @@ const AdminManage = () => {
     bool: false,
   });
   const [pk, setPk] = useState([]);
+  const [applyModal, setApplyModal] = useState(false);
   let prevent = false;
   const navigate = useNavigate();
 
@@ -157,7 +159,7 @@ const AdminManage = () => {
                 </span>
               </button>
               <button
-                className='couponBtn'
+                className='deleteBtn'
                 onClick={() => {
                   if (pk.length === 0)
                     return commonModalSetting(
@@ -168,6 +170,9 @@ const AdminManage = () => {
                     );
                 }}>
                 일괄 삭제
+              </button>
+              <button onClick={() => setApplyModal(true)}>
+                신규 관리자 등록
               </button>
             </div>
           </div>
@@ -207,6 +212,7 @@ const AdminManage = () => {
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
       </div>
+      {applyModal && <AdminApplyModal setModal={setApplyModal} />}
       {alertBox.bool && (
         <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
       )}

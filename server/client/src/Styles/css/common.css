@@ -280,7 +280,7 @@
 .topBar > div button > .searchIcon > svg {
   transform: translateY(2px);
 }
-.topBar > div button.searchBtn {
+.topBar > div button.deleteBtn, .topBar > div button.searchBtn {
   border-right: 1px solid white;
 }
 
@@ -815,6 +815,69 @@
   box-shadow: 0 0 5px rgba(67, 67, 67, 0.4);
   width: calc(100% - 100px);
   padding: 10px 5px;
+}
+.modal-background .modal.applyAdmin .topBar h2 {
+  font-size: 35px;
+}
+.modal-background .modal.applyAdmin button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 15px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 10px;
+}
+.modal-background .modal.applyAdmin button.duplicateCheck {
+  width: 80px;
+  margin-left: 10px;
+}
+.modal-background .modal.applyAdmin button.applyBtn {
+  margin-top: 100px;
+  padding: 10px 30px;
+  font-size: 16px;
+}
+.modal-background .modal.applyAdmin .infoInput {
+  margin-top: 100px;
+  align-items: flex-start;
+}
+.modal-background .modal.applyAdmin .infoInput > .column {
+  align-items: flex-start;
+}
+.modal-background .modal.applyAdmin .infoInput > .column:first-child {
+  margin-right: 70px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row {
+  margin-bottom: 20px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row span {
+  width: 100px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input,
+.modal-background .modal.applyAdmin .infoInput > .column > .row select {
+  box-shadow: 0 0 3px #cdcdcd;
+  width: 290px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input.idInput,
+.modal-background .modal.applyAdmin .infoInput > .column > .row select.idInput {
+  width: 200px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input[type=radio] {
+  box-shadow: none;
+  width: 30px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .genderBox {
+  cursor: pointer;
+  width: 135px;
+  box-shadow: 0 0 3px #cdcdcd;
+  padding: 10px 15px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .genderBox:last-child {
+  margin-right: 0;
 }
 
 @media screen and (max-width: 1440px) {

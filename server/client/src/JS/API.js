@@ -352,3 +352,22 @@ export const editService = async (code, data) => {
     return await errorHandling(error);
   }
 };
+
+//서비스 삭제
+export const deleteService = async code => {
+  try {
+    return await axios.post(`/api/admin/service/delete/${code}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 상품 관리
+// 상품 불러오기
+export const getMerchant = async () => {
+  try {
+    return await axios.get(`/api/admin/merchants`, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
