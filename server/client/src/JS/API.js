@@ -371,3 +371,12 @@ export const getMerchant = async () => {
     return await errorHandling(error);
   }
 };
+
+// 상품 등록
+export const applyMerchant = async data => {
+  try {
+    return await axios.post(`/api/admin/merchants`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};

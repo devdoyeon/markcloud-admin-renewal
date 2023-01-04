@@ -280,7 +280,7 @@
 .topBar > div button > .searchIcon > svg {
   transform: translateY(2px);
 }
-.topBar > div button.deleteBtn, .topBar > div button.searchBtn {
+.topBar > div button.deleteBtn, .topBar > div button.searchBtn, .topBar > div button.applyBtn {
   border-right: 1px solid white;
 }
 

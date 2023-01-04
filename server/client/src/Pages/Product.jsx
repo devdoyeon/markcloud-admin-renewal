@@ -31,10 +31,7 @@ const Product = () => {
       prevent = false;
     }, 200);
     const result = await getMerchant();
-    if (typeof result === 'object') {
-      setMerchantArr(result?.data?.data)
-      console.log(result);
-    }
+    if (typeof result === 'object') setMerchantArr(result?.data?.data);
   };
 
   const checkAll = () => {
@@ -106,8 +103,8 @@ const Product = () => {
   };
 
   useEffect(() => {
-    getList();
-  }, []);
+    if (!modal) getList();
+  }, [modal]);
 
   return (
     <>
@@ -132,6 +129,7 @@ const Product = () => {
                 <option value='50'>50개씩 보기</option>
               </select>
               <button
+                className='applyBtn'
                 onClick={() => {
                   setMode('apply');
                   setModal(true);
