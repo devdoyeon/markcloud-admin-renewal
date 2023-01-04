@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import CommonModal from './CommonModal';
-import { changeState, commonModalSetting } from 'JS/common';
+import { changeState, commonModalSetting, enterFn } from 'JS/common';
 import { createService, editService, deleteService } from 'JS/API';
 
 const ServiceModal = ({ mode, setModal, info, setInfo }) => {
@@ -80,6 +80,9 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'service_code', e.target.value)
                 }
+                onKeyDown={e =>
+                  enterFn(e, mode === 'apply' ? newService : modifyService)
+                }
               />
             </div>
             <div className='row'>
@@ -90,6 +93,9 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
                 value={info?.service_name}
                 onChange={e =>
                   changeState(setInfo, 'service_name', e.target.value)
+                }
+                onKeyDown={e =>
+                  enterFn(e, mode === 'apply' ? newService : modifyService)
                 }
               />
             </div>

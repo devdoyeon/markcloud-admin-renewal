@@ -66,21 +66,25 @@ const Product = () => {
       }
     };
     return merchantArr.reduce(
-      (acc, { service_code, merchant_code, merchant_name, merchant_price }) => {
+      (
+        acc,
+        { id, service_code, merchant_code, merchant_name, merchant_price }
+      ) => {
+        const onModal = () => {
+          setMode('edit');
+          setProductInfo({
+            id: id,
+            service_code: service_code,
+            merchant_code: merchant_code,
+            merchant_name: merchant_name,
+            merchant_price: merchant_price.toLocaleString(),
+          });
+          setModal(true);
+        };
         return (
           <>
             {acc}
-            <tr
-              onClick={() => {
-                setMode('edit');
-                setProductInfo({
-                  service_code: service_code,
-                  merchant_code: merchant_code,
-                  merchant_name: merchant_name,
-                  merchant_price: merchant_price.toLocaleString(),
-                });
-                setModal(true);
-              }}>
+            <tr>
               <td>
                 {' '}
                 <input
@@ -90,10 +94,12 @@ const Product = () => {
                   value={merchant_code}
                 />
               </td>
-              <td>{service_code}</td>
-              <td>{merchant_code}</td>
-              <td>{merchant_name}</td>
-              <td className='price'>{merchant_price.toLocaleString()}원</td>
+              <td onClick={onModal}>{service_code}</td>
+              <td onClick={onModal}>{merchant_code}</td>
+              <td onClick={onModal}>{merchant_name}</td>
+              <td onClick={onModal} className='price'>
+                {merchant_price.toLocaleString()}원
+              </td>
             </tr>
           </>
         );

@@ -390,6 +390,14 @@ export const editMerchant = async (id, data) => {
   }
 };
 
+export const deleteMerchants = async arr => {
+  try {
+    return await axios.post(`/api/admin/merchants/delete`, arr, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
 // 상품 삭제
 export const deleteMerchant = async id => {
   try {
