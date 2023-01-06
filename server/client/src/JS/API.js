@@ -57,6 +57,9 @@ const tokenReissue = async () => {
     removeCookie('myToken');
     setCookie('myToken', result.data.data.access_token, {
       path: '/',
+      domain: 'markcloud.co.kr',
+      secure: true,
+      sameSite: 'none',
     });
     window.location.reload();
   } catch (error) {

@@ -86,12 +86,16 @@ const AdminManage = () => {
             {acc}
             <tr>
               <td>
-                <input
-                  type='checkbox'
-                  className='coupon-check'
-                  value={user_pk}
-                  onChange={checkEach}
-                />
+                {is_active ? (
+                  <input
+                    type='checkbox'
+                    className='coupon-check'
+                    value={user_pk}
+                    onChange={checkEach}
+                  />
+                ) : (
+                  ''
+                )}
               </td>
               <td>{user_id}</td>
               <td>{name}</td>
@@ -122,7 +126,7 @@ const AdminManage = () => {
         <SideBar />
         <div className='content-wrap adminManage'>
           <div className='topBar'>
-            <h2>ADMIN MANAGE</h2>
+            <h2>ADMIN</h2>
             <div>
               <select
                 value={pageInfo.limit}

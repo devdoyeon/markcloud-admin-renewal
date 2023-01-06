@@ -80,9 +80,7 @@ const Manage = () => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
-  const applyCoupons = async () => {
-    
-  }
+  const applyCoupons = async () => {};
 
   const checkAll = () => {
     let arr = [];
@@ -116,6 +114,9 @@ const Manage = () => {
           event_status,
           created_at,
           is_active,
+          birthday,
+          phone,
+          email,
         }
       ) => {
         const couponCheck = () => {
@@ -141,9 +142,6 @@ const Manage = () => {
           }
         };
 
-        const phone = '010-5647-9689';
-        const email = 'doyeonyou@naver.com';
-
         return (
           <>
             {acc}
@@ -154,8 +152,11 @@ const Manage = () => {
                   name: maskingInfo('name', name),
                   department: department,
                   gender: gender,
-                  birth: '2002-11-26',
-                  phone: maskingInfo('phone', phone),
+                  birth: birthday,
+                  phone: maskingInfo(
+                    'phone',
+                    phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
+                  ),
                   email: maskingInfo('email', email),
                 });
                 setEditModal(true);
@@ -220,7 +221,7 @@ const Manage = () => {
       <SideBar />
       <div className='content-wrap manage'>
         <div className='topBar'>
-          <h2>MANAGE</h2>
+          <h2>MEMBER</h2>
           <div>
             <select
               value={pageInfo.limit}

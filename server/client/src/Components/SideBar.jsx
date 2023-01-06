@@ -111,7 +111,7 @@ const SideBar = () => {
           로그아웃
         </div>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />}
     </>
   );
 };
