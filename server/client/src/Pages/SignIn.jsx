@@ -54,15 +54,11 @@ const SignIn = () => {
       const { access_token, refresh_token } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
+        secure: false,
       });
       setCookie('rfToken', refresh_token, {
         path: '/',
-        domain: 'markcloud.co.kr',
-        secure: true,
-        sameSite: 'none',
+        secure: false,
       });
       //@ 아이디 저장 체크 여부 확인 후 체크 되어 있으면 저장
       if (check) {
