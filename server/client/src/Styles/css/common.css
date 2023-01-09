@@ -816,6 +816,9 @@
   width: calc(100% - 100px);
   padding: 10px 5px;
 }
+.modal-background .modal.applyAdmin {
+  overflow: hidden;
+}
 .modal-background .modal.applyAdmin .topBar h2 {
   font-size: 35px;
 }
@@ -882,6 +885,9 @@
 .modal-background .modal.applyAdmin .infoInput > .column > .row select.idInput,
 .modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput.idInput {
   width: 200px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput {
+  background-color: #f5f5f5;
 }
 .modal-background .modal.applyAdmin .infoInput > .column > .row input[type=radio] {
   box-shadow: none;

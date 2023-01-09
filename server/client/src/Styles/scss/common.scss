@@ -756,6 +756,7 @@
       }
     }
     &.applyAdmin {
+      overflow: hidden;
       .topBar {
         h2 {
           font-size: 35px;
@@ -820,6 +821,9 @@
               border-radius: 10px;
               border: none;
               background-color: white;
+            }
+            .fixedInput {
+              background-color: $gray05;
             }
             input[type='radio'] {
               box-shadow: none;

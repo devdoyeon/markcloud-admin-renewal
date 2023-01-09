@@ -31,7 +31,15 @@ const AdminManage = () => {
   const [mode, setMode] = useState('');
   const [pk, setPk] = useState([]);
   const [applyModal, setApplyModal] = useState(false);
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState({
+    user_id: '',
+    name: '',
+    pw: '',
+    gender: '',
+    birth: '',
+    phone: '',
+    email: '',
+  });
   let prevent = false;
   const navigate = useNavigate();
 
@@ -150,7 +158,15 @@ const AdminManage = () => {
 
   useEffect(() => {
     if (!applyModal) {
-      setInfo({});
+      setInfo({
+        user_id: '',
+        name: '',
+        pw: '',
+        gender: '',
+        birth: '',
+        phone: '',
+        email: '',
+      });
       userList();
     }
   }, [pageInfo.page, pageInfo.limit, applyModal]);

@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import CommonModal from './CommonModal';
 import { FaWindowClose } from 'react-icons/fa';
-import { outClick, changeState, commonModalSetting } from 'JS/common';
+import {
+  outClick,
+  changeState,
+  commonModalSetting,
+  regularExpression,
+  addHyphen,
+} from 'JS/common';
 import { idDuplicateCheck } from 'JS/API';
 
 const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
@@ -18,18 +24,80 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
   });
 
   const duplicateCheck = async () => {
-    if (info?.user_id.trim() === '')
-      commonModalSetting(setAlertBox, true, 'alert', '아이디를 입력해 주세요.');
+    if (info?.user_id?.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디를 입력해 주세요.'
+      );
+    else if (regularExpression('id', info?.id))
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디 형식이 잘못되었습니다.<br/>아이디는 4자리에서 30자리까지 가능합니다.'
+      );
     else {
       const result = await idDuplicateCheck(info?.user_id);
+      setRender(true);
       if (typeof result === 'object') {
-        setRender(true);
         setIdCheck(true);
       } else {
-        setRender(true);
         setIdCheck(false);
       }
     }
+  };
+
+  const applyAdmin = async () => {
+    if (!idCheck)
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디 중복확인을 해 주세요.'
+      );
+    else if (info?.pw.trim() === '')
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '비밀번호를 입력해 주세요.'
+      );
+    else if (regularExpression('pw', info?.pw))
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '비밀번호 형식이 잘못되었습니다.<br/>비밀번호는 특수문자를 포함하여<br/>8 ~ 20자리만 가능합니다.'
+      );
+    else if (info?.gender.trim() === '')
+      commonModalSetting(setAlertBox, true, 'alert', '성별을 선택해 주세요.');
+    else if (info?.phone.trim() === '')
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '전화번호를 입력해 주세요.'
+      );
+    else if (info?.phone?.length !== 13)
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '전화번호 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
+      );
+    else if (info?.name.trim() === '')
+      commonModalSetting(setAlertBox, true, 'alert', '성명을 입력해 주세요.');
+    else if (info?.email.trim() === '')
+      commonModalSetting(setAlertBox, true, 'alert', '이메일을 입력해 주세요.');
+    else if (regularExpression('email', info?.email))
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일의 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
+      );
   };
 
   return (
@@ -124,7 +192,9 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <input
                   type='text'
                   value={info?.phone}
-                  onChange={e => changeState(setInfo, 'phone', e.target.value)}
+                  onChange={e =>
+                    changeState(setInfo, 'phone', addHyphen(e.target.value))
+                  }
                 />
               </div>
               <div className='row'>
@@ -167,7 +237,9 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               </div>
             </div>
           </div>
-          <button className='applyBtn'>등록</button>
+          <button className='applyBtn' onClick={applyAdmin}>
+            등록
+          </button>
         </div>
       </div>
       {alertBox.bool && (
