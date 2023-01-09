@@ -67,11 +67,10 @@ const SignIn = () => {
     } else {
       //@ Error Handling
       const failCount = result?.split(',')[1];
-      if (result === 'wrongId') {
-        checkForm('wrongId', true);
-      } else if (result === `wrongPw,${failCount}`) {
+      if (result === 'wrongId') checkForm('wrongId', true);
+      else if (result === `wrongPw,${failCount}`)
         checkForm('wrongPw', true, failCount);
-      } else return catchError(result, navigate, setAlertBox);
+      else return catchError(result, navigate, setAlertBox);
     }
   };
 
