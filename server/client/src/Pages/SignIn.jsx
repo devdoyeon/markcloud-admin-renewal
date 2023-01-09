@@ -61,9 +61,8 @@ const SignIn = () => {
         secure: false,
       });
       //@ 아이디 저장 체크 여부 확인 후 체크 되어 있으면 저장
-      if (check) {
-        localStorage.setItem('save-id', userId);
-      } else localStorage.removeItem('save-id');
+      if (check) localStorage.setItem('save-id', userId);
+      else localStorage.removeItem('save-id');
       navigate('/home');
     } else {
       //@ Error Handling
