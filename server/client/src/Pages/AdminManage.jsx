@@ -28,8 +28,10 @@ const AdminManage = () => {
     context: '',
     bool: false,
   });
+  const [mode, setMode] = useState('');
   const [pk, setPk] = useState([]);
   const [applyModal, setApplyModal] = useState(false);
+  const [info, setInfo] = useState({});
   let prevent = false;
   const navigate = useNavigate();
 
@@ -64,7 +66,20 @@ const AdminManage = () => {
 
   const renderAdminList = () => {
     return user.reduce(
-      (acc, { user_id, name, is_active, created_at, user_pk }) => {
+      (
+        acc,
+        {
+          user_id,
+          name,
+          is_active,
+          created_at,
+          user_pk,
+          gender,
+          phone,
+          birthday,
+          email,
+        }
+      ) => {
         const checkEach = () => {
           let all = $('.coupon-check').length;
           let checked = $('.coupon-check:checked').length;
@@ -84,7 +99,20 @@ const AdminManage = () => {
         return (
           <>
             {acc}
-            <tr>
+            <tr
+              onClick={() => {
+                setMode('edit');
+                setApplyModal(true);
+                setInfo({
+                  user_id: user_id,
+                  name: name,
+                  pw: 'password',
+                  gender: gender,
+                  birth: birthday,
+                  phone: phone,
+                  email: email,
+                });
+              }}>
               <td>
                 {is_active ? (
                   <input
@@ -106,7 +134,11 @@ const AdminManage = () => {
               <td>{created_at.split('T')[0]}</td>
               <td>{is_active ? '' : '몰 랑'}</td>
               <td>
-                <button className='deleteBtn'>관리자 삭제</button>
+                {is_active ? (
+                  <button className='deleteBtn'>관리자 삭제</button>
+                ) : (
+                  ''
+                )}
               </td>
             </tr>
           </>
@@ -117,8 +149,11 @@ const AdminManage = () => {
   };
 
   useEffect(() => {
-    userList();
-  }, [pageInfo.page, pageInfo.limit]);
+    if (!applyModal) {
+      setInfo({});
+      userList();
+    }
+  }, [pageInfo.page, pageInfo.limit, applyModal]);
 
   return (
     <>
@@ -175,7 +210,11 @@ const AdminManage = () => {
                 }}>
                 일괄 삭제
               </button>
-              <button onClick={() => setApplyModal(true)}>
+              <button
+                onClick={() => {
+                  setMode('apply');
+                  setApplyModal(true);
+                }}>
                 신규 관리자 등록
               </button>
             </div>
@@ -216,7 +255,14 @@ const AdminManage = () => {
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
       </div>
-      {applyModal && <AdminApplyModal setModal={setApplyModal} />}
+      {applyModal && (
+        <AdminApplyModal
+          setModal={setApplyModal}
+          mode={mode}
+          info={info}
+          setInfo={setInfo}
+        />
+      )}
       {alertBox.bool && (
         <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
       )}

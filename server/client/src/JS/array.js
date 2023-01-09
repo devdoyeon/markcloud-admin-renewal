@@ -1,6 +1,6 @@
 export const errorList = {
   accessDenied: '접근 권한이 없습니다.',
-  tokenExpired: '토큰이 만료되었습니다.<br/>다시 로그인해 주세요.',
+  tokenExpired: '토큰이 만료되었습니다.\n다시 로그인해 주세요.',
   tokenError: '비정상적인 요청이 감지되어 로그아웃 합니다.',
   serverError: '잠시 후 다시 시도해 주세요.',
   duplicateLogin: '중복 로그인 되었습니다.<br/>다시 로그인해 주세요.',

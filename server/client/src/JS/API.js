@@ -28,6 +28,7 @@ const errorHandling = async error => {
       else if (detail === 'Days Limit Exceeded') return 'datePasses';
       else if (detail === 'Expiration Date Exceeds limit')
         return 'exceedCharOfDate';
+      else if (detail === 'Duplicated Id') return 'duplicateId'
       break;
     case 499:
       return 'tokenError';
@@ -406,6 +407,16 @@ export const productMultiDelete = async arr => {
 export const deleteMerchant = async id => {
   try {
     return await axios.post(`/api/admin/merchants/delete/${id}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 관리자 관리
+// 아이디 중복체크
+export const idDuplicateCheck = async id => {
+  try {
+    return await axios.post(`/api/auth/check/id-duplicate`, { user_id: id });
   } catch (error) {
     return await errorHandling(error);
   }

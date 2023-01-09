@@ -95,3 +95,23 @@ export const maskingInfo = (type, str) => {
     else return `${str.slice(0, 4)}${'*'.repeat(Number(str.length) - 4)}`;
   }
 };
+
+export const regularExpression = async (type, str) => {
+  let regExp;
+  switch (type) {
+    case 'id':
+      regExp = /^[a-z0-9]{4,30}$/;
+      break;
+    case 'pw':
+      regExp =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+      break;
+    case 'email':
+      regExp =
+        /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(kr|aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+      break;
+    default:
+      break;
+  }
+  return regExp.test(str.trim());
+};

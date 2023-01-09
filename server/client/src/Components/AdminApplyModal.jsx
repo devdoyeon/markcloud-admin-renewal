@@ -1,73 +1,179 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import CommonModal from './CommonModal';
 import { FaWindowClose } from 'react-icons/fa';
-import { outClick } from 'JS/common';
+import { outClick, changeState, commonModalSetting } from 'JS/common';
+import { idDuplicateCheck } from 'JS/API';
 
-const AdminApplyModal = ({ setModal }) => {
+const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
+  const [alertBox, setAlertBox] = useState({
+    mode: '',
+    context: '',
+    bool: false,
+  });
+  const [idCheck, setIdCheck] = useState('');
+  const [render, setRender] = useState(false);
+
   useEffect(() => {
     window.addEventListener('click', e => outClick(e, setModal));
   });
 
+  const duplicateCheck = async () => {
+    if (info?.user_id.trim() === '')
+      commonModalSetting(setAlertBox, true, 'alert', '아이디를 입력해 주세요.');
+    else {
+      const result = await idDuplicateCheck(info?.user_id);
+      if (typeof result === 'object') {
+        setRender(true);
+        setIdCheck(true);
+      } else {
+        setRender(true);
+        setIdCheck(false);
+      }
+    }
+  };
+
   return (
-    <div className='modal-background'>
-      <div className='modal applyAdmin'>
-        <div className='topBar'>
-          <h2>관리자 등록</h2>
-          <div onClick={() => setModal(false)}>
-            <FaWindowClose />
+    <>
+      <div className='modal-background'>
+        <div className='modal applyAdmin'>
+          <div className='topBar'>
+            <h2>{mode === 'apply' ? '관리자 등록' : '관리자 수정'}</h2>
+            <div onClick={() => setModal(false)}>
+              <FaWindowClose />
+            </div>
           </div>
+          <div className='row infoInput'>
+            <div className='column'>
+              <div className='row id'>
+                <span>아이디</span>
+                {mode === 'edit' ? (
+                  <span className='fixedInput'>{info?.user_id}</span>
+                ) : (
+                  <>
+                    <input
+                      type='text'
+                      className='idInput'
+                      value={info?.user_id}
+                      onChange={e => {
+                        setRender(false);
+                        changeState(setInfo, 'user_id', e.target.value);
+                      }}
+                    />
+                    <button className='duplicateCheck' onClick={duplicateCheck}>
+                      중복체크
+                    </button>
+                  </>
+                )}
+              </div>
+              {idCheck ? (
+                <span className={`idCheck ${render ? 'active canUsed' : ''}`}>
+                  사용할 수 있는 아이디입니다.
+                </span>
+              ) : (
+                <span className={`idCheck ${render ? 'active cantUsed' : ''}`}>
+                  사용할 수 없는 아이디입니다.
+                </span>
+              )}
+              <div className='row'>
+                <span>비밀번호</span>
+                <input
+                  type='password'
+                  value={info?.pw}
+                  onChange={e => changeState(setInfo, 'pw', e.target.value)}
+                />
+              </div>
+              <div className='row'>
+                <span>성별</span>
+                {mode === 'edit' ? (
+                  info?.gender === 'M' ? (
+                    <span className='fixedInput'>남성</span>
+                  ) : (
+                    <span className='fixedInput'>여성</span>
+                  )
+                ) : (
+                  <>
+                    <label className='row genderBox' htmlFor='male'>
+                      <p>남성</p>
+                      <input
+                        type='radio'
+                        name='gender'
+                        id='male'
+                        value='M'
+                        onChange={e =>
+                          changeState(setInfo, 'gender', e.target.value)
+                        }
+                      />
+                    </label>
+                    <label className='row genderBox' htmlFor='female'>
+                      <p>여성</p>
+                      <input
+                        type='radio'
+                        name='gender'
+                        id='female'
+                        value='F'
+                        onChange={e =>
+                          changeState(setInfo, 'gender', e.target.value)
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+              </div>
+              <div className='row'>
+                <span>전화번호</span>
+                <input
+                  type='text'
+                  value={info?.phone}
+                  onChange={e => changeState(setInfo, 'phone', e.target.value)}
+                />
+              </div>
+              <div className='row'>
+                <span>권한</span>
+                <select>
+                  <option value='super'>Super Admin</option>
+                  <option value='admin'>Admin</option>
+                </select>
+              </div>
+            </div>
+            <div className='column'>
+              <div className='row'>
+                <span>성명</span>
+                {mode === 'edit' ? (
+                  <span className='fixedInput'>{info?.name}</span>
+                ) : (
+                  <input
+                    type='text'
+                    value={info?.name}
+                    onChange={e => changeState(setInfo, 'name', e.target.value)}
+                  />
+                )}
+              </div>
+              <div className='row'>
+                <span>생년월일</span>
+                <input
+                  type='date'
+                  value={info?.birth}
+                  onChange={e => changeState(setInfo, 'birth', e.target.value)}
+                  readOnly={mode === 'edit'}
+                />
+              </div>
+              <div className='row'>
+                <span>이메일</span>
+                <input
+                  type='text'
+                  value={info?.email}
+                  onChange={e => changeState(setInfo, 'email', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <button className='applyBtn'>등록</button>
         </div>
-        <div className='row infoInput'>
-          <div className='column'>
-            <div className='row'>
-              <span>아이디</span>
-              <input type='text' className='idInput' />
-              <button className='duplicateCheck'>중복체크</button>
-            </div>
-            <div className='row'>
-              <span>비밀번호</span>
-              <input type='password' />
-            </div>
-            <div className='row'>
-              <span>성별</span>
-              <label className='row genderBox' htmlFor='male'>
-                <p>남성</p>
-                <input type='radio' name='gender' id='male' />
-              </label>
-              <label className='row genderBox' htmlFor='female'>
-                <p>여성</p>
-                <input type='radio' name='gender' id='female' />
-              </label>
-            </div>
-            <div className='row'>
-              <span>전화번호</span>
-              <input type='text' />
-            </div>
-            <div className='row'>
-              <span>권한</span>
-              <select>
-                <option value='super'>Super Admin</option>
-                <option value='admin'>Admin</option>
-              </select>
-            </div>
-          </div>
-          <div className='column'>
-            <div className='row'>
-              <span>성명</span>
-              <input type='text' />
-            </div>
-            <div className='row'>
-              <span>생년월일</span>
-              <input type='date' />
-            </div>
-            <div className='row'>
-              <span>이메일</span>
-              <input type='text' />
-            </div>
-          </div>
-        </div>
-        <button className='applyBtn'>등록</button>
       </div>
-    </div>
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
+    </>
   );
 };
 

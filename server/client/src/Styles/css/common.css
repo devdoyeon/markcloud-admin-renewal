@@ -839,6 +839,20 @@
   margin-top: 100px;
   align-items: flex-start;
 }
+.modal-background .modal.applyAdmin .infoInput .idCheck {
+  padding: 5px 0;
+  margin-left: 100px;
+  opacity: 0;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.active {
+  opacity: 1;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.canUsed {
+  color: #3c8fef;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.cantUsed {
+  color: #ff3838;
+}
 .modal-background .modal.applyAdmin .infoInput > .column {
   align-items: flex-start;
 }
@@ -851,8 +865,12 @@
 .modal-background .modal.applyAdmin .infoInput > .column > .row span {
   width: 100px;
 }
+.modal-background .modal.applyAdmin .infoInput > .column > .row.id {
+  margin-bottom: 0;
+}
 .modal-background .modal.applyAdmin .infoInput > .column > .row input,
-.modal-background .modal.applyAdmin .infoInput > .column > .row select {
+.modal-background .modal.applyAdmin .infoInput > .column > .row select,
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput {
   box-shadow: 0 0 3px #cdcdcd;
   width: 290px;
   padding: 10px 15px;
@@ -861,7 +879,8 @@
   background-color: white;
 }
 .modal-background .modal.applyAdmin .infoInput > .column > .row input.idInput,
-.modal-background .modal.applyAdmin .infoInput > .column > .row select.idInput {
+.modal-background .modal.applyAdmin .infoInput > .column > .row select.idInput,
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput.idInput {
   width: 200px;
 }
 .modal-background .modal.applyAdmin .infoInput > .column > .row input[type=radio] {

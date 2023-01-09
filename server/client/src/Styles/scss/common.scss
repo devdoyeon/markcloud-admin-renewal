@@ -780,18 +780,37 @@
       .infoInput {
         margin-top: 100px;
         align-items: flex-start;
+        .idCheck {
+          padding: 5px 0;
+          margin-left: 100px;
+          opacity: 0;
+          &.active {
+            opacity: 1;
+          }
+          &.canUsed {
+            color: $subColor;
+          }
+          &.cantUsed {
+            color: $highlight_red;
+          }
+        }
         > .column {
           align-items: flex-start;
           &:first-child {
             margin-right: 70px;
           }
+          
           > .row {
             margin-bottom: 20px;
             span {
               width: 100px;
             }
+            &.id {
+              margin-bottom: 0;
+            }
             input,
-            select {
+            select,
+            .fixedInput {
               &.idInput {
                 width: 200px;
               }

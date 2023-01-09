@@ -173,7 +173,7 @@ const Manage = () => {
               </td>
               <td>{maskingInfo('id', user_id)}</td>
               <td>{maskingInfo('name', name)}</td>
-              <td>{department}</td>
+              <td>{department === 'none' ? '없음' : department}</td>
               <td>{voucher_name}</td>
               <td>{statusArr[voucher_status]}</td>
               <td>{event_name}</td>

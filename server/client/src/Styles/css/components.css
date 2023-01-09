@@ -351,12 +351,6 @@
   box-shadow: 0 0 10px rgba(67, 67, 67, 0.7);
 }
 
-.adminManage .table-wrap tbody > tr {
-  cursor: default;
-}
-.adminManage .table-wrap tbody > tr:hover > td {
-  color: black;
-}
 .adminManage .table-wrap tbody > tr td button {
   background-color: #434343;
   color: white;

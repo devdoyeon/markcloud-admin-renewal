@@ -368,12 +368,6 @@
 .adminManage {
   .table-wrap {
     tbody > tr {
-      cursor: default;
-      &:hover {
-        > td {
-          color: black;
-        }
-      }
       td {
         button {
           background-color: $gray;
