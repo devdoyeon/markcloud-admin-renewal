@@ -238,7 +238,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
             </div>
           </div>
           <button className='applyBtn' onClick={applyAdmin}>
-            등록
+            {mode === 'edit' ? '수정' : '등록'}
           </button>
         </div>
       </div>

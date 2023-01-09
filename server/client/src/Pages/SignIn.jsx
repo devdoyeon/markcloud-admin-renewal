@@ -99,8 +99,9 @@ const SignIn = () => {
     } else if (formCheck.wrongPw.bool) {
       context = `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`;
       setUserPw('');
-    }
-    commonModalSetting(setAlertBox, true, 'alert', context);
+    } else context = '';
+    if (context.trim() !== '')
+      commonModalSetting(setAlertBox, true, 'alert', context);
   }, [formCheck]);
 
   return (
