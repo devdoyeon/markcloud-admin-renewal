@@ -28,7 +28,7 @@ const errorHandling = async error => {
       else if (detail === 'Days Limit Exceeded') return 'datePasses';
       else if (detail === 'Expiration Date Exceeds limit')
         return 'exceedCharOfDate';
-      else if (detail === 'Duplicated Id') return 'duplicateId'
+      else if (detail === 'Duplicated Id') return 'duplicateId';
       break;
     case 499:
       return 'tokenError';
@@ -417,6 +417,71 @@ export const deleteMerchant = async id => {
 export const idDuplicateCheck = async id => {
   try {
     return await axios.post(`/api/auth/check/id-duplicate`, { user_id: id });
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 목록 불러오기
+export const getAdmin = async ({ page, limit }, filter) => {
+  try {
+    return await axios.get(
+      `/api/admin/accounts?page=${page}&limit=${limit}&filter=${filter}`,
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 추가
+export const addAdmin = async data => {
+  try {
+    return await axios.post(`/api/admin/accounts`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 다중 삭제
+export const adminMultiDelete = async pkArr => {
+  try {
+    const query = {
+      items: pkArr,
+    };
+    return await axios.post(`/api/admin/accounts/delete`, query, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 삭제
+export const adminDelete = async pk => {
+  try {
+    return await axios.post(`/api/admin/accounts/delete/${pk}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 수정
+export const adminEdit = async ({
+  pk,
+  password,
+  admin_role,
+  birthday,
+  phone,
+  email,
+}) => {
+  try {
+    const query = {
+      password: password,
+      admin_role: admin_role,
+      birthday: birthday,
+      phone: phone.replaceAll('-', ''),
+      email: email,
+    };
+    return await axios.post(`/api/admin/accounts/edit/${pk}`, query, header());
   } catch (error) {
     return await errorHandling(error);
   }

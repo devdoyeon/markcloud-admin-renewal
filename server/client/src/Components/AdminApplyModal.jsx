@@ -8,9 +8,10 @@ import {
   regularExpression,
   addHyphen,
 } from 'JS/common';
-import { idDuplicateCheck } from 'JS/API';
+import { idDuplicateCheck, addAdmin, adminEdit } from 'JS/API';
 
 const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -31,7 +32,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
         'alert',
         '아이디를 입력해 주세요.'
       );
-    else if (regularExpression('id', info?.id))
+    else if (!regularExpression('id', info?.user_id))
       commonModalSetting(
         setAlertBox,
         true,
@@ -41,11 +42,16 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
     else {
       const result = await idDuplicateCheck(info?.user_id);
       setRender(true);
-      if (typeof result === 'object') {
-        setIdCheck(true);
-      } else {
-        setIdCheck(false);
-      }
+      if (typeof result === 'object') setIdCheck(true);
+      else setIdCheck(false);
+    }
+  };
+
+  const editAdmin = async () => {
+    const result = await adminEdit(info);
+    if (typeof result === 'object') {
+      setAlert('completeEdit');
+      commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
     }
   };
 
@@ -57,14 +63,14 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
         'alert',
         '아이디 중복확인을 해 주세요.'
       );
-    else if (info?.pw.trim() === '')
+    else if (info?.password.trim() === '')
       commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '비밀번호를 입력해 주세요.'
       );
-    else if (regularExpression('pw', info?.pw))
+    else if (!regularExpression('pw', info?.password))
       commonModalSetting(
         setAlertBox,
         true,
@@ -91,13 +97,27 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
       commonModalSetting(setAlertBox, true, 'alert', '성명을 입력해 주세요.');
     else if (info?.email.trim() === '')
       commonModalSetting(setAlertBox, true, 'alert', '이메일을 입력해 주세요.');
-    else if (regularExpression('email', info?.email))
+    else if (!regularExpression('email', info?.email))
       commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '이메일의 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
       );
+    else {
+      const query = { ...info };
+      query.password = query.password.replaceAll('-', '');
+      const result = await addAdmin(query);
+      if (typeof result === 'object') {
+        setAlert('completeApply');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '등록이 완료되었습니다.'
+        );
+      }
+    }
   };
 
   return (
@@ -146,8 +166,10 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <span>비밀번호</span>
                 <input
                   type='password'
-                  value={info?.pw}
-                  onChange={e => changeState(setInfo, 'pw', e.target.value)}
+                  value={info?.password}
+                  onChange={e =>
+                    changeState(setInfo, 'password', e.target.value)
+                  }
                 />
               </div>
               <div className='row'>
@@ -192,6 +214,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <input
                   type='text'
                   value={info?.phone}
+                  maxLength={13}
                   onChange={e =>
                     changeState(setInfo, 'phone', addHyphen(e.target.value))
                   }
@@ -199,8 +222,12 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               </div>
               <div className='row'>
                 <span>권한</span>
-                <select>
-                  <option value='super'>Super Admin</option>
+                <select
+                  value={info?.admin_role}
+                  onChange={e =>
+                    changeState(setInfo, 'admin_role', e.target.value)
+                  }>
+                  <option value='super_admin'>Super Admin</option>
                   <option value='admin'>Admin</option>
                 </select>
               </div>
@@ -222,8 +249,10 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <span>생년월일</span>
                 <input
                   type='date'
-                  value={info?.birth}
-                  onChange={e => changeState(setInfo, 'birth', e.target.value)}
+                  value={info?.birthday}
+                  onChange={e =>
+                    changeState(setInfo, 'birthday', e.target.value)
+                  }
                   readOnly={mode === 'edit'}
                 />
               </div>
@@ -237,13 +266,30 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               </div>
             </div>
           </div>
-          <button className='applyBtn' onClick={applyAdmin}>
-            {mode === 'edit' ? '수정' : '등록'}
-          </button>
+          <div>
+            <button
+              className='applyBtn'
+              onClick={mode === 'edit' ? editAdmin : applyAdmin}>
+              {mode === 'edit' ? '수정' : '등록'}
+            </button>
+          </div>
         </div>
       </div>
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (
+              alert === 'completeApply' ||
+              alert === 'completeDelete' ||
+              alert === 'completeEdit'
+            )
+              setModal(false);
+            else return;
+          }}
+          failFn={() => {}}
+        />
       )}
     </>
   );

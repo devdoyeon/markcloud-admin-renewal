@@ -6,7 +6,7 @@ import SideBar from 'Components/SideBar';
 import CommonModal from 'Components/CommonModal';
 import Pagination from 'Components/Pagination';
 import AdminApplyModal from 'Components/AdminApplyModal';
-import { getUserList } from 'JS/API';
+import { adminMultiDelete, getAdmin, adminDelete } from 'JS/API';
 import {
   enterFn,
   commonModalSetting,
@@ -23,22 +23,25 @@ const AdminManage = () => {
   const [user, setUser] = useState([]);
   const [select, setSelect] = useState('all');
   const [searchTxt, setSearchTxt] = useState('');
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
   });
   const [mode, setMode] = useState('');
-  const [pk, setPk] = useState([]);
+  const [pkArr, setPkArr] = useState([]);
+  const [pk, setPk] = useState(0);
   const [applyModal, setApplyModal] = useState(false);
   const [info, setInfo] = useState({
     user_id: '',
     name: '',
-    pw: '',
-    gender: '',
-    birth: '',
-    phone: '',
+    password: '',
     email: '',
+    gender: '',
+    birthday: '',
+    admin_role: 'super_admin',
+    phone: '',
   });
   let prevent = false;
   const navigate = useNavigate();
@@ -49,26 +52,54 @@ const AdminManage = () => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getUserList(pageInfo.page, pageInfo.limit);
+    const result = await getAdmin(pageInfo, select);
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
     } else return catchError(result, navigate, setAlertBox);
   };
 
+  const deleteAdmin = async () => {
+    const result = await adminDelete(pk);
+    if (typeof result === 'object') {
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
+      setPk(0);
+    }
+  };
+
+  const duplicateDelete = async () => {
+    const result = await adminMultiDelete(pkArr);
+    if (typeof result === 'object') {
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
+      setPkArr([]);
+    }
+  };
+
   const checkAll = () => {
     let arr = [];
-    if ($('.coupon-all-check').is(':checked')) {
-      $('.coupon-check').prop('checked', true);
-      const all = $('.coupon-check').length;
+    if ($('.admin-all-check').is(':checked')) {
+      $('.admin-check').prop('checked', true);
+      const all = $('.admin-check').length;
       for (let i = 0; i < all; i++) {
-        const val = document.getElementsByClassName('coupon-check')[i].value;
+        const val = document.getElementsByClassName('admin-check')[i].value;
         arr.push(val);
-        setPk(arr);
+        setPkArr(arr);
       }
     } else {
-      $('.coupon-check').prop('checked', false);
-      setPk([]);
+      $('.admin-check').prop('checked', false);
+      setPkArr([]);
     }
   };
 
@@ -77,73 +108,91 @@ const AdminManage = () => {
       (
         acc,
         {
+          id,
           user_id,
           name,
           is_active,
           created_at,
-          user_pk,
+          expired_at,
           gender,
           phone,
           birthday,
           email,
+          admin_role,
         }
       ) => {
         const checkEach = () => {
-          let all = $('.coupon-check').length;
-          let checked = $('.coupon-check:checked').length;
+          let all = $('.admin-check').length;
+          let checked = $('.admin-check:checked').length;
           let arr = [];
-          if (all !== checked) $('.coupon-all-check').prop('checked', false);
-          else $('.coupon-all-check').prop('checked', true);
+          if (all !== checked) $('.admin-all-check').prop('checked', false);
+          else $('.admin-all-check').prop('checked', true);
           for (let i = 0; i < all; i++) {
-            if (document.getElementsByClassName('coupon-check')[i].checked) {
+            if (document.getElementsByClassName('admin-check')[i].checked) {
               const val =
-                document.getElementsByClassName('coupon-check')[i].value;
+                document.getElementsByClassName('admin-check')[i].value;
               arr.push(val);
-              setPk(arr);
+              setPkArr(arr);
             }
           }
+        };
+
+        const onModal = () => {
+          setMode('edit');
+          setApplyModal(true);
+          setInfo({
+            pk: id,
+            user_id: user_id,
+            name: name,
+            password: 'samplePw',
+            gender: gender,
+            birthday: birthday,
+            phone: phone,
+            email: email,
+            admin_role: admin_role,
+          });
         };
 
         return (
           <>
             {acc}
-            <tr
-              onClick={() => {
-                setMode('edit');
-                setApplyModal(true);
-                setInfo({
-                  user_id: user_id,
-                  name: name,
-                  pw: 'password',
-                  gender: gender,
-                  birth: birthday,
-                  phone: phone,
-                  email: email,
-                });
-              }}>
+            <tr>
               <td>
                 {is_active ? (
                   <input
                     type='checkbox'
-                    className='coupon-check'
-                    value={user_pk}
+                    className='admin-check'
+                    value={id}
                     onChange={checkEach}
                   />
                 ) : (
                   ''
                 )}
               </td>
-              <td>{user_id}</td>
-              <td>{name}</td>
-              <td>관리자</td>
-              <td className={is_active ? 'user' : 'resign'}>
+              <td onClick={onModal}>{user_id}</td>
+              <td onClick={onModal}>{name}</td>
+              <td onClick={onModal}>관리자</td>
+              <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
                 {is_active ? '회원' : '탈퇴'}
               </td>
-              <td>{created_at.split('T')[0]}</td>
-              <td>{is_active ? '' : '몰 랑'}</td>
+              <td onClick={onModal}>{created_at}</td>
+              <td onClick={onModal}>{is_active ? '' : expired_at}</td>
               <td>
                 {is_active ? (
-                  <button className='deleteBtn'>관리자 삭제</button>
+                  <button
+                    className='deleteBtn'
+                    onClick={() => {
+                      setPk(id);
+                      setAlert('confirmDelete');
+                      commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'confirm',
+                        '정말 삭제하시겠습니까?'
+                      );
+                    }}>
+                    관리자 삭제
+                  </button>
                 ) : (
                   ''
                 )}
@@ -161,11 +210,12 @@ const AdminManage = () => {
       setInfo({
         user_id: '',
         name: '',
-        pw: '',
-        gender: '',
-        birth: '',
-        phone: '',
+        password: '',
         email: '',
+        gender: '',
+        birthday: '',
+        admin_role: 'super_admin',
+        phone: '',
       });
       userList();
     }
@@ -195,8 +245,8 @@ const AdminManage = () => {
               </select>
               <select value={select} onChange={e => setSelect(e.target.value)}>
                 <option value='all'>전체 보기</option>
-                <option value='user_id'>아이디</option>
-                <option value='username'>이름</option>
+                <option value='uid'>아이디</option>
+                <option value='name'>이름</option>
               </select>
               <input
                 type='text'
@@ -216,13 +266,22 @@ const AdminManage = () => {
               <button
                 className='deleteBtn'
                 onClick={() => {
-                  if (pk.length === 0)
+                  if (!pkArr.length)
                     return commonModalSetting(
                       setAlertBox,
                       true,
                       'alert',
                       '삭제할 대상을 선택해 주세요.'
                     );
+                  else {
+                    setAlert('confirmMultiDelete');
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'confirm',
+                      `${pkArr.length}명의 관리자를 정말 삭제하시겠습니까?<br/>삭제된 관리자는 복구할 수 없습니다.`
+                    );
+                  }
                 }}>
                 일괄 삭제
               </button>
@@ -252,7 +311,7 @@ const AdminManage = () => {
                   <th>
                     <input
                       type='checkbox'
-                      className='coupon-all-check'
+                      className='admin-all-check'
                       onChange={checkAll}
                     />
                   </th>
@@ -280,7 +339,17 @@ const AdminManage = () => {
         />
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'confirmMultiDelete') duplicateDelete();
+            else if (alert === 'completeDelete') userList();
+            else if (alert === 'confirmDelete') deleteAdmin();
+            else return;
+          }}
+          failFn={() => {}}
+        />
       )}
     </>
   );

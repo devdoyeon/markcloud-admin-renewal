@@ -833,10 +833,13 @@
   width: 80px;
   margin-left: 10px;
 }
-.modal-background .modal.applyAdmin button.applyBtn {
+.modal-background .modal.applyAdmin button.applyBtn, .modal-background .modal.applyAdmin button.deleteBtn {
   margin-top: 100px;
   padding: 10px 30px;
   font-size: 16px;
+}
+.modal-background .modal.applyAdmin button.deleteBtn {
+  margin-left: 20px;
 }
 .modal-background .modal.applyAdmin .infoInput {
   margin-top: 100px;

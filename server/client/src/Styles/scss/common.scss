@@ -772,10 +772,14 @@
           width: 80px;
           margin-left: 10px;
         }
-        &.applyBtn {
+        &.applyBtn,
+        &.deleteBtn {
           margin-top: 100px;
           padding: 10px 30px;
           font-size: 16px;
+        }
+        &.deleteBtn {
+          margin-left: 20px;
         }
       }
       .infoInput {
@@ -800,7 +804,7 @@
           &:first-child {
             margin-right: 70px;
           }
-          
+
           > .row {
             margin-bottom: 20px;
             span {

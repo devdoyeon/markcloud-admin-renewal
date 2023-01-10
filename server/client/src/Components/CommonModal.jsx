@@ -35,7 +35,7 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
         </div>
         <div className='content'></div>
         <div className='btn-wrap'>
-        <button
+          <button
             onClick={() => {
               okFn();
               commonModalSetting(setModal, false);

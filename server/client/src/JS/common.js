@@ -96,7 +96,7 @@ export const maskingInfo = (type, str) => {
   }
 };
 
-export const regularExpression = async (type, str) => {
+export const regularExpression = (type, str) => {
   let regExp;
   switch (type) {
     case 'id':
