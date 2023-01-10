@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CommonModal from './CommonModal';
 import { FaWindowClose } from 'react-icons/fa';
 import {
@@ -7,6 +8,7 @@ import {
   commonModalSetting,
   regularExpression,
   addHyphen,
+  catchError,
 } from 'JS/common';
 import { idDuplicateCheck, addAdmin, adminEdit } from 'JS/API';
 
@@ -19,11 +21,13 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
   });
   const [idCheck, setIdCheck] = useState('');
   const [render, setRender] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener('click', e => outClick(e, setModal));
   });
 
+  //= 아이디 중복체크
   const duplicateCheck = async () => {
     if (info?.user_id?.trim() === '')
       return commonModalSetting(
@@ -47,14 +51,16 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
     }
   };
 
+  //= 관리자 수정
   const editAdmin = async () => {
     const result = await adminEdit(info);
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
-    }
+    } else catchError(result, navigate, setAlertBox);
   };
 
+  //= 관리자 등록
   const applyAdmin = async () => {
     if (!idCheck)
       commonModalSetting(
@@ -116,7 +122,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
           'alert',
           '등록이 완료되었습니다.'
         );
-      }
+      } else catchError(result, navigate, setAlertBox);
     }
   };
 

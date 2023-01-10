@@ -46,6 +46,7 @@ const AdminManage = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 관리자 불러오기
   const userList = async () => {
     if (prevent) return;
     prevent = true;
@@ -59,6 +60,7 @@ const AdminManage = () => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
+  //= 관리자 삭제
   const deleteAdmin = async () => {
     const result = await adminDelete(pk);
     if (typeof result === 'object') {
@@ -70,9 +72,10 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPk(0);
-    }
+    } else catchError(result, navigate, setAlertBox);
   };
 
+  //= 관리자 다중 삭제
   const duplicateDelete = async () => {
     const result = await adminMultiDelete(pkArr);
     if (typeof result === 'object') {
@@ -84,9 +87,10 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPkArr([]);
-    }
+    } else catchError(result, navigate, setAlertBox);
   };
 
+  //= 전체 체크
   const checkAll = () => {
     let arr = [];
     if ($('.admin-all-check').is(':checked')) {
@@ -121,6 +125,7 @@ const AdminManage = () => {
           admin_role,
         }
       ) => {
+        //= 각자 체크
         const checkEach = () => {
           let all = $('.admin-check').length;
           let checked = $('.admin-check:checked').length;
@@ -137,6 +142,7 @@ const AdminManage = () => {
           }
         };
 
+        //= 모달 데이터 바인딩
         const onModal = () => {
           setMode('edit');
           setApplyModal(true);
