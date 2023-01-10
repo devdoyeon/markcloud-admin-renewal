@@ -43,6 +43,9 @@ const SideBar = () => {
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
+          <Link to='/popup'>
+            <li className={path === '/popup' && 'active'}>팝업 관리</li>
+          </Link>
           <Link to='/service'>
             <li className={path === '/service' && 'active'}>서비스 관리</li>
           </Link>
@@ -54,9 +57,6 @@ const SideBar = () => {
               해외 데이터 캐시 관리
             </li>
           </Link>
-          {/* <Link to='/popup'>
-            <li className={path === '/popup' && 'active'}>팝업 관리</li>
-          </Link> */}
           <li className='main'>이벤트</li>
           <Link to='/event'>
             <li className={path === '/event' && 'active'}>
@@ -93,17 +93,12 @@ const SideBar = () => {
             }>
             마크링크
           </li>
-          <li
-            onClick={() =>
-              commonModalSetting(
-                setAlertBox,
-                true,
-                'alert',
-                '서비스 준비 중입니다.'
-              )
-            }>
-            마크그룹웨어
-          </li>
+          <a
+            href='https://markcloud.co.kr/mark-groupware'
+            target='_blank'
+            rel='noopener noreferrer'>
+            <li>마크그룹웨어</li>
+          </a>
         </ul>
         <div
           className='logoutBtn'

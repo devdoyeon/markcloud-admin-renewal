@@ -48,13 +48,13 @@ const AdminManage = () => {
   const navigate = useNavigate();
 
   //= 관리자 불러오기
-  const userList = async () => {
+  const adminList = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getAdmin(pageInfo, select);
+    const result = await getAdmin(pageInfo, select, searchTxt);
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
@@ -222,7 +222,17 @@ const AdminManage = () => {
   };
 
   useEffect(() => {
-    if (!applyModal) {
+    if (localStorage.getItem('admin_role') === 'admin') {
+      setAlert('notAuthority');
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '접근 권한이 없습니다.'
+      );
+    }
+    setSearchTxt('');
+    if (!applyModal && select === 'all') {
       setInfo({
         user_id: '',
         name: '',
@@ -233,9 +243,9 @@ const AdminManage = () => {
         admin_role: 'super_admin',
         phone: '',
       });
-      userList();
+      adminList();
     }
-  }, [pageInfo.page, pageInfo.limit, applyModal]);
+  }, [pageInfo.page, pageInfo.limit, applyModal, select]);
 
   return (
     <>
@@ -273,7 +283,25 @@ const AdminManage = () => {
                   if (!alertBox.bool) enterFn(e, () => {});
                 }}
               />
-              <button className='searchBtn' onClick={() => {}}>
+              <button
+                className='searchBtn'
+                onClick={() => {
+                  if (select === 'all')
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'alert',
+                      '검색하실 검색어의 종류를 선택해 주세요.'
+                    );
+                  else if (searchTxt.trim() === '')
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'alert',
+                      '검색어를 입력해 주세요.'
+                    );
+                  adminList();
+                }}>
                 검색
                 <span className='searchIcon'>
                   <FaSearch />
@@ -360,8 +388,9 @@ const AdminManage = () => {
           modal={alertBox}
           okFn={() => {
             if (alert === 'confirmMultiDelete') duplicateDelete();
-            else if (alert === 'completeDelete') userList();
+            else if (alert === 'completeDelete') adminList();
             else if (alert === 'confirmDelete') deleteAdmin();
+            else if (alert === 'notAuthority') navigate('/home')
             else return;
           }}
           failFn={() => {}}

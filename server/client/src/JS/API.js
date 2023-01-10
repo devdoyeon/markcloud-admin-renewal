@@ -29,7 +29,7 @@ const errorHandling = async error => {
       else if (detail === 'Expiration Date Exceeds limit')
         return 'exceedCharOfDate';
       else if (detail === 'Duplicated Id') return 'duplicateId';
-      else if (detail === 'Retired User') return 'retired'
+      else if (detail === 'Retired User') return 'retired';
       break;
     case 499:
       return 'tokenError';
@@ -424,10 +424,14 @@ export const idDuplicateCheck = async id => {
 };
 
 // 관리자 목록 불러오기
-export const getAdmin = async ({ page, limit }, filter) => {
+export const getAdmin = async ({ page, limit }, filter, searchInput) => {
   try {
     return await axios.get(
-      `/api/admin/accounts?page=${page}&limit=${limit}&filter=${filter}`,
+      `/api/admin/accounts?page=${page}&limit=${limit}${
+        filter === 'all'
+          ? ''
+          : `&filter_type=${filter}&filter_val=${searchInput}`
+      }`,
       header()
     );
   } catch (error) {

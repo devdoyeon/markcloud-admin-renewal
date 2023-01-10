@@ -177,6 +177,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                       type='text'
                       className='idInput'
                       value={info?.user_id}
+                      placeholder='아이디를 입력해 주세요.'
                       onChange={e => {
                         setRender(false);
                         changeState(setInfo, 'user_id', e.target.value);
@@ -202,6 +203,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <input
                   type='password'
                   value={info?.password}
+                  placeholder='비밀번호를 입력해 주세요.'
                   onChange={e =>
                     changeState(setInfo, 'password', e.target.value)
                   }
@@ -250,6 +252,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                   type='text'
                   value={info?.phone}
                   maxLength={13}
+                  placeholder='전화번호를 입력해 주세요.'
                   onChange={e =>
                     changeState(setInfo, 'phone', addHyphen(e.target.value))
                   }
@@ -276,6 +279,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                   <input
                     type='text'
                     value={info?.name}
+                    placeholder='성명을 입력해 주세요.'
                     onChange={e => changeState(setInfo, 'name', e.target.value)}
                   />
                 )}
@@ -296,6 +300,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <input
                   type='text'
                   value={info?.email}
+                  placeholder='이메일을 입력해 주세요.'
                   onChange={e => changeState(setInfo, 'email', e.target.value)}
                 />
               </div>

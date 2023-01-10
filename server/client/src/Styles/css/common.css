@@ -907,6 +907,73 @@
 .modal-background .modal.applyAdmin .infoInput > .column > .row .genderBox:last-child {
   margin-right: 0;
 }
+.modal-background .modal.applyPopup {
+  height: 750px;
+}
+.modal-background .modal.applyPopup h2 {
+  font-size: 35px;
+}
+.modal-background .modal.applyPopup > .column {
+  margin-top: 30px;
+  width: 100%;
+}
+.modal-background .modal.applyPopup > .column > input[type=file] {
+  display: none;
+}
+.modal-background .modal.applyPopup > .column .imageInput {
+  background-color: #fafafa;
+  border: 2px dashed #434343;
+  border-radius: 16px;
+  width: 60%;
+  color: #434343;
+  height: 300px;
+  margin-bottom: 40px;
+  overflow-y: hidden;
+}
+.modal-background .modal.applyPopup > .column .imageInput > img {
+  max-width: 100%;
+}
+.modal-background .modal.applyPopup > .column .imageInput > svg {
+  font-size: 100px;
+}
+.modal-background .modal.applyPopup > .column .imageInput > span {
+  font-size: 13px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.applyPopup > .column .imageInput.enter {
+  background-color: #dddddd;
+}
+.modal-background .modal.applyPopup > .column > .row {
+  margin-bottom: 20px;
+}
+.modal-background .modal.applyPopup > .column > .row:last-child {
+  margin-bottom: 40px;
+}
+.modal-background .modal.applyPopup > .column > .row > span {
+  width: 100px;
+}
+.modal-background .modal.applyPopup > .column > .row input[type=text], .modal-background .modal.applyPopup > .column > .row .dateInput {
+  width: 400px;
+  box-shadow: 0 0 3px rgba(67, 67, 67, 0.4);
+  padding: 7px 10px;
+  border-radius: 8px;
+  min-height: 34px;
+}
+.modal-background .modal.applyPopup > .column > .row input[type=text] > input[type=time], .modal-background .modal.applyPopup > .column > .row .dateInput > input[type=time] {
+  margin-left: 30px;
+}
+.modal-background .modal.applyPopup .btnWrap > button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 20px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 10px;
+  font-size: 15px;
+  margin-right: 10px;
+}
+.modal-background .modal.applyPopup .btnWrap > button:last-child {
+  margin-right: 0;
+}
 
 @media screen and (max-width: 1440px) {
   .container .content-wrap {
