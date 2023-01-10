@@ -28,11 +28,15 @@ const SideBar = () => {
           <Link to='/manage'>
             <li className={path === '/manage' && 'active'}>회원 관리</li>
           </Link>
-          <Link to='/admin-manage'>
-            <li className={path === '/admin-manage' && 'active'}>
-              관리자 계정 관리
-            </li>
-          </Link>
+          {localStorage.getItem('admin_role') === 'super_admin' ? (
+            <Link to='/admin-manage'>
+              <li className={path === '/admin-manage' && 'active'}>
+                관리자 계정 관리
+              </li>
+            </Link>
+          ) : (
+            ''
+          )}
           <Link to='/inquiry'>
             <li className={path === '/inquiry' && 'active'}>문의 사항 관리</li>
           </Link>
@@ -106,12 +110,15 @@ const SideBar = () => {
           onClick={() => {
             removeCookie('myToken');
             removeCookie('rfToken');
+            localStorage.clear();
             return navigate('/');
           }}>
           로그아웃
         </div>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </>
   );
 };

@@ -29,6 +29,7 @@ const errorHandling = async error => {
       else if (detail === 'Expiration Date Exceeds limit')
         return 'exceedCharOfDate';
       else if (detail === 'Duplicated Id') return 'duplicateId';
+      else if (detail === 'Retired User') return 'retired'
       break;
     case 499:
       return 'tokenError';
@@ -416,7 +417,7 @@ export const deleteMerchant = async id => {
 // 아이디 중복체크
 export const idDuplicateCheck = async id => {
   try {
-    return await axios.post(`/api/auth/check/id-duplicate`, { user_id: id });
+    return await axios.post(`/api/admin/check/id-duplicate`, { user_id: id });
   } catch (error) {
     return await errorHandling(error);
   }
@@ -475,7 +476,7 @@ export const adminEdit = async ({
 }) => {
   try {
     const query = {
-      password: password,
+      password: password === 'samplePw' ? null : password,
       admin_role: admin_role,
       birthday: birthday,
       phone: phone.replaceAll('-', ''),

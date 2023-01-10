@@ -12,6 +12,7 @@ import {
   commonModalSetting,
   changeState,
   catchError,
+  addHyphen,
 } from 'JS/common';
 
 const AdminManage = () => {
@@ -144,6 +145,13 @@ const AdminManage = () => {
 
         //= 모달 데이터 바인딩
         const onModal = () => {
+          if (!is_active)
+            return commonModalSetting(
+              setAlertBox,
+              true,
+              'alert',
+              '삭제된 관리자는 수정하실 수 없습니다.'
+            );
           setMode('edit');
           setApplyModal(true);
           setInfo({
@@ -153,7 +161,7 @@ const AdminManage = () => {
             password: 'samplePw',
             gender: gender,
             birthday: birthday,
-            phone: phone,
+            phone: addHyphen(phone),
             email: email,
             admin_role: admin_role,
           });
@@ -177,7 +185,9 @@ const AdminManage = () => {
               </td>
               <td onClick={onModal}>{user_id}</td>
               <td onClick={onModal}>{name}</td>
-              <td onClick={onModal}>관리자</td>
+              <td onClick={onModal}>
+                {admin_role === 'super_admin' ? '최상위 관리자' : '관리자'}
+              </td>
               <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
                 {is_active ? '회원' : '탈퇴'}
               </td>
@@ -303,14 +313,14 @@ const AdminManage = () => {
           <div className='table-wrap'>
             <table>
               <colgroup>
-                <col width='10%' />
+                <col width='5%' />
                 <col width='15%' />
                 <col width='10%' />
                 <col width='10%' />
                 <col width='10%' />
                 <col width='15%' />
                 <col width='15%' />
-                <col width='15%' />
+                <col width='10%' />
               </colgroup>
               <thead>
                 <tr>

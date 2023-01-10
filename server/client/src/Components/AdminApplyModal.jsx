@@ -27,6 +27,76 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
     window.addEventListener('click', e => outClick(e, setModal));
   });
 
+  const checkInputVal = () => {
+    if (mode === 'apply' && !idCheck)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '아이디 중복확인을 해 주세요.'
+      );
+    else if (mode === 'apply' && info?.password.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '비밀번호를 입력해 주세요.'
+      );
+    else if (
+      info?.password !== 'samplePw' &&
+      !regularExpression('pw', info?.password)
+    )
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '비밀번호 형식이 잘못되었습니다.<br/>비밀번호는 특수문자를 포함하여<br/>8 ~ 20자리만 가능합니다.'
+      );
+    else if (mode === 'apply' && info?.gender.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성별을 선택해 주세요.'
+      );
+    else if (info?.phone.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '전화번호를 입력해 주세요.'
+      );
+    else if (info?.phone?.length !== 13)
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '전화번호 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
+      );
+    else if (mode === 'apply' && info?.name.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성명을 입력해 주세요.'
+      );
+    else if (info?.email.trim() === '')
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일을 입력해 주세요.'
+      );
+    else if (!regularExpression('email', info?.email))
+      return commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '이메일의 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
+      );
+    else return true;
+  };
+
   //= 아이디 중복체크
   const duplicateCheck = async () => {
     if (info?.user_id?.trim() === '')
@@ -53,64 +123,23 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
 
   //= 관리자 수정
   const editAdmin = async () => {
-    const result = await adminEdit(info);
-    if (typeof result === 'object') {
-      setAlert('completeEdit');
-      commonModalSetting(setAlertBox, true, 'alert', '수정이 완료되었습니다.');
-    } else catchError(result, navigate, setAlertBox);
+    if (checkInputVal()) {
+      const result = await adminEdit(info);
+      if (typeof result === 'object') {
+        setAlert('completeEdit');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '수정이 완료되었습니다.'
+        );
+      } else catchError(result, navigate, setAlertBox);
+    }
   };
 
   //= 관리자 등록
   const applyAdmin = async () => {
-    if (!idCheck)
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '아이디 중복확인을 해 주세요.'
-      );
-    else if (info?.password.trim() === '')
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '비밀번호를 입력해 주세요.'
-      );
-    else if (!regularExpression('pw', info?.password))
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '비밀번호 형식이 잘못되었습니다.<br/>비밀번호는 특수문자를 포함하여<br/>8 ~ 20자리만 가능합니다.'
-      );
-    else if (info?.gender.trim() === '')
-      commonModalSetting(setAlertBox, true, 'alert', '성별을 선택해 주세요.');
-    else if (info?.phone.trim() === '')
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '전화번호를 입력해 주세요.'
-      );
-    else if (info?.phone?.length !== 13)
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '전화번호 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
-      );
-    else if (info?.name.trim() === '')
-      commonModalSetting(setAlertBox, true, 'alert', '성명을 입력해 주세요.');
-    else if (info?.email.trim() === '')
-      commonModalSetting(setAlertBox, true, 'alert', '이메일을 입력해 주세요.');
-    else if (!regularExpression('email', info?.email))
-      commonModalSetting(
-        setAlertBox,
-        true,
-        'alert',
-        '이메일의 형식이 잘못되었습니다.<br/>다시 확인해 주세요.'
-      );
-    else {
+    if (checkInputVal()) {
       const query = { ...info };
       query.password = query.password.replaceAll('-', '');
       const result = await addAdmin(query);
@@ -233,8 +262,8 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                   onChange={e =>
                     changeState(setInfo, 'admin_role', e.target.value)
                   }>
-                  <option value='super_admin'>Super Admin</option>
-                  <option value='admin'>Admin</option>
+                  <option value='super_admin'>최상위 관리자</option>
+                  <option value='admin'>관리자</option>
                 </select>
               </div>
             </div>
