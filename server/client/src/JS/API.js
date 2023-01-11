@@ -28,6 +28,8 @@ const errorHandling = async error => {
       else if (detail === 'Days Limit Exceeded') return 'datePasses';
       else if (detail === 'Expiration Date Exceeds limit')
         return 'exceedCharOfDate';
+      else if (detail === 'Duplicated Id') return 'duplicateId';
+      else if (detail === 'Retired User') return 'retired';
       break;
     case 499:
       return 'tokenError';
@@ -35,6 +37,9 @@ const errorHandling = async error => {
       return 'serverError';
     case 404:
       return 'notFound';
+    case 501:
+      if (detail === 'IntegrityError') return 'integrityError';
+      break;
     case 504:
       return 'renderErrorPage';
     default:
@@ -320,6 +325,168 @@ export const removeCacheJson = async () => {
       '/us/system/manual_removal_json?passcode=kingsan',
       header()
     );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 서비스 관리
+// 서비스 목록 불러오기
+export const getServices = async () => {
+  try {
+    return await axios.get(`/api/admin/service`, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 서비스 생성
+export const createService = async data => {
+  try {
+    return await axios.post('/api/admin/service', data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 서비스 수정
+export const editService = async (code, data) => {
+  try {
+    return await axios.post(`/api/admin/service/edit/${code}`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//서비스 삭제
+export const deleteService = async code => {
+  try {
+    return await axios.post(`/api/admin/service/delete/${code}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 상품 관리
+// 상품 불러오기
+export const getMerchant = async () => {
+  try {
+    return await axios.get(`/api/admin/merchants`, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 상품 등록
+export const applyMerchant = async data => {
+  try {
+    return await axios.post(`/api/admin/merchants`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 상품 수정
+export const editMerchant = async (id, data) => {
+  try {
+    return await axios.post(`/api/admin/merchants/edit/${id}`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 상품 다중 삭제
+export const productMultiDelete = async arr => {
+  try {
+    return await axios.post(`/api/admin/merchants/delete`, arr, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 상품 삭제
+export const deleteMerchant = async id => {
+  try {
+    return await axios.post(`/api/admin/merchants/delete/${id}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 관리자 관리
+// 아이디 중복체크
+export const idDuplicateCheck = async id => {
+  try {
+    return await axios.post(`/api/admin/check/id-duplicate`, { user_id: id });
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 목록 불러오기
+export const getAdmin = async ({ page, limit }, filter, searchInput) => {
+  try {
+    return await axios.get(
+      `/api/admin/accounts?page=${page}&limit=${limit}${
+        filter === 'all'
+          ? ''
+          : `&filter_type=${filter}&filter_val=${searchInput}`
+      }`,
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 추가
+export const addAdmin = async data => {
+  try {
+    return await axios.post(`/api/admin/accounts`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 다중 삭제
+export const adminMultiDelete = async pkArr => {
+  try {
+    const query = {
+      items: pkArr,
+    };
+    return await axios.post(`/api/admin/accounts/delete`, query, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 삭제
+export const adminDelete = async pk => {
+  try {
+    return await axios.post(`/api/admin/accounts/delete/${pk}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 관리자 수정
+export const adminEdit = async ({
+  pk,
+  password,
+  admin_role,
+  birthday,
+  phone,
+  email,
+}) => {
+  try {
+    const query = {
+      password: password === 'samplePw' ? null : password,
+      admin_role: admin_role,
+      birthday: birthday,
+      phone: phone.replaceAll('-', ''),
+      email: email,
+    };
+    return await axios.post(`/api/admin/accounts/edit/${pk}`, query, header());
   } catch (error) {
     return await errorHandling(error);
   }

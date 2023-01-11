@@ -31,12 +31,7 @@ export const enterFn = (e, okFn) => {
   else return;
 };
 
-export const commonModalSetting = (
-  setAlertBox,
-  bool,
-  mode,
-  context
-) => {
+export const commonModalSetting = (setAlertBox, bool, mode, context) => {
   if (bool) {
     setAlertBox({
       mode: mode,
@@ -73,4 +68,62 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
       return changeState(setByte, column, byte);
     }
   }
+};
+
+export const outClick = (e, setModal) => {
+  if (e.target.className === 'modal-background') {
+    setModal(false);
+    window.removeEventListener('click', outClick);
+  }
+};
+
+export const maskingInfo = (type, str) => {
+  if (type === 'email')
+    return `${str.split('@')[0].slice(0, 2)}${'*'.repeat(
+      str.split('@')[0].length - 2
+    )}@${str.split('@')[1]}`;
+  else if (type === 'phone')
+    return `${str.split('-')[0]}-****-${str.split('-')[2]}`;
+  else if (type === 'name') {
+    if (str.length === 2) return `${str.slice(0, 1)}*`;
+    else if (str.length === 3) return `${str.slice(0, 1)}*${str.slice(2)}`;
+    else if (str.length >= 4) return `${str.slice(0, 1)}**${str.slice(3)}`;
+  } else if (type === 'id') {
+    if (str.length <= 6)
+      if (str.length < 3) return str;
+      else return `${str.slice(0, 2)}${'*'.repeat(Number(str.length) - 2)}`;
+    else return `${str.slice(0, 4)}${'*'.repeat(Number(str.length) - 4)}`;
+  }
+};
+
+export const regularExpression = (type, str) => {
+  let regExp;
+  switch (type) {
+    case 'id':
+      regExp = /^[a-z0-9]{4,30}$/;
+      break;
+    case 'pw':
+      regExp =
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
+      break;
+    case 'email':
+      regExp =
+        /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(kr|aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+      break;
+    default:
+      break;
+  }
+  return regExp.test(str.trim());
+};
+
+export const addHyphen = phone => {
+  return phone
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+    .replace(/(\-{1,2})$/g, '');
+};
+
+export const addZero = t => {
+  if (t < 10) return `0${t}`;
+  else return t;
 };

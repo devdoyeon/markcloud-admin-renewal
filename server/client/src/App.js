@@ -4,9 +4,10 @@ import SignIn from 'Pages/SignIn';
 import Home from 'Pages/Home';
 import Notice from 'Pages/Notice';
 import Manage from 'Pages/Manage';
+import AdminManage from 'Pages/AdminManage';
 import Inquiry from 'Pages/Inquiry';
 import Coupon from 'Pages/Coupon';
-// import PopUp from 'Pages/PopUp';
+import PopUp from 'Pages/PopUp';
 import Product from 'Pages/Product';
 import Service from './Pages/Service';
 import ErrorPage from 'Pages/ErrorPage';
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<SignIn />} />
         <Route path='/home' element={<Home />} />
         <Route path='/manage' element={<Manage />} />
+        <Route path='/admin-manage' element={<AdminManage />} />
         <Route path='/inquiry' element={<Inquiry />} />
         <Route path='/notice' element={<Notice />} />
         <Route path='/product' element={<Product />} />

@@ -11,6 +11,8 @@ import {
   catchError,
   changeState,
   commonModalSetting,
+  maskingInfo,
+  outClick,
 } from 'JS/common';
 import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
@@ -18,7 +20,7 @@ import { serviceCodeToString } from 'JS/array';
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
   const [byte, setByte] = useState(0);
-  const [command, setCommand] = useState('');
+  const [alert, setAlert] = useState('');
   const [edit, setEdit] = useState(false);
   const [info, setInfo] = useState({
     service_code: '',
@@ -106,20 +108,20 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         clone.answer = '';
         return clone;
       });
+      setAlert('deleteComplete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
     } else return catchError(result, navigate, setAlertBox);
-  };
-
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
   };
 
   useEffect(() => {
     if (!alertBox.bool) {
       getDetail();
-      window.addEventListener('click', e => outClick(e));
+      window.addEventListener('click', e => outClick(e, setModal));
     }
   }, [alertBox.bool]);
 
@@ -143,7 +145,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <tbody>
                   <tr>
                     <td>작성자</td>
-                    <td>{info.user_name}</td>
+                    <td>{maskingInfo('name', info.user_name)}</td>
                   </tr>
                   <tr>
                     <td>등록일자</td>
@@ -191,7 +193,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                         <button
                           className='btn'
                           onClick={() => {
-                            setCommand('edit');
+                            setAlert('edit');
                             commonModalSetting(
                               setAlertBox,
                               true,
@@ -207,7 +209,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                     )}
                     <button
                       onClick={() => {
-                        setCommand('delete');
+                        setAlert('delete');
                         commonModalSetting(
                           setAlertBox,
                           true,
@@ -250,7 +252,8 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (command === 'edit') setEdit(false);
+            if (alert === 'edit') setEdit(false);
+            else if (alert === 'deleteComplete') getDetail();
             else delAnswer();
           }}
           failFn={() => {}}

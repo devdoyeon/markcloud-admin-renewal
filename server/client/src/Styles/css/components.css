@@ -164,6 +164,7 @@
   color: #333333;
 }
 .dashboard > .row > div .title-wrap p::before {
+  content: "*";
   color: #f74848;
 }
 .dashboard > .row > div > div {
@@ -226,6 +227,12 @@
   min-height: 200px;
   height: auto;
 }
+.dashboard > .row > div > div.king > table tr {
+  cursor: auto;
+}
+.dashboard > .row > div > div.king > table tr:hover td {
+  color: black;
+}
 .dashboard > .row > div > div.king > table tr:last-child {
   border-bottom: none;
 }
@@ -253,24 +260,39 @@
 .manage .table-wrap > table .checkBoxArea {
   padding: 10px;
 }
-.manage .table-wrap > table th,
-.manage .table-wrap > table td {
+.manage .table-wrap > table thead tr {
+  cursor: default;
+}
+.manage .table-wrap > table tr {
+  cursor: pointer;
+}
+.manage .table-wrap > table tr th,
+.manage .table-wrap > table tr td {
   padding: 20px;
 }
-.manage .table-wrap > table th > .couponBtn,
-.manage .table-wrap > table td > .couponBtn {
+.manage .table-wrap > table tr th > .couponBtn,
+.manage .table-wrap > table tr td > .couponBtn {
   background-color: #333333;
   padding: 5px 20px;
   color: white;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   border-radius: 6px;
 }
-.manage .table-wrap > table th.user,
-.manage .table-wrap > table td.user {
+.manage .table-wrap > table tr th.user,
+.manage .table-wrap > table tr td.user {
   color: #3172cc;
 }
-.manage .table-wrap > table th.resign,
-.manage .table-wrap > table td.resign {
+.manage .table-wrap > table tr th.resign,
+.manage .table-wrap > table tr td.resign {
+  color: #de5d60;
+}
+.manage .table-wrap > table tr:hover td {
+  color: #406178;
+}
+.manage .table-wrap > table tr:hover td.user {
+  color: #3172cc;
+}
+.manage .table-wrap > table tr:hover td.resign {
   color: #de5d60;
 }
 
@@ -279,6 +301,79 @@
 }
 .notice .topBar > div > button:nth-child(2) a {
   color: white;
+}
+
+.service .topBar > button {
+  color: white;
+  background-color: #434343;
+  padding: 10px 30px;
+  font-size: 15px;
+  border-radius: 8px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.service .service-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 100px;
+}
+.service .service-wrap .serviceBox {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(67, 67, 67, 0.4);
+  margin: 30px;
+  width: 35%;
+  height: 150px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  font-size: 32px;
+  color: #434343;
+  transition: all 0.3s;
+}
+.service .service-wrap .serviceBox span {
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  display: inline-block;
+  color: #858585;
+  font-size: 14px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.service .service-wrap .serviceBox:hover {
+  transition: all 0.3s;
+  box-shadow: 0 0 10px rgba(67, 67, 67, 0.7);
+}
+
+.adminManage .table-wrap tbody > tr td button {
+  background-color: #434343;
+  color: white;
+  padding: 5px 15px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 8px;
+}
+.adminManage .table-wrap tbody > tr td.resign {
+  color: #de5d60;
+}
+.adminManage .table-wrap tbody > tr td.user {
+  color: #3172cc;
+}
+
+.product .table-wrap tbody > tr {
+  cursor: pointer;
+}
+.product .table-wrap tbody > tr:hover > td {
+  color: #406178;
+}
+.product .table-wrap tbody > tr > .price {
+  text-align: right;
+  transform: translateX(-120px);
 }
 
 .usa-cache .topBar > div :first-child {
@@ -298,6 +393,13 @@
   cursor: pointer;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   color: #3172cc;
+}
+
+.event .table-wrap tr {
+  cursor: auto;
+}
+.event .table-wrap tr:hover td {
+  color: black;
 }
 
 .empty-cache {

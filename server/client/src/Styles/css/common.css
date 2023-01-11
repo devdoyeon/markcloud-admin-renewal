@@ -177,7 +177,7 @@
 }
 .sideBar > a img {
   width: 60%;
-  margin: 30px 0;
+  margin: 20px 0;
 }
 .sideBar > .mainMenu {
   width: 100%;
@@ -192,7 +192,7 @@
   text-justify: center;
   border-bottom: 1px solid #858585;
   color: white;
-  padding: 15px;
+  padding: 12px 15px;
 }
 .sideBar > .mainMenu li:hover {
   background-color: #434343;
@@ -280,7 +280,7 @@
 .topBar > div button > .searchIcon > svg {
   transform: translateY(2px);
 }
-.topBar > div button.searchBtn {
+.topBar > div button.deleteBtn, .topBar > div button.searchBtn, .topBar > div button.applyBtn {
   border-right: 1px solid white;
 }
 
@@ -333,8 +333,14 @@
 .table-wrap > table thead {
   background-color: #f5f5f5;
 }
+.table-wrap > table thead tr {
+  cursor: default;
+}
 .table-wrap > table tbody {
   background-color: rgba(255, 255, 255, 0.4);
+}
+.table-wrap > table tr {
+  cursor: pointer;
 }
 .table-wrap > table tr > th {
   font-weight: normal;
@@ -343,10 +349,7 @@
 .table-wrap > table tr > td {
   padding: 20px 0;
 }
-.table-wrap > table tr > td.title {
-  cursor: pointer;
-}
-.table-wrap > table tr > td.title:hover {
+.table-wrap > table tr:hover td {
   color: #406178;
 }
 .table-wrap > table tr > th,
@@ -654,6 +657,323 @@
   border-radius: 8px;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
   margin-left: 15px;
+}
+.modal-background .modal.service {
+  width: 500px;
+  height: 300px;
+  position: relative;
+}
+.modal-background .modal.service > h2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #434343;
+  color: white;
+  padding: 15px 30px;
+}
+.modal-background .modal.service > .serviceInput {
+  width: 100%;
+  margin-top: 50px;
+}
+.modal-background .modal.service > .serviceInput > .row {
+  width: 320px;
+  justify-content: space-between;
+}
+.modal-background .modal.service > .serviceInput > .row span {
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: #434343;
+}
+.modal-background .modal.service > .serviceInput > .row input {
+  margin-left: 10px;
+  width: 70%;
+  border: 1px solid #434343;
+  padding: 5px 10px;
+}
+.modal-background .modal.service > .serviceInput > .row input:last-child {
+  margin-top: 10px;
+}
+.modal-background .modal.service > .btn-wrap {
+  margin-top: 30px;
+}
+.modal-background .modal.service > .btn-wrap > button {
+  border-radius: 6px;
+  padding: 10px 25px;
+  background-color: #434343;
+  color: white;
+  margin-right: 20px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.service > .btn-wrap > button:last-child {
+  margin-right: 0;
+}
+.modal-background .modal.product {
+  width: 500px;
+  height: 370px;
+  position: relative;
+}
+.modal-background .modal.product > h2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: white;
+  background-color: #434343;
+  padding: 15px 30px;
+}
+.modal-background .modal.product > .productInput {
+  margin-top: 60px;
+}
+.modal-background .modal.product > .productInput .row {
+  justify-content: space-between;
+  width: 300px;
+  margin-bottom: 5px;
+}
+.modal-background .modal.product > .productInput .row select {
+  border: none;
+  box-shadow: 0 0 3px rgba(67, 67, 67, 0.3);
+  width: 200px;
+  background-color: white;
+  padding: 5px 10px;
+}
+.modal-background .modal.product > .productInput .row input {
+  width: 200px;
+  padding: 5px 10px;
+  box-shadow: 0 0 3px rgba(67, 67, 67, 0.3);
+}
+.modal-background .modal.product > .productInput .row:last-child {
+  margin-bottom: none;
+}
+.modal-background .modal.product > .btn-wrap {
+  margin-top: 30px;
+}
+.modal-background .modal.product > .btn-wrap button {
+  padding: 10px 20px;
+  background-color: #434343;
+  color: white;
+  margin-right: 10px;
+  font-size: 16px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 8px;
+}
+.modal-background .modal.product > .btn-wrap button:last-child {
+  margin-right: none;
+}
+.modal-background .modal.personnel {
+  width: 50%;
+  height: 600px;
+  justify-content: center;
+  position: relative;
+}
+.modal-background .modal.personnel .topBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 15px 30px;
+}
+.modal-background .modal.personnel .topBar h3 {
+  font-size: 30px;
+  color: #434343;
+}
+.modal-background .modal.personnel .personnelInput {
+  margin-top: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(67, 67, 67, 0.2);
+  width: 80%;
+  height: 90%;
+}
+.modal-background .modal.personnel .personnelInput > .row {
+  width: 90%;
+  margin-bottom: 30px;
+}
+.modal-background .modal.personnel .personnelInput > .row:last-child {
+  margin-bottom: 0;
+}
+.modal-background .modal.personnel .personnelInput > .row span {
+  text-align: left;
+  width: 100px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  color: #434343;
+}
+.modal-background .modal.personnel .personnelInput > .row > .row {
+  width: 100%;
+}
+.modal-background .modal.personnel .personnelInput > .row > .row .infoInput {
+  width: calc(100% - 100px);
+}
+.modal-background .modal.personnel .personnelInput > .row .name,
+.modal-background .modal.personnel .personnelInput > .row .gender,
+.modal-background .modal.personnel .personnelInput > .row .birth,
+.modal-background .modal.personnel .personnelInput > .row .department {
+  width: 47.5%;
+}
+.modal-background .modal.personnel .personnelInput > .row .blank {
+  width: 5%;
+}
+.modal-background .modal.personnel .personnelInput > .row .infoInput {
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(67, 67, 67, 0.4);
+  width: calc(100% - 100px);
+  padding: 10px 5px;
+}
+.modal-background .modal.applyAdmin {
+  overflow: hidden;
+}
+.modal-background .modal.applyAdmin .topBar h2 {
+  font-size: 35px;
+}
+.modal-background .modal.applyAdmin button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 15px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 10px;
+}
+.modal-background .modal.applyAdmin button.duplicateCheck {
+  width: 80px;
+  margin-left: 10px;
+}
+.modal-background .modal.applyAdmin button.applyBtn, .modal-background .modal.applyAdmin button.deleteBtn {
+  margin-top: 100px;
+  padding: 10px 30px;
+  font-size: 16px;
+}
+.modal-background .modal.applyAdmin button.deleteBtn {
+  margin-left: 20px;
+}
+.modal-background .modal.applyAdmin .infoInput {
+  margin-top: 100px;
+  align-items: flex-start;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck {
+  padding: 5px 0;
+  margin-left: 100px;
+  opacity: 0;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.active {
+  opacity: 1;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.canUsed {
+  color: #3c8fef;
+}
+.modal-background .modal.applyAdmin .infoInput .idCheck.cantUsed {
+  color: #ff3838;
+}
+.modal-background .modal.applyAdmin .infoInput > .column {
+  align-items: flex-start;
+}
+.modal-background .modal.applyAdmin .infoInput > .column:first-child {
+  margin-right: 70px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row {
+  margin-bottom: 20px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row span {
+  width: 100px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row.id {
+  margin-bottom: 0;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input,
+.modal-background .modal.applyAdmin .infoInput > .column > .row select,
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput {
+  box-shadow: 0 0 3px #cdcdcd;
+  width: 290px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input.idInput,
+.modal-background .modal.applyAdmin .infoInput > .column > .row select.idInput,
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput.idInput {
+  width: 200px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .fixedInput {
+  background-color: #f5f5f5;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row input[type=radio] {
+  box-shadow: none;
+  width: 30px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .genderBox {
+  cursor: pointer;
+  width: 135px;
+  box-shadow: 0 0 3px #cdcdcd;
+  padding: 10px 15px;
+  margin-right: 20px;
+  border-radius: 10px;
+}
+.modal-background .modal.applyAdmin .infoInput > .column > .row .genderBox:last-child {
+  margin-right: 0;
+}
+.modal-background .modal.applyPopup {
+  height: 750px;
+}
+.modal-background .modal.applyPopup h2 {
+  font-size: 35px;
+}
+.modal-background .modal.applyPopup > .column {
+  margin-top: 30px;
+  width: 100%;
+}
+.modal-background .modal.applyPopup > .column > input[type=file] {
+  display: none;
+}
+.modal-background .modal.applyPopup > .column .imageInput {
+  background-color: #fafafa;
+  border: 2px dashed #434343;
+  border-radius: 16px;
+  width: 60%;
+  color: #434343;
+  min-height: 200px;
+  height: auto;
+  margin-bottom: 40px;
+  overflow-y: hidden;
+}
+.modal-background .modal.applyPopup > .column .imageInput > img {
+  width: 100%;
+}
+.modal-background .modal.applyPopup > .column .imageInput > svg {
+  font-size: 100px;
+}
+.modal-background .modal.applyPopup > .column .imageInput > span {
+  font-size: 13px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.applyPopup > .column .imageInput.enter {
+  background-color: #dddddd;
+}
+.modal-background .modal.applyPopup > .column > .row {
+  margin-bottom: 20px;
+}
+.modal-background .modal.applyPopup > .column > .row:last-child {
+  margin-bottom: 40px;
+}
+.modal-background .modal.applyPopup > .column > .row > span {
+  width: 100px;
+}
+.modal-background .modal.applyPopup > .column > .row input[type=text], .modal-background .modal.applyPopup > .column > .row .dateInput {
+  width: 400px;
+  box-shadow: 0 0 3px rgba(67, 67, 67, 0.4);
+  padding: 7px 10px;
+  border-radius: 8px;
+  min-height: 34px;
+}
+.modal-background .modal.applyPopup > .column > .row input[type=text] > input[type=time], .modal-background .modal.applyPopup > .column > .row .dateInput > input[type=time] {
+  margin-left: 30px;
+}
+.modal-background .modal.applyPopup .btnWrap > button {
+  background-color: #434343;
+  color: white;
+  padding: 10px 20px;
+  font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  border-radius: 10px;
+  font-size: 15px;
+  margin-right: 10px;
+}
+.modal-background .modal.applyPopup .btnWrap > button:last-child {
+  margin-right: 0;
 }
 
 @media screen and (max-width: 1440px) {

@@ -28,12 +28,24 @@ const SideBar = () => {
           <Link to='/manage'>
             <li className={path === '/manage' && 'active'}>회원 관리</li>
           </Link>
+          {localStorage.getItem('admin_role') === 'super_admin' ? (
+            <Link to='/admin-manage'>
+              <li className={path === '/admin-manage' && 'active'}>
+                관리자 계정 관리
+              </li>
+            </Link>
+          ) : (
+            ''
+          )}
           <Link to='/inquiry'>
             <li className={path === '/inquiry' && 'active'}>문의 사항 관리</li>
           </Link>
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
+          {/* <Link to='/popup'>
+            <li className={path === '/popup' && 'active'}>팝업 관리</li>
+          </Link> */}
           <Link to='/service'>
             <li className={path === '/service' && 'active'}>서비스 관리</li>
           </Link>
@@ -41,11 +53,10 @@ const SideBar = () => {
             <li className={path === '/product' && 'active'}>상품 관리</li>
           </Link>
           <Link to='/usa-cache'>
-            <li className={path === '/usa-cache' && 'active'}>해외 데이터 캐시 관리</li>
+            <li className={path === '/usa-cache' && 'active'}>
+              해외 데이터 캐시 관리
+            </li>
           </Link>
-          {/* <Link to='/popup'>
-            <li className={path === '/popup' && 'active'}>팝업 관리</li>
-          </Link> */}
           <li className='main'>이벤트</li>
           <Link to='/event'>
             <li className={path === '/event' && 'active'}>
@@ -82,29 +93,27 @@ const SideBar = () => {
             }>
             마크링크
           </li>
-          <li
-            onClick={() =>
-              commonModalSetting(
-                setAlertBox,
-                true,
-                'alert',
-                '서비스 준비 중입니다.'
-              )
-            }>
-            마크그룹웨어
-          </li>
+          <a
+            href='https://markcloud.co.kr/mark-groupware'
+            target='_blank'
+            rel='noopener noreferrer'>
+            <li>마크그룹웨어</li>
+          </a>
         </ul>
         <div
           className='logoutBtn'
           onClick={() => {
             removeCookie('myToken');
             removeCookie('rfToken');
+            localStorage.clear();
             return navigate('/');
           }}>
           로그아웃
         </div>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </>
   );
 };

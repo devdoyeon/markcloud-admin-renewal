@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
 import CommonModal from './CommonModal';
-import { byteCount, catchError, commonModalSetting } from 'JS/common';
+import { byteCount, catchError, commonModalSetting, outClick } from 'JS/common';
 import { getNoticeDetail, noticeDelete } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
 
@@ -19,6 +19,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -56,20 +57,19 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const delNotice = async () => {
     const result = await noticeDelete(noticeId);
     if (typeof result === 'object') {
-      setModal(false);
+      setAlert('completeDelete');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '정상적으로 삭제되었습니다.'
+      );
     } else return catchError(result, navigate, setAlertBox);
-  };
-
-  const outClick = e => {
-    if (e.target.className === 'modal-background') {
-      setModal(false);
-      window.removeEventListener('click', outClick);
-    }
   };
 
   useEffect(() => {
     getDetail();
-    window.addEventListener('click', e => outClick(e));
+    window.addEventListener('click', e => outClick(e, setModal));
   }, []);
 
   useEffect(() => {
@@ -128,14 +128,15 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
               </button>
               <button
                 className='btn'
-                onClick={() =>
+                onClick={() => {
+                  setAlert('deleteConfirm');
                   commonModalSetting(
                     setAlertBox,
                     true,
                     'confirm',
                     '해당 공지를 삭제하시겠습니까?'
-                  )
-                }>
+                  );
+                }}>
                 삭제
               </button>
             </div>
@@ -154,7 +155,11 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={delNotice}
+          okFn={() => {
+            if (alert === 'deleteConfirm') delNotice();
+            else if (alert === 'completeDelete') setModal(false);
+            else return;
+          }}
           failFn={() => {}}
         />
       )}

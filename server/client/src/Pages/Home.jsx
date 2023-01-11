@@ -7,7 +7,7 @@ import NoticeDetail from 'Components/NoticeDetail';
 import InquiryDetail from 'Components/InquiryDetail';
 import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
-import { catchError } from 'JS/common';
+import { catchError, maskingInfo } from 'JS/common';
 import {
   getSearchCount,
   getUserCount,
@@ -158,8 +158,8 @@ const Home = () => {
                 <FaCrown />
               </span>
             </td>
-            <td>{user_id}</td>
-            <td>{name}</td>
+            <td>{maskingInfo('id', user_id)}</td>
+            <td>{maskingInfo('name', name)}</td>
             <td>{search_count}</td>
           </tr>
         </>
@@ -179,8 +179,8 @@ const Home = () => {
                 <FaCrown />
               </span>
             </td>
-            <td>{user_id}</td>
-            <td>{name}</td>
+            <td>{maskingInfo('id', user_id)}</td>
+            <td>{maskingInfo('name', name)}</td>
             <td>{search_count}</td>
           </tr>
         </>
@@ -195,15 +195,12 @@ const Home = () => {
         return (
           <>
             {acc}
-            <tr>
-              <td
-                onClick={() => {
-                  setNoticeId(id);
-                  setNoticeModal(true);
-                }}
-                className='title'>
-                {title}
-              </td>
+            <tr
+              onClick={() => {
+                setNoticeId(id);
+                setNoticeModal(true);
+              }}>
+              <td className='title'>{title}</td>
               <td>{admin_name}</td>
               <td>{created_at.replaceAll('T', ' ')}</td>
             </tr>
@@ -219,16 +216,13 @@ const Home = () => {
         return (
           <>
             {acc}
-            <tr>
-              <td
-                onClick={() => {
-                  setInquiryId(id);
-                  setInquiryModal(true);
-                }}
-                className='title'>
-                {title}
-              </td>
-              <td>{user_name}</td>
+            <tr
+              onClick={() => {
+                setInquiryId(id);
+                setInquiryModal(true);
+              }}>
+              <td className='title'>{title}</td>
+              <td>{maskingInfo('name', user_name)}</td>
               <td>{created_at.replaceAll('T', ' ')}</td>
             </tr>
           </>
@@ -427,7 +421,7 @@ const Home = () => {
           setEditor={setEditor}
         />
       )}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}}/>}
     </div>
   );
 };

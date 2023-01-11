@@ -14,6 +14,7 @@ const SignIn = () => {
     emptyPw: false,
     wrongId: false,
     wrongPw: { bool: false, failCount: 0 },
+    retired: false,
   };
   const [userId, setUserId] = useState('');
   const [userPw, setUserPw] = useState('');
@@ -36,6 +37,7 @@ const SignIn = () => {
       emptyPw: false,
       wrongId: false,
       wrongPw: { bool: false, failCount: 0 },
+      retired: false,
     };
     obj[checkStr] = bool;
     if (failCount) obj[checkStr] = { bool: bool, failCount: failCount };
@@ -51,7 +53,7 @@ const SignIn = () => {
 
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
-      const { access_token, refresh_token } = result?.data?.data;
+      const { access_token, refresh_token, role } = result?.data?.data;
       setCookie('myToken', access_token, {
         path: '/',
         secure: false,
@@ -60,19 +62,19 @@ const SignIn = () => {
         path: '/',
         secure: false,
       });
+      localStorage.setItem('admin_role', role);
       //@ 아이디 저장 체크 여부 확인 후 체크 되어 있으면 저장
-      if (check) {
-        localStorage.setItem('save-id', userId);
-      } else localStorage.removeItem('save-id');
+      if (check) localStorage.setItem('save-id', userId);
+      else localStorage.removeItem('save-id');
       navigate('/home');
     } else {
       //@ Error Handling
       const failCount = result?.split(',')[1];
-      if (result === 'wrongId') {
-        checkForm('wrongId', true);
-      } else if (result === `wrongPw,${failCount}`) {
+      if (result === 'wrongId') checkForm('wrongId', true);
+      else if (result === `wrongPw,${failCount}`)
         checkForm('wrongPw', true, failCount);
-      } else return catchError(result, navigate, setAlertBox);
+      else if (result === 'retired') checkForm('retired', true);
+      else return catchError(result, navigate, setAlertBox);
     }
   };
 
@@ -99,8 +101,11 @@ const SignIn = () => {
     } else if (formCheck.wrongPw.bool) {
       context = `비밀번호를 ${formCheck.wrongPw.failCount}회 틀리셨습니다.<br/>다시 입력해 주세요.`;
       setUserPw('');
-    }
-    commonModalSetting(setAlertBox, true, 'alert', context);
+    } else if (formCheck.retired) {
+      context = `탈퇴된 아이디입니다.`;
+    } else context = '';
+    if (context.trim() !== '')
+      commonModalSetting(setAlertBox, true, 'alert', context);
   }, [formCheck]);
 
   return (
@@ -150,7 +155,9 @@ const SignIn = () => {
         <hr />
         <button onClick={login}>로그인</button>
       </div>
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </div>
   );
 };

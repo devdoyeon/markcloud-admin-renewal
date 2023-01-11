@@ -22,6 +22,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -57,14 +58,13 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     };
     const result = await noticeEdit(noticeId, data);
     if (typeof result === 'object') {
+      setAlert('completeEdit');
       commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '성공적으로 수정 되었습니다.'
       );
-      setEditor(false);
-      setModal(true);
     } else return catchError(result, navigate, setAlertBox);
   };
 
@@ -93,7 +93,13 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     } else {
       const result = await noticeWrite(info);
       if (typeof result === 'object') {
-        setEditor(false);
+        setAlert('completeApply');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '성공적으로 등록 되었습니다.'
+        );
       } else return catchError(result, navigate, setAlertBox);
     }
   };
@@ -187,10 +193,10 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (!!noticeId) {
+            if (alert === 'completeEdit') {
+              setEditor(false);
               setModal(true);
-            }
-            setEditor(false);
+            } else if (alert === 'completeApply') setEditor(false);
           }}
           failFn={() => {}}
         />
