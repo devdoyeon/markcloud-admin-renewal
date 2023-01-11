@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import { TbDragDrop } from 'react-icons/tb';
 import CommonModal from './CommonModal';
-import { outClick, commonModalSetting } from 'JS/common';
+import { outClick, commonModalSetting, changeState, addZero } from 'JS/common';
 
 const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
   const [alertBox, setAlertBox] = useState({
@@ -13,20 +13,46 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
   const [uploadImg, setUploadImg] = useState('');
   const [upload, setUpload] = useState(false);
   const [dragState, setDragState] = useState('leave');
+  const date = new Date();
+  const [activeDate, setActiveDate] = useState({
+    start_date: `${date.getFullYear()}-${addZero(
+      date.getMonth() + 1
+    )}-${addZero(date.getDate())}`,
+    start_time: '12:00',
+    end_date: `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(
+      date.getDate()
+    )}`,
+    end_time: '12:00',
+  });
 
   useEffect(() => {
     window.addEventListener('click', e => outClick(e, setModal));
-  });
+  }, []);
 
   const imgPreview = inputFile => {
     if (!inputFile) return; //파일 없을때 처리
-    console.log(inputFile);
     const reader = new FileReader();
     reader.onload = () => {
       setUploadImg(reader.result);
     };
     reader.readAsDataURL(inputFile[0]);
   };
+
+  useEffect(() => {
+    setInfo(prev => {
+      const clone = { ...prev };
+      clone.start = Math.floor(
+        new Date(
+          `${activeDate.start_date} ${activeDate.start_time}`
+        ).getTime() / 1000
+      );
+      clone.end = Math.floor(
+        new Date(`${activeDate.end_date} ${activeDate.end_time}`).getTime() /
+          1000
+      );
+      return clone;
+    });
+  }, [activeDate]);
 
   return (
     <>
@@ -77,20 +103,46 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
               <input
                 type='text'
                 placeholder='이미지와 함께 첨부할 URL을 입력해 주세요.'
+                value={info?.link}
+                onChange={e => changeState(setInfo, 'link', e.target.value)}
               />
             </div>
             <div className='row'>
               <span>팝업 게시일</span>
               <div className='dateInput row'>
-                <input type='date' />
-                <input type='time' />
+                <input
+                  type='date'
+                  value={activeDate.start_date}
+                  onChange={e =>
+                    changeState(setActiveDate, 'start_date', e.target.value)
+                  }
+                />
+                <input
+                  type='time'
+                  value={activeDate.start_time}
+                  onChange={e =>
+                    changeState(setActiveDate, 'start_time', e.target.value)
+                  }
+                />
               </div>
             </div>
             <div className='row'>
               <span>팝업 만료일</span>
               <div className='dateInput row'>
-                <input type='date' />
-                <input type='time' />
+                <input
+                  type='date'
+                  value={activeDate.end_date}
+                  onChange={e =>
+                    changeState(setActiveDate, 'end_date', e.target.value)
+                  }
+                />
+                <input
+                  type='time'
+                  value={activeDate.end_time}
+                  onChange={e =>
+                    changeState(setActiveDate, 'end_time', e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>

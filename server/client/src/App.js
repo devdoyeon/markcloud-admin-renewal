@@ -25,7 +25,7 @@ function App() {
         <Route path='/notice' element={<Notice />} />
         <Route path='/product' element={<Product />} />
         <Route path='/service' element={<Service />} />
-        <Route path='/popup' element={<PopUp />} />
+        {/* <Route path='/popup' element={<PopUp />} /> */}
         <Route path='/event' element={<Coupon />} />
         <Route path='/usa-cache' element={<USACache />} />
         <Route path='*' element={<ErrorPage />} />

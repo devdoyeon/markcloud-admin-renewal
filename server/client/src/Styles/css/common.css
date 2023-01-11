@@ -926,12 +926,13 @@
   border-radius: 16px;
   width: 60%;
   color: #434343;
-  height: 300px;
+  min-height: 200px;
+  height: auto;
   margin-bottom: 40px;
   overflow-y: hidden;
 }
 .modal-background .modal.applyPopup > .column .imageInput > img {
-  max-width: 100%;
+  width: 100%;
 }
 .modal-background .modal.applyPopup > .column .imageInput > svg {
   font-size: 100px;

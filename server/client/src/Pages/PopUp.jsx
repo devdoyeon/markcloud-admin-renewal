@@ -16,7 +16,12 @@ const PopUp = () => {
     context: '',
     bool: false,
   });
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState({
+    img: '',
+    link: '',
+    start: '',
+    end: '',
+  });
   const [view, setView] = useState(10);
   const [due, setDue] = useState('all');
   const [mode, setMode] = useState('');

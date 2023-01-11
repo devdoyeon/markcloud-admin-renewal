@@ -865,11 +865,12 @@
           border-radius: 16px;
           width: 60%;
           color: $gray;
-          height: 300px;
+          min-height: 200px;
+          height: auto;
           margin-bottom: 40px;
           overflow-y: hidden;
           > img {
-            max-width: 100%;
+            width: 100%;
           }
           > svg {
             font-size: 100px;

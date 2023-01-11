@@ -43,9 +43,9 @@ const SideBar = () => {
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
-          <Link to='/popup'>
+          {/* <Link to='/popup'>
             <li className={path === '/popup' && 'active'}>팝업 관리</li>
-          </Link>
+          </Link> */}
           <Link to='/service'>
             <li className={path === '/service' && 'active'}>서비스 관리</li>
           </Link>
