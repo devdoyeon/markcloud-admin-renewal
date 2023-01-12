@@ -269,49 +269,37 @@ const Home = () => {
             <div className='title-wrap'>
               <h2>최근 업로드한 공지 사항</h2>
             </div>
-            {!recentNotice.length ? (
-              <div className='none-list'>
-                <MdOutlineMoodBad />
-              </div>
-            ) : (
-              <div className='table-wrap'>
-                <table>
-                  {tableColGroup('upload')}
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>공지 날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>{noticeListRender()}</tbody>
-                </table>
-              </div>
-            )}
+            <div className='table-wrap'>
+              <table>
+                {tableColGroup('upload')}
+                <thead>
+                  <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>공지 날짜</th>
+                  </tr>
+                </thead>
+                <tbody>{noticeListRender()}</tbody>
+              </table>
+            </div>
           </div>
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드 된 문의 사항</h2>
             </div>
-            {!recentInquiry.length ? (
-              <div className='none-list'>
-                <MdOutlineMoodBad />
-              </div>
-            ) : (
-              <div className='table-wrap'>
-                <table>
-                  {tableColGroup('upload')}
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>문의 날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>{inquiryListRender()}</tbody>
-                </table>
-              </div>
-            )}
+            <div className='table-wrap'>
+              <table>
+                {tableColGroup('upload')}
+                <thead>
+                  <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>문의 날짜</th>
+                  </tr>
+                </thead>
+                <tbody>{inquiryListRender()}</tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div className='row'>
@@ -421,7 +409,9 @@ const Home = () => {
           setEditor={setEditor}
         />
       )}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}}/>}
+      {alertBox.bool && (
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+      )}
     </div>
   );
 };

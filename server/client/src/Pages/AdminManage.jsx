@@ -222,6 +222,7 @@ const AdminManage = () => {
   };
 
   useEffect(() => {
+    document.title = '마크클라우드 관리자 > 관리자 계정 관리';
     if (localStorage.getItem('admin_role') === 'admin') {
       setAlert('notAuthority');
       return commonModalSetting(

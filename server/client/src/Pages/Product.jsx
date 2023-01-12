@@ -133,7 +133,19 @@ const Product = () => {
   };
 
   useEffect(() => {
-    if (!modal) getProduct();
+    if (!modal) {
+      document.title = '마크클라우드 관리자 > 상품 관리';
+      if (localStorage.getItem('admin_role') === 'admin') {
+        setAlert('notAuthority');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '접근 권한이 없습니다.'
+        );
+      }
+      getProduct();
+    }
   }, [modal]);
 
   return (
@@ -218,6 +230,7 @@ const Product = () => {
           okFn={() => {
             if (alert === 'multipleDelete') deleteMultiple();
             else if (alert === 'completeDelete') setModal(false);
+            else if (alert === 'notAuthority') navigate('/home')
             else return;
           }}
           failFn={() => {

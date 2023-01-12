@@ -127,3 +127,8 @@ export const addZero = t => {
   if (t < 10) return `0${t}`;
   else return t;
 };
+
+export const getWeek = () => {
+  const date = new Date(this.getFullYear(), 0, 1);
+  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
+};

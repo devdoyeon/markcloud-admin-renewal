@@ -4,7 +4,7 @@ import SideBar from 'Components/SideBar';
 import ServiceModal from 'Components/ServiceModal';
 import CommonModal from 'Components/CommonModal';
 import { getServices } from 'JS/API';
-import { catchError } from 'JS/common';
+import { catchError, commonModalSetting } from 'JS/common';
 
 const Service = () => {
   const [mode, setMode] = useState('apply');
@@ -15,6 +15,7 @@ const Service = () => {
     service_name: '',
   });
   let prevent = false;
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -61,7 +62,23 @@ const Service = () => {
   };
 
   useEffect(() => {
-    if (!modal) serviceList();
+    if (!modal) {
+      document.title = '마크클라우드 관리자 > 서비스 관리';
+      if (localStorage.getItem('admin_role') === 'admin') {
+        setAlert('notAuthority');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '접근 권한이 없습니다.'
+        );
+      }
+      setInfo({
+        service_code: '',
+        service_name: '',
+      });
+      serviceList();
+    }
   }, [modal]);
 
   return (
@@ -94,7 +111,10 @@ const Service = () => {
         ''
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {
+          if (alert === 'notAuthority') return navigate('/home')
+          else return
+        }} />
       )}
     </>
   );
