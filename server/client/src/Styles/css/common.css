@@ -953,14 +953,16 @@
 .modal-background .modal.applyPopup > .column > .row > span {
   width: 100px;
 }
-.modal-background .modal.applyPopup > .column > .row input[type=text], .modal-background .modal.applyPopup > .column > .row .dateInput {
+.modal-background .modal.applyPopup > .column > .row input[type=text], .modal-background .modal.applyPopup > .column > .row .dateInput, .modal-background .modal.applyPopup > .column > .row select {
+  background-color: white;
+  border: none;
   width: 400px;
   box-shadow: 0 0 3px rgba(67, 67, 67, 0.4);
   padding: 7px 10px;
   border-radius: 8px;
   min-height: 34px;
 }
-.modal-background .modal.applyPopup > .column > .row input[type=text] > input[type=time], .modal-background .modal.applyPopup > .column > .row .dateInput > input[type=time] {
+.modal-background .modal.applyPopup > .column > .row input[type=text] > input[type=time], .modal-background .modal.applyPopup > .column > .row .dateInput > input[type=time], .modal-background .modal.applyPopup > .column > .row select > input[type=time] {
   margin-left: 30px;
 }
 .modal-background .modal.applyPopup .btnWrap > button {

@@ -4,7 +4,7 @@ import SideBar from 'Components/SideBar';
 import ServiceModal from 'Components/ServiceModal';
 import CommonModal from 'Components/CommonModal';
 import { getServices } from 'JS/API';
-import { catchError, commonModalSetting } from 'JS/common';
+import { catchError, commonModalSetting, getKeyByValue } from 'JS/common';
 
 const Service = () => {
   const [mode, setMode] = useState('apply');
@@ -22,10 +22,6 @@ const Service = () => {
     bool: false,
   });
   const navigate = useNavigate();
-
-  const getKeyByValue = (obj, value) => {
-    return Object.keys(obj).find(key => obj[key] === value);
-  };
 
   const serviceList = async () => {
     if (prevent) return;

@@ -132,3 +132,7 @@ export const getWeek = () => {
   const date = new Date(this.getFullYear(), 0, 1);
   return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
 };
+
+export const getKeyByValue = (obj, value) => {
+  return Object.keys(obj).find(key => obj[key] === value);
+};

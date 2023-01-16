@@ -1,18 +1,29 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import { TbDragDrop } from 'react-icons/tb';
 import CommonModal from './CommonModal';
-import { outClick, commonModalSetting, changeState, addZero } from 'JS/common';
+import {
+  outClick,
+  commonModalSetting,
+  changeState,
+  addZero,
+  catchError,
+  getKeyByValue,
+} from 'JS/common';
+import { getServices, createPopup, editPopup, deletePopup } from 'JS/API';
 
 const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
     bool: false,
   });
-  const [uploadImg, setUploadImg] = useState('');
   const [upload, setUpload] = useState(false);
+  const [uploadImg, setUploadImg] = useState('');
   const [dragState, setDragState] = useState('leave');
+  const [serviceList, setServiceList] = useState({});
   const date = new Date();
   const [activeDate, setActiveDate] = useState({
     start_date: `${date.getFullYear()}-${addZero(
@@ -24,9 +35,54 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     )}`,
     end_time: '12:00',
   });
+  let prevent = false;
+  const navigate = useNavigate();
+
+  const getServiceList = async () => {
+    if (prevent) return;
+    prevent = true;
+    setTimeout(() => {
+      prevent = false;
+    }, 200);
+    const result = await getServices();
+    if (typeof result === 'object') {
+      setServiceList(result?.data?.data);
+      if (mode === 'apply')
+        changeState(
+          setInfo,
+          'service_code',
+          Object.keys(result?.data?.data)[0]
+        );
+    } else catchError(result, navigate, setAlertBox);
+  };
+
+  const newPopup = async () => {
+    const result = await createPopup(info);
+    if (typeof result === 'object') {
+      setAlert('completeApply');
+      commonModalSetting(setAlertBox, 'alert', true, '등록이 완료되었습니다.');
+    } else return catchError(result, navigate, setAlertBox);
+  };
+
+  const modifyPopup = async () => {
+    const result = await editPopup(info);
+    if (typeof result === 'object') {
+      setAlert('completeEdit');
+      commonModalSetting(setAlertBox, 'alert', true, '수정이 완료되었습니다.');
+    } else return catchError(result, navigate, setAlertBox);
+  };
+
+  const removePopup = async () => {
+    const result = await deletePopup(info?.id);
+    if (typeof result === 'object') {
+      setAlert('completeDelete');
+      commonModalSetting(setAlertBox, 'alert', true, '삭제가 완료되었습니다.');
+    } else return catchError(result, navigate, setAlertBox);
+  };
 
   useEffect(() => {
     window.addEventListener('click', e => outClick(e, setModal));
+    getServiceList();
   }, []);
 
   const imgPreview = inputFile => {
@@ -39,20 +95,44 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
   };
 
   useEffect(() => {
-    setInfo(prev => {
-      const clone = { ...prev };
-      clone.start = Math.floor(
-        new Date(
-          `${activeDate.start_date} ${activeDate.start_time}`
-        ).getTime() / 1000
-      );
-      clone.end = Math.floor(
-        new Date(`${activeDate.end_date} ${activeDate.end_time}`).getTime() /
-          1000
-      );
-      return clone;
-    });
+    if (mode === 'apply') {
+      setInfo(prev => {
+        const clone = { ...prev };
+        clone.start = Math.floor(
+          new Date(
+            `${activeDate.start_date} ${activeDate.start_time}`
+          ).getTime() / 1000
+        );
+        clone.end = Math.floor(
+          new Date(`${activeDate.end_date} ${activeDate.end_time}`).getTime() /
+            1000
+        );
+        return clone;
+      });
+    }
   }, [activeDate]);
+
+  useEffect(() => {
+    console.log(info);
+    if (mode === 'edit') {
+      const start = new Date(info?.start * 1000);
+      const end = new Date(info?.end * 1000);
+      setActiveDate({
+        start_date: `${start.getFullYear()}-${addZero(
+          start?.getMonth() + 1
+        )}-${addZero(start?.getDate())}`,
+        start_time: `${addZero(start.getHours())}:${addZero(
+          start.getMinutes()
+        )}`,
+        end_date: `${end.getFullYear()}-${addZero(
+          end?.getMonth() + 1
+        )}-${addZero(end?.getDate())}`,
+        end_time: `${addZero(end.getHours())}:${addZero(end.getMinutes())}`,
+      });
+      setUpload(true);
+      setUploadImg(`http://192.168.0.38:5555${info?.img}`);
+    }
+  }, [info]);
 
   return (
     <>
@@ -88,6 +168,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
                       'alert',
                       '한 장만 업로드하실 수 있습니다.'
                     );
+                  changeState(setInfo, 'img', files[0]);
                   imgPreview(files);
                   setDragState('leave');
                   setUpload(true);
@@ -98,6 +179,25 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
                 <span>이미지를 업로드해 주세요.</span>
               </div>
             )}
+            <div className='row'>
+              <span>서비스 구분</span>
+              <select
+                value={Number(info?.service_code)}
+                onChange={e =>
+                  changeState(setInfo, 'service_code', e.target.value)
+                }>
+                {Object.values(serviceList).reduce((acc, service) => {
+                  return (
+                    <>
+                      {acc}
+                      <option value={getKeyByValue(serviceList, service)}>
+                        {service}
+                      </option>
+                    </>
+                  );
+                }, <></>)}
+              </select>
+            </div>
             <div className='row'>
               <span>링크</span>
               <input
@@ -147,8 +247,25 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
             </div>
           </div>
           <div className='btnWrap row'>
-            <button>{mode === 'edit' ? '수정' : '등록'}</button>
-            {mode === 'edit' ? <button>삭제</button> : ''}
+            <button onClick={mode === 'edit' ? modifyPopup : newPopup}>
+              {mode === 'edit' ? '수정' : '등록'}
+            </button>
+            {mode === 'edit' ? (
+              <button
+                onClick={() => {
+                  setAlert('confirmDelete');
+                  commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'confirm',
+                    '팝업을 삭제하시겠습니까?<br/>삭제된 팝업은 복구할 수 없습니다.'
+                  );
+                }}>
+                삭제
+              </button>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
@@ -156,7 +273,15 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
+          okFn={() => {
+            if (
+              alert === 'completeApply' ||
+              alert === 'completeEdit' ||
+              alert === 'completeDelete'
+            )
+              setModal(false);
+            else if (alert === 'confirmDelete') removePopup();
+          }}
           failFn={() => {}}
         />
       )}

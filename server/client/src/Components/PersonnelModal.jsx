@@ -43,7 +43,7 @@ const PersonnelModal = ({ setEditModal, info }) => {
             <div className='blank'></div>
             <div className='row department'>
               <span>소속</span>
-              <div className='infoInput'>{info.department}</div>
+              <div className='infoInput'>{info.department === 'none' ? '없음' : info.department}</div>
             </div>
           </div>
           <div className='row'>

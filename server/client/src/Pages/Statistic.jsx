@@ -47,15 +47,9 @@ const Statistic = () => {
     }
   };
 
-  const makeBarData = () => {};
-
   useEffect(() => {
     makeArr('month');
   }, []);
-
-  useEffect(() => {
-    console.log(arr);
-  }, [arr]);
 
   return (
     <div className='container'>

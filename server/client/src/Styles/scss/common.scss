@@ -891,7 +891,9 @@
           > span {
             width: 100px;
           }
-          input[type='text'], .dateInput {
+          input[type='text'], .dateInput, select {
+            background-color: white;
+            border: none;
             width: 400px;
             box-shadow: 0 0 3px rgba($color: $gray, $alpha: 0.4);
             padding: 7px 10px;

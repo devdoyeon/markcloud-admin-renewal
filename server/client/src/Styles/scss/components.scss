@@ -513,6 +513,15 @@
   }
 }
 
+.popup {
+  td {
+    > img {
+      height: 100px;
+      max-width: 100%;
+    }
+  }
+}
+
 .empty-cache {
   @include flex-style();
   height: 500px;

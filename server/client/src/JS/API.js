@@ -1,9 +1,16 @@
-import axios from 'axios';
+import axios, { AxiosHeaders } from 'axios';
 import { getCookie, setCookie, removeCookie } from './cookie';
 
 const header = () => ({
   headers: {
     'Content-Type': 'application/json',
+    'access-token': getCookie('myToken'),
+  },
+});
+
+const fileHeader = () => ({
+  headers: {
+    'Content-Type': 'multipart/form-data',
     'access-token': getCookie('myToken'),
   },
 });
@@ -487,6 +494,65 @@ export const adminEdit = async ({
       email: email,
     };
     return await axios.post(`/api/admin/accounts/edit/${pk}`, query, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 팝업 관리
+// 팝업 불러오기
+export const getPopUpList = async (due, { page, limit }) => {
+  try {
+    return await axios.get(
+      `/api/admin/popup?filter_type=${due}&page=${page}&limit=${limit}`,
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 등록
+export const createPopup = async ({ service_code, start, end, img, link }) => {
+  try {
+    return await axios.post(
+      `/api/admin/popup?service_code=${service_code}&start_date=${start}&end_date=${end}${
+        link.trim() === '' ? '' : `&link_url=${link}`
+      }`,
+      { file: img },
+      fileHeader()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 수정
+export const editPopup = async ({
+  id,
+  service_code,
+  start,
+  end,
+  img,
+  link,
+}) => {
+  try {
+    return await axios.post(
+      `/api/admin/popup/edit/${id}?service_code=${service_code}&start_date=${start}&end_date=${end}${
+        link.trim() === '' ? '' : `&link_url=${link}`
+      }`,
+      typeof img === 'string' ? {} : { file: img },
+      typeof img === 'string' ? header() : fileHeader()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 삭제
+export const deletePopup = async id => {
+  try {
+    return await axios.post(`/api/admin/popup/delete/${id}`, {}, header());
   } catch (error) {
     return await errorHandling(error);
   }
