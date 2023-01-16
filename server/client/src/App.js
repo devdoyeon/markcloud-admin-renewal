@@ -1,4 +1,4 @@
-import './App.css';
+import 'App.css';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from 'Pages/SignIn';
 import Home from 'Pages/Home';
@@ -10,7 +10,7 @@ import Inquiry from 'Pages/Inquiry';
 import Coupon from 'Pages/Coupon';
 import PopUp from 'Pages/PopUp';
 import Product from 'Pages/Product';
-import Service from './Pages/Service';
+import Service from 'Pages/Service';
 import ErrorPage from 'Pages/ErrorPage';
 import USACache from 'Pages/USACache';
 

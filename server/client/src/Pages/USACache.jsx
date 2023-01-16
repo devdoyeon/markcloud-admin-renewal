@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import ViewCacheModal from 'Components/ViewCacheModal';
 import CommonModal from 'Components/CommonModal';
-import { commonModalSetting } from 'JS/common';
+import { commonModalSetting, catchError } from 'JS/common';
 import {
   getCacheList,
   removeCacheJson,
@@ -23,12 +24,14 @@ const USACache = () => {
     context: '',
     bool: false,
   });
+  const navigate = useNavigate();
 
   let prevent = false;
 
   const cacheSize = useCallback(async () => {
     const result = await getCacheSize();
-    setSize(result.data);
+    if (typeof result === 'object') setSize(result.data);
+    else return catchError(result, navigate, setAlertBox);
   }, [setSize]);
 
   const cacheList = async () => {
@@ -41,9 +44,11 @@ const USACache = () => {
     setKey([]);
     setValue([]);
     const result = await getCacheList();
-    setKey(Object.keys(result.data));
-    setValue(Object.values(result.data));
-    cacheSize();
+    if (typeof result === 'object') {
+      setKey(Object.keys(result.data));
+      setValue(Object.values(result.data));
+      cacheSize();
+    } else return catchError(result, navigate, setAlertBox);
   };
 
   const renderCacheList = () => {

@@ -244,7 +244,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                   '정상적으로 삭제되었습니다.'
                 );
                 return;
-              }
+              } else return catchError(result, navigate, setAlertBox)
             } else if (alert === 'completeDelete') {
               setInfo({
                 id: 0,

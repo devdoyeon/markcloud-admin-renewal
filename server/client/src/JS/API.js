@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders } from 'axios';
+import axios from 'axios';
 import { getCookie, setCookie, removeCookie } from './cookie';
 
 const header = () => ({

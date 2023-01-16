@@ -80,8 +80,6 @@ const Manage = () => {
     } else return catchError(result, navigate, setAlertBox);
   };
 
-  const applyCoupons = async () => {};
-
   const checkAll = () => {
     let arr = [];
     if ($('.coupon-all-check').is(':checked')) {
