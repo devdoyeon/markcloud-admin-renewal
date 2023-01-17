@@ -36,6 +36,7 @@ const Home = () => {
   const [inquiryModal, setInquiryModal] = useState(false);
   const [editor, setEditor] = useState(false);
 
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -49,7 +50,7 @@ const Home = () => {
   const getInquiry = async () => {
     const result = await getInquiryList('no-answer', 1, 100);
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
     for (let obj of result.data.data) arr.push(obj);
     setRecentInquiry(arr);
@@ -59,7 +60,7 @@ const Home = () => {
   const getNotice = async () => {
     const result = await getNoticeList(1, 100);
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
     for (let obj of result.data.data) arr.push(obj);
     setRecentNotice(arr);
@@ -70,7 +71,7 @@ const Home = () => {
   const getTextKing = async () => {
     const result = await getSearchKing('text');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTextKing(result?.data?.data);
     getNotice();
   };
@@ -79,7 +80,7 @@ const Home = () => {
   const getImgKing = async () => {
     const result = await getSearchKing('img');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgKing(result?.data?.data);
     getTextKing();
   };
@@ -88,7 +89,7 @@ const Home = () => {
   const getTodayImgSearch = async () => {
     const result = await getSearchCount('img_today');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgToday(result?.data?.data);
     getImgKing();
   };
@@ -97,7 +98,7 @@ const Home = () => {
   const getAllImgSearch = async () => {
     const result = await getSearchCount('img_all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgAll(result?.data?.data);
     getTodayImgSearch();
   };
@@ -106,7 +107,7 @@ const Home = () => {
   const getTodayTxtSearch = async () => {
     const result = await getSearchCount('text_today');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTxtToday(result?.data?.data);
     getAllImgSearch();
   };
@@ -115,7 +116,7 @@ const Home = () => {
   const getAllTxtSearch = async () => {
     const result = await getSearchCount('text_all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTxtAll(result?.data?.data);
     getTodayTxtSearch();
   };
@@ -124,7 +125,7 @@ const Home = () => {
   const getTodayUser = async () => {
     const result = await getUserCount('month');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setNewUser(result?.data?.data);
     getAllTxtSearch();
   };
@@ -138,7 +139,7 @@ const Home = () => {
     }, 200);
     const result = await getUserCount('all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     else {
       setState('ok');
       setAllUser(result?.data?.data);
@@ -410,7 +411,14 @@ const Home = () => {
         />
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

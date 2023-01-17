@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { commonModalSetting } from 'JS/common';
 
-const CommonModal = ({ setModal, modal, okFn, failFn }) => {
+const CommonModal = ({ setModal, modal, okFn }) => {
   useEffect(() => {
     if (modal.context === undefined || modal.context === 'undefined')
       setModal(false);
@@ -20,7 +20,6 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
         } else commonModalSetting(setModal, false);
       } else if (e.key === 'Escape') {
         if (modal.mode === 'confirm') {
-          failFn();
           commonModalSetting(setModal, false);
         } else commonModalSetting(setModal, false);
       } else return;
@@ -45,7 +44,6 @@ const CommonModal = ({ setModal, modal, okFn, failFn }) => {
           {modal.mode === 'confirm' && (
             <button
               onClick={() => {
-                failFn();
                 commonModalSetting(setModal, false);
               }}>
               취소

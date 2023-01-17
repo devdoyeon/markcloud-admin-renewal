@@ -53,7 +53,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
           'service_code',
           Object.keys(result?.data?.data)[0]
         );
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const newPopup = async () => {
@@ -61,7 +61,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     if (typeof result === 'object') {
       setAlert('completeApply');
       commonModalSetting(setAlertBox, 'alert', true, '등록이 완료되었습니다.');
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const modifyPopup = async () => {
@@ -69,7 +69,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(setAlertBox, 'alert', true, '수정이 완료되었습니다.');
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const removePopup = async () => {
@@ -77,7 +77,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     if (typeof result === 'object') {
       setAlert('completeDelete');
       commonModalSetting(setAlertBox, 'alert', true, '삭제가 완료되었습니다.');
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -281,8 +281,9 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
             )
               setModal(false);
             else if (alert === 'confirmDelete') removePopup();
+            else if (alert === 'logout') navigate('/');
+            else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

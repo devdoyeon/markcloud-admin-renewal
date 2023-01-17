@@ -14,6 +14,7 @@ const Coupon = () => {
     limit: 10,
   });
   const [list, setList] = useState([]);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -32,7 +33,7 @@ const Coupon = () => {
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -121,7 +122,14 @@ const Coupon = () => {
         )}
       </div>
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

@@ -31,7 +31,7 @@ const Service = () => {
     }, 200);
     const result = await getServices();
     if (typeof result === 'object') setList(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderServiceList = () => {
@@ -107,10 +107,15 @@ const Service = () => {
         ''
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {
-          if (alert === 'notAuthority') return navigate('/home')
-          else return
-        }} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'notAuthority') return navigate('/home');
+            else if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </>
   );

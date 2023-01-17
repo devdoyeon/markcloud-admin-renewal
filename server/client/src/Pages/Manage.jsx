@@ -26,6 +26,7 @@ const Manage = () => {
   const [searchTxt, setSearchTxt] = useState('');
   const [select, setSelect] = useState('all');
   const [couponModal, setCouponModal] = useState(false);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -49,7 +50,7 @@ const Manage = () => {
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const userSearch = async () => {
@@ -77,7 +78,7 @@ const Manage = () => {
       setUser(result?.data?.data);
       setSelect('all');
       setSearchTxt('');
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const checkAll = () => {
@@ -323,7 +324,14 @@ const Manage = () => {
         />
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
       {editModal && <PersonnelModal setEditModal={setEditModal} info={info} />}
     </div>

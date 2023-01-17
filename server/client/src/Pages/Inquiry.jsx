@@ -16,6 +16,7 @@ const Inquiry = () => {
   });
   const [select, setSelect] = useState('no-answer');
   const [id, setId] = useState('');
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -37,7 +38,7 @@ const Inquiry = () => {
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderTableBody = () => {
@@ -136,7 +137,14 @@ const Inquiry = () => {
       </div>
       {modal ? <InquiryDetail inquiryId={id} setModal={setModal} /> : ''}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

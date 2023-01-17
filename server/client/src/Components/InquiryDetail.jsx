@@ -64,7 +64,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         status: status_flag,
         answer: answer,
       });
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const applyAnswer = async () => {
@@ -80,7 +80,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     if (typeof result === 'object') {
       changeState(setInfo, 'status', true);
       getDetail();
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const editAnswer = async () => {
@@ -96,7 +96,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     if (typeof result === 'object') {
       setEdit(false);
       getDetail();
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const delAnswer = async () => {
@@ -115,7 +115,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         'alert',
         '정상적으로 삭제되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -254,9 +254,9 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
           okFn={() => {
             if (alert === 'edit') setEdit(false);
             else if (alert === 'deleteComplete') getDetail();
+            else if (alert === 'logout') navigate('/');
             else delAnswer();
           }}
-          failFn={() => {}}
         />
       )}
     </>

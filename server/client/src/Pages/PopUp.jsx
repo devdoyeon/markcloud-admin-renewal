@@ -18,6 +18,7 @@ const PopUp = () => {
     totalPage: 10,
     limit: 10,
   });
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -59,7 +60,7 @@ const PopUp = () => {
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
-    else catchError(result, navigate, setAlertBox);
+    else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const getList = async () => {
@@ -78,7 +79,7 @@ const PopUp = () => {
         return clone;
       });
       getServiceList();
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderList = () => {
@@ -206,8 +207,10 @@ const PopUp = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
-          failFn={() => {}}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
         />
       )}
     </>

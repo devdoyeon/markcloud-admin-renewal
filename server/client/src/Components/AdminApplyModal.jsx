@@ -133,7 +133,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
           'alert',
           '수정이 완료되었습니다.'
         );
-      } else catchError(result, navigate, setAlertBox);
+      } else catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -151,7 +151,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
           'alert',
           '등록이 완료되었습니다.'
         );
-      } else catchError(result, navigate, setAlertBox);
+      } else catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -326,9 +326,9 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               alert === 'completeEdit'
             )
               setModal(false);
+            else if (alert === 'logout') navigate('/')
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

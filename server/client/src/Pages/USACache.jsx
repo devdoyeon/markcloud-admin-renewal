@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import ViewCacheModal from 'Components/ViewCacheModal';
@@ -17,8 +17,8 @@ const USACache = () => {
   const [value, setValue] = useState([]);
   const [arr, setArr] = useState([]);
   const [size, setSize] = useState('');
-  const [delMode, setDelMode] = useState('');
   const [modal, setModal] = useState(false);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -28,13 +28,13 @@ const USACache = () => {
 
   let prevent = false;
 
-  const cacheSize = useCallback(async () => {
+  const getCacheSize = async () => {
     const result = await getCacheSize();
     if (typeof result === 'object') setSize(result.data);
-    else return catchError(result, navigate, setAlertBox);
-  }, [setSize]);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
-  const cacheList = async () => {
+  const getCacheList = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
@@ -47,8 +47,23 @@ const USACache = () => {
     if (typeof result === 'object') {
       setKey(Object.keys(result.data));
       setValue(Object.values(result.data));
-      cacheSize();
-    } else return catchError(result, navigate, setAlertBox);
+      getCacheSize();
+    } else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const removeCacheList = async mode => {
+    let result;
+    if (mode === 'json') result = await removeCacheJson();
+    else result = await removeCache();
+    if (typeof result === 'object') {
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '성공적으로 삭제되었습니다.'
+      );
+      getCacheList();
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderCacheList = () => {
@@ -75,7 +90,7 @@ const USACache = () => {
   };
 
   useEffect(() => {
-    cacheList();
+    getCacheList();
   }, []);
 
   return (
@@ -90,25 +105,25 @@ const USACache = () => {
             </span>
             <button
               onClick={() => {
+                setAlert('allDelete');
                 commonModalSetting(
                   setAlertBox,
                   true,
                   'confirm',
                   '전체 캐시를 삭제하시겠습니까?<br/>삭제된 캐시는 복구할 수 없습니다.'
                 );
-                setDelMode('all');
               }}>
               전체 캐시 삭제
             </button>
             <button
               onClick={() => {
+                setAlert('jsonDelete');
                 commonModalSetting(
                   setAlertBox,
                   true,
                   'confirm',
                   'JSON을 삭제하시겠습니까?<br/>삭제된 파일은 복구할 수 없습니다.'
                 );
-                setDelMode('json');
               }}>
               JSON 삭제
             </button>
@@ -145,21 +160,12 @@ const USACache = () => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={async () => {
-            let result;
-            if (delMode === 'all') result = await removeCache();
-            else result = await removeCacheJson();
-            if (typeof result === 'object') {
-              commonModalSetting(
-                setAlertBox,
-                true,
-                'alert',
-                '성공적으로 삭제되었습니다.'
-              );
-              cacheList();
-            }
+          okFn={() => {
+            if (alert === 'allDelete') removeCacheList('all');
+            else if (alert === 'jsonDelete') removeCacheList('json');
+            else if (alert === 'logout') navigate('/');
+            else return;
           }}
-          failFn={() => {}}
         />
       )}
     </div>

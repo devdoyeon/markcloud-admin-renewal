@@ -44,7 +44,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     if (typeof result === 'object') {
       setServices(Object.keys(result?.data?.data));
       setServiceInfo(result?.data?.data);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const newMerchant = async () => {
@@ -76,7 +76,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
           merchant_price: '',
         });
         setModal(false);
-      } else return catchError(result, navigate, setAlertBox);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -109,7 +109,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
           merchant_price: '',
         });
         setModal(false);
-      } else return catchError(result, navigate, setAlertBox);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -244,7 +244,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                   '정상적으로 삭제되었습니다.'
                 );
                 return;
-              } else return catchError(result, navigate, setAlertBox)
+              } else return catchError(result, navigate, setAlertBox, setAlert);
             } else if (alert === 'completeDelete') {
               setInfo({
                 id: 0,
@@ -254,9 +254,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 merchant_price: '',
               });
               setModal(false);
-            } else return;
+            } else if (alert === 'logout') navigate('/');
+            else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

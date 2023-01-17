@@ -51,7 +51,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         data?.context,
         'text/html'
       ).body.innerHTML;
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const delNotice = async () => {
@@ -64,7 +64,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         'alert',
         '정상적으로 삭제되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -158,9 +158,9 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
           okFn={() => {
             if (alert === 'deleteConfirm') delNotice();
             else if (alert === 'completeDelete') setModal(false);
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

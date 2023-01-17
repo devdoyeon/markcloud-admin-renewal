@@ -41,7 +41,7 @@ const Notice = () => {
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const deleteNotices = async () => {
@@ -60,7 +60,7 @@ const Notice = () => {
         'alert',
         '정상적으로 삭제되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const checkAll = () => {
@@ -233,6 +233,7 @@ const Notice = () => {
           okFn={() => {
             if (alert === 'deleteConfirm') deleteNotices();
             else if (alert === 'completeDelete') getNotice();
+            else if (alert === 'logout') navigate('/')
             else return;
           }}
         />

@@ -21,6 +21,7 @@ const SignIn = () => {
   const [check, setCheck] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
   const [formCheck, setFormCheck] = useState(obj);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -74,7 +75,7 @@ const SignIn = () => {
       else if (result === `wrongPw,${failCount}`)
         checkForm('wrongPw', true, failCount);
       else if (result === 'retired') checkForm('retired', true);
-      else return catchError(result, navigate, setAlertBox);
+      else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -156,7 +157,14 @@ const SignIn = () => {
         <button onClick={login}>로그인</button>
       </div>
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

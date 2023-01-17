@@ -47,7 +47,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
         service_code: service_code,
         context: context,
       });
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const editNotice = async () => {
@@ -65,7 +65,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
         'alert',
         '성공적으로 수정 되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const writeNotice = async () => {
@@ -100,7 +100,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
           'alert',
           '성공적으로 등록 되었습니다.'
         );
-      } else return catchError(result, navigate, setAlertBox);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -197,8 +197,9 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
               setEditor(false);
               setModal(true);
             } else if (alert === 'completeApply') setEditor(false);
+            else if (alert === 'logout') navigate('/');
+            else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

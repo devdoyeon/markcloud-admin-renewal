@@ -58,7 +58,7 @@ const AdminManage = () => {
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 관리자 삭제
@@ -73,7 +73,7 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPk(0);
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 관리자 다중 삭제
@@ -88,7 +88,7 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPkArr([]);
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 전체 체크
@@ -391,10 +391,10 @@ const AdminManage = () => {
             if (alert === 'confirmMultiDelete') duplicateDelete();
             else if (alert === 'completeDelete') adminList();
             else if (alert === 'confirmDelete') deleteAdmin();
-            else if (alert === 'notAuthority') navigate('/home')
+            else if (alert === 'notAuthority') navigate('/home');
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

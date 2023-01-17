@@ -35,7 +35,7 @@ const Product = () => {
     }, 200);
     const result = await getMerchant();
     if (typeof result === 'object') setMerchantArr(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const checkAll = () => {
@@ -71,7 +71,7 @@ const Product = () => {
         '정상적으로 삭제되었습니다.'
       );
       return;
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderTableBody = () => {
@@ -230,13 +230,9 @@ const Product = () => {
           okFn={() => {
             if (alert === 'multipleDelete') deleteMultiple();
             else if (alert === 'completeDelete') setModal(false);
-            else if (alert === 'notAuthority') navigate('/home')
+            else if (alert === 'notAuthority') navigate('/home');
+            else if (alert === 'logout') navigate('/');
             else return;
-          }}
-          failFn={() => {
-            $('.product-all-check').prop('checked', false);
-            $('.product-check').prop('checked', false);
-            return setProductArr([]);
           }}
         />
       )}

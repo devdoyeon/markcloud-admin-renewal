@@ -1,7 +1,7 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
-export const catchError = async (result, navigate, setModal) => {
+export const catchError = async (result, navigate, setModal, setAlert) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
@@ -10,8 +10,8 @@ export const catchError = async (result, navigate, setModal) => {
   ) {
     removeCookie('myToken');
     removeCookie('rfToken');
-    navigate('/');
-    return alert(errorList[result]);
+    setAlert('logout')
+    return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
   else if (result === 'AccessTokenExpired') return;
