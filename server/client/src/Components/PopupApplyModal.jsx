@@ -212,6 +212,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
               <div className='dateInput row'>
                 <input
                   type='date'
+                  max='9999-12-31'
                   value={activeDate.start_date}
                   onChange={e =>
                     changeState(setActiveDate, 'start_date', e.target.value)
@@ -219,6 +220,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
                 />
                 <input
                   type='time'
+                  max='9999-12-31'
                   value={activeDate.start_time}
                   onChange={e =>
                     changeState(setActiveDate, 'start_time', e.target.value)

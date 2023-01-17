@@ -4,8 +4,7 @@ import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
 import CommonModal from './CommonModal';
 import { byteCount, catchError, commonModalSetting, outClick } from 'JS/common';
-import { getNoticeDetail, noticeDelete } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
+import { getNoticeDetail, noticeDelete, getServices } from 'JS/API';
 
 const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({
@@ -19,6 +18,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
+  const [serviceList, setServiceList] = useState({})
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -28,6 +28,12 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   const navigate = useNavigate();
   let prevent = false;
   const domParser = new DOMParser();
+
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   const getDetail = async () => {
     if (prevent) return;
@@ -51,6 +57,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         data?.context,
         'text/html'
       ).body.innerHTML;
+      getServiceList()
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -89,7 +96,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
                 <thead>
                   <tr>
                     <th>서비스 구분</th>
-                    <th>{serviceCodeToString[info.service_code]}</th>
+                    <th>{serviceList[info.service_code]}</th>
                   </tr>
                 </thead>
                 <tbody>

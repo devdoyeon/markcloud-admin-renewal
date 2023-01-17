@@ -14,14 +14,14 @@ import {
   maskingInfo,
   outClick,
 } from 'JS/common';
-import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
+import { getInquiryDetail, answerPost, answerEdit, answerDelete, getServices } from 'JS/API';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
   const [byte, setByte] = useState(0);
   const [alert, setAlert] = useState('');
   const [edit, setEdit] = useState(false);
+  const [serviceList, setServiceList] = useState({})
   const [info, setInfo] = useState({
     service_code: '',
     user_name: '',
@@ -37,6 +37,12 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     bool: false,
   });
   const navigate = useNavigate();
+
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   const getDetail = async () => {
     if (prevent) return;
@@ -64,6 +70,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         status: status_flag,
         answer: answer,
       });
+      getServiceList()
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -139,7 +146,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <thead>
                   <tr>
                     <th>서비스 구분</th>
-                    <th>{serviceCodeToString[info.service_code]}</th>
+                    <th>{serviceList[info.service_code]}</th>
                   </tr>
                 </thead>
                 <tbody>

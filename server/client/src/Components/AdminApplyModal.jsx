@@ -288,6 +288,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <span>생년월일</span>
                 <input
                   type='date'
+                  max='9999-12-31'
                   value={info?.birthday}
                   onChange={e =>
                     changeState(setInfo, 'birthday', e.target.value)
@@ -326,7 +327,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               alert === 'completeEdit'
             )
               setModal(false);
-            else if (alert === 'logout') navigate('/')
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
         />

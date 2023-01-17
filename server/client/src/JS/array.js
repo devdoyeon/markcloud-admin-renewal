@@ -22,10 +22,3 @@ export const statusArr = {
   Refunded: '환불',
   Revoked: '취소',
 };
-
-export const serviceCodeToString = {
-  100: '마크클라우드',
-  110: '마크뷰',
-  120: '마크그룹웨어',
-  130: '마크링크',
-};

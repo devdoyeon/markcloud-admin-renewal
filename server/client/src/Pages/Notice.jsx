@@ -7,7 +7,7 @@ import NoticeDetail from 'Components/NoticeDetail';
 import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
 import { catchError, changeState, commonModalSetting } from 'JS/common';
-import { getNoticeList, noticeMultiDelete } from 'JS/API';
+import { getNoticeList, noticeMultiDelete, getServices } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
 
 const Notice = () => {
@@ -22,6 +22,7 @@ const Notice = () => {
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
   const [alert, setAlert] = useState('');
+  const [serviceList, setServiceList] = useState({})
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -30,6 +31,12 @@ const Notice = () => {
 
   let prevent = false;
   const navigate = useNavigate();
+
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert)
+  }
 
   const getNotice = async () => {
     if (prevent) return;
@@ -41,6 +48,7 @@ const Notice = () => {
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+      getServiceList()
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -119,7 +127,7 @@ const Notice = () => {
               </td>
               <td>{created_at.split('T')[0]}</td>
               <td>{admin_name}</td>
-              <td>{serviceCodeToString[service_code]}</td>
+              <td>{serviceList[service_code]}</td>
             </tr>
           </>
         );

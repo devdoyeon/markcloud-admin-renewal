@@ -125,7 +125,7 @@ export const addHyphen = phone => {
 
 export const addZero = t => {
   if (t < 10) return `0${t}`;
-  else return t;
+else return t;
 };
 
 export const getWeek = () => {

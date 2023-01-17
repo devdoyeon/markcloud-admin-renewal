@@ -9,8 +9,9 @@ import {
   byteCount,
   changeState,
   commonModalSetting,
+  getKeyByValue,
 } from 'JS/common';
-import { getNoticeDetail, noticeEdit, noticeWrite } from 'JS/API';
+import { getNoticeDetail, noticeEdit, noticeWrite, getServices } from 'JS/API';
 
 const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   const [info, setInfo] = useState({
@@ -22,6 +23,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
+  const [services, setServices] = useState({});
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -32,6 +34,23 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   const navigate = useNavigate();
 
   let prevent = false;
+
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServices(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  const renderServiceList = () => {
+    return Object.values(services).reduce((acc, service) => {
+      return (
+        <>
+          {acc}
+          <option value={getKeyByValue(services, service)}>{service}</option>
+        </>
+      );
+    }, <></>);
+  };
 
   const getDetail = async () => {
     if (prevent) return;
@@ -111,6 +130,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     } else {
       setMode('write');
       changeState(setInfo, 'service_code', 100);
+      getServiceList();
     }
   }, []);
 
@@ -134,8 +154,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                   onChange={e =>
                     changeState(setInfo, 'service_code', Number(e.target.value))
                   }>
-                  <option value={100}>마크클라우드</option>
-                  <option value={110}>마크뷰</option>
+                  {renderServiceList()}
                 </select>
               )}
               <input

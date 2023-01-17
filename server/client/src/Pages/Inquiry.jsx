@@ -5,8 +5,7 @@ import Pagination from 'Components/Pagination';
 import InquiryDetail from 'Components/InquiryDetail';
 import CommonModal from 'Components/CommonModal';
 import { catchError, changeState, maskingInfo } from 'JS/common';
-import { getInquiryList } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
+import { getInquiryList, getServices } from 'JS/API';
 
 const Inquiry = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -24,9 +23,16 @@ const Inquiry = () => {
   });
   const [list, setList] = useState([]);
   const [modal, setModal] = useState(false);
+  const [serviceList, setServiceList] = useState({});
   const navigate = useNavigate();
 
   let prevent = false;
+
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   const getInquiry = async () => {
     if (prevent) return;
@@ -38,6 +44,7 @@ const Inquiry = () => {
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+      getServiceList()
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -62,7 +69,7 @@ const Inquiry = () => {
               <td>{created_at.split('T')[0]}</td>
               <td>{maskingInfo('name', user_name)}</td>
               <td>{status_flag ? '완료' : '미답변'}</td>
-              <td>{serviceCodeToString[service_code]}</td>
+              <td>{serviceList[service_code]}</td>
             </tr>
           </>
         );
