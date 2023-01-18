@@ -35,24 +35,21 @@ const Service = () => {
   };
 
   const renderServiceList = () => {
-    return Object.values(list).reduce((acc, service) => {
+    return Object.values(list).map(service => {
       return (
-        <>
-          {acc}
-          <div
-            className='serviceBox'
-            onClick={() => {
-              setInfo({
-                service_code: getKeyByValue(list, service),
-                service_name: service,
-              });
-              setMode('edit');
-              setModal(true);
-            }}>
-            <span>서비스 코드: {getKeyByValue(list, service)}</span>
-            {service}
-          </div>
-        </>
+        <div
+          className='serviceBox'
+          onClick={() => {
+            setInfo({
+              service_code: getKeyByValue(list, service),
+              service_name: service,
+            });
+            setMode('edit');
+            setModal(true);
+          }}>
+          <span>서비스 코드: {getKeyByValue(list, service)}</span>
+          {service}
+        </div>
       );
     }, <></>);
   };

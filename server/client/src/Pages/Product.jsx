@@ -89,11 +89,8 @@ const Product = () => {
         }
       }
     };
-    return merchantArr.reduce(
-      (
-        acc,
-        { id, service_code, merchant_code, merchant_name, merchant_price }
-      ) => {
+    return merchantArr.map(
+      ({ id, service_code, merchant_code, merchant_name, merchant_price }) => {
         const onModal = () => {
           setMode('edit');
           setProductInfo({
@@ -106,26 +103,23 @@ const Product = () => {
           setModal(true);
         };
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                {' '}
-                <input
-                  type='checkbox'
-                  className='product-check'
-                  onChange={checkEach}
-                  value={id}
-                />
-              </td>
-              <td onClick={onModal}>{service_code}</td>
-              <td onClick={onModal}>{merchant_code}</td>
-              <td onClick={onModal}>{merchant_name}</td>
-              <td onClick={onModal} className='price'>
-                {merchant_price.toLocaleString()}원
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              {' '}
+              <input
+                type='checkbox'
+                className='product-check'
+                onChange={checkEach}
+                value={id}
+              />
+            </td>
+            <td onClick={onModal}>{service_code}</td>
+            <td onClick={onModal}>{merchant_code}</td>
+            <td onClick={onModal}>{merchant_name}</td>
+            <td onClick={onModal} className='price'>
+              {merchant_price.toLocaleString()}원
+            </td>
+          </tr>
         );
       },
       <></>

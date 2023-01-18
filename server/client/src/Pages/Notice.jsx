@@ -22,7 +22,7 @@ const Notice = () => {
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
   const [alert, setAlert] = useState('');
-  const [serviceList, setServiceList] = useState({})
+  const [serviceList, setServiceList] = useState({});
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -35,8 +35,8 @@ const Notice = () => {
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox, setAlert)
-  }
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
 
   const getNotice = async () => {
     if (prevent) return;
@@ -48,7 +48,7 @@ const Notice = () => {
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-      getServiceList()
+      getServiceList();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -88,8 +88,8 @@ const Notice = () => {
   };
 
   const renderTableBody = () => {
-    return noticeList.reduce(
-      (acc, { title, created_at, service_code, id, admin_name }) => {
+    return noticeList.map(
+      ({ title, created_at, service_code, id, admin_name }) => {
         const checkEach = () => {
           let all = $('.notice-check').length;
           let checked = $('.notice-check:checked').length;
@@ -105,31 +105,29 @@ const Notice = () => {
             }
           }
         };
+
+        const onModal = () => {
+          setModal(true);
+          setId(id);
+        };
+
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                <input
-                  type='checkbox'
-                  className='notice-check'
-                  onChange={checkEach}
-                  value={id}
-                />
-              </td>
-              <td
-                className='title'
-                onClick={() => {
-                  setModal(true);
-                  setId(id);
-                }}>
-                {title}
-              </td>
-              <td>{created_at.split('T')[0]}</td>
-              <td>{admin_name}</td>
-              <td>{serviceList[service_code]}</td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              <input
+                type='checkbox'
+                className='notice-check'
+                onChange={checkEach}
+                value={id}
+              />
+            </td>
+            <td className='title' onClick={onModal}>
+              {title}
+            </td>
+            <td onClick={onModal}>{created_at.split('T')[0]}</td>
+            <td onClick={onModal}>{admin_name}</td>
+            <td onClick={onModal}>{serviceList[service_code]}</td>
+          </tr>
         );
       },
       <></>
@@ -241,7 +239,7 @@ const Notice = () => {
           okFn={() => {
             if (alert === 'deleteConfirm') deleteNotices();
             else if (alert === 'completeDelete') getNotice();
-            else if (alert === 'logout') navigate('/')
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
         />

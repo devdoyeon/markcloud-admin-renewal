@@ -166,7 +166,18 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                 <span>{byte.title}</span>/300
               </div>
             </div>
-            <div onClick={() => setEditor(false)}>
+            <div
+              onClick={() => {
+                setAlert('confirmCancel');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  `정말 취소하시겠습니까?<br />지금까지 ${
+                    mode === 'edit' ? '수정' : '작성'
+                  }된 내용은 반영되지 않습니다.`
+                );
+              }}>
               <FaWindowClose />
             </div>
           </div>
@@ -184,7 +195,8 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
             </div>
             <div>
               <button
-                onClick={() =>
+                onClick={() => {
+                  setAlert('confirmCancel');
                   commonModalSetting(
                     setAlertBox,
                     true,
@@ -192,8 +204,8 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                     `정말 취소하시겠습니까?<br />지금까지 ${
                       mode === 'edit' ? '수정' : '작성'
                     }된 내용은 반영되지 않습니다.`
-                  )
-                }>
+                  );
+                }}>
                 취소
               </button>
               <button
@@ -212,10 +224,17 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
           setModal={setAlertBox}
           modal={alertBox}
           okFn={() => {
-            if (alert === 'completeEdit') {
+            if (
+              alert === 'completeEdit' ||
+              (alert === 'confirmCancel' && mode === 'edit')
+            ) {
               setEditor(false);
               setModal(true);
-            } else if (alert === 'completeApply') setEditor(false);
+            } else if (
+              alert === 'completeApply' ||
+              (alert === 'confirmCancel' && mode === 'write')
+            )
+              setEditor(false);
             else if (alert === 'logout') navigate('/');
             else return;
           }}

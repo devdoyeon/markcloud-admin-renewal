@@ -83,36 +83,33 @@ const PopUp = () => {
   };
 
   const renderList = () => {
-    return list?.reduce(
-      (acc, { id, service_code, img_url, link_url, start_date, end_date }) => {
+    return list?.map(
+      ({ id, service_code, img_url, link_url, start_date, end_date }) => {
         return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setMode('edit');
-                setModal(true);
-                setInfo({
-                  id: id,
-                  img: img_url,
-                  link: link_url,
-                  start: start_date,
-                  end: end_date,
-                  service_code: service_code,
-                });
-              }}>
-              <td>{serviceList[service_code]}</td>
-              <td>
-                <img src={`http://192.168.0.38:5555${img_url}`} alt='' />
-              </td>
-              <td>{link_url}</td>
-              <td>{returnDate(start_date)}</td>
-              <td>{returnDate(end_date)}</td>
-              <td>
-                {returnStatus(returnDate(start_date), returnDate(end_date))}
-              </td>
-            </tr>
-          </>
+          <tr
+            onClick={() => {
+              setMode('edit');
+              setModal(true);
+              setInfo({
+                id: id,
+                img: img_url,
+                link: link_url,
+                start: start_date,
+                end: end_date,
+                service_code: service_code,
+              });
+            }}>
+            <td>{serviceList[service_code]}</td>
+            <td>
+              <img src={`http://192.168.0.38:5555${img_url}`} alt='' />
+            </td>
+            <td>{link_url}</td>
+            <td>{returnDate(start_date)}</td>
+            <td>{returnDate(end_date)}</td>
+            <td>
+              {returnStatus(returnDate(start_date), returnDate(end_date))}
+            </td>
+          </tr>
         );
       },
       <></>

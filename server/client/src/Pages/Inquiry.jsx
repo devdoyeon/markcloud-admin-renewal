@@ -13,7 +13,7 @@ const Inquiry = () => {
     totalPage: 10,
     limit: 10,
   });
-  const [select, setSelect] = useState('no-answer');
+  const [select, setSelect] = useState('no_answer');
   const [id, setId] = useState('');
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
@@ -44,34 +44,25 @@ const Inquiry = () => {
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-      getServiceList()
+      getServiceList();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   const renderTableBody = () => {
-    return list.reduce(
-      (
-        acc,
-        { title, created_at, user_name, status_flag, service_code, id }
-      ) => {
+    return list.map(
+      ({ title, created_at, user_name, status_flag, service_code, id }) => {
         return (
-          <>
-            {acc}
-            <tr>
-              <td
-                className='title'
-                onClick={() => {
-                  setModal(true);
-                  setId(id);
-                }}>
-                {title}
-              </td>
-              <td>{created_at.split('T')[0]}</td>
-              <td>{maskingInfo('name', user_name)}</td>
-              <td>{status_flag ? '완료' : '미답변'}</td>
-              <td>{serviceList[service_code]}</td>
-            </tr>
-          </>
+          <tr
+            onClick={() => {
+              setModal(true);
+              setId(id);
+            }}>
+            <td className='title'>{title}</td>
+            <td>{created_at.split('T')[0]}</td>
+            <td>{maskingInfo('name', user_name)}</td>
+            <td>{status_flag ? '완료' : '미답변'}</td>
+            <td>{serviceList[service_code]}</td>
+          </tr>
         );
       },
       <></>
@@ -114,7 +105,8 @@ const Inquiry = () => {
                 setSelect(e.target.value);
                 changeState(setPageInfo, 'page', 1);
               }}>
-              <option value='no-answer'>미답변 문의</option>
+              <option value='no_answer'>미답변 문의</option>
+              <option value='answer'>답변 완료</option>
               <option value='all'>전체보기</option>
             </select>
           </div>

@@ -157,13 +157,9 @@ export const applyToken = async data => {
 //~ Inquiry
 // 문의 내역 조회
 export const getInquiryList = async (target, page, limit) => {
-  const param = () => {
-    if (target === 'all') return 'inquirys';
-    else if (target === 'no-answer') return 'inquirys/no-answer';
-  };
   try {
     return await axios.get(
-      `api/admin/${param()}?page=${page}&limit=${limit}`,
+      `api/admin/inquiry?filter_type=${target}&page=${page}&limit=${limit}`,
       header()
     );
   } catch (error) {

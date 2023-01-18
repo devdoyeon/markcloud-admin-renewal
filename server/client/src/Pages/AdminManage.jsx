@@ -109,23 +109,20 @@ const AdminManage = () => {
   };
 
   const renderAdminList = () => {
-    return user.reduce(
-      (
-        acc,
-        {
-          id,
-          user_id,
-          name,
-          is_active,
-          created_at,
-          expired_at,
-          gender,
-          phone,
-          birthday,
-          email,
-          admin_role,
-        }
-      ) => {
+    return user.map(
+      ({
+        id,
+        user_id,
+        name,
+        is_active,
+        created_at,
+        expired_at,
+        gender,
+        phone,
+        birthday,
+        email,
+        admin_role,
+      }) => {
         //= 각자 체크
         const checkEach = () => {
           let all = $('.admin-check').length;
@@ -168,53 +165,50 @@ const AdminManage = () => {
         };
 
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                {is_active ? (
-                  <input
-                    type='checkbox'
-                    className='admin-check'
-                    value={id}
-                    onChange={checkEach}
-                  />
-                ) : (
-                  ''
-                )}
-              </td>
-              <td onClick={onModal}>{user_id}</td>
-              <td onClick={onModal}>{name}</td>
-              <td onClick={onModal}>
-                {admin_role === 'super_admin' ? '최상위 관리자' : '관리자'}
-              </td>
-              <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
-                {is_active ? '회원' : '탈퇴'}
-              </td>
-              <td onClick={onModal}>{created_at}</td>
-              <td onClick={onModal}>{is_active ? '' : expired_at}</td>
-              <td>
-                {is_active ? (
-                  <button
-                    className='deleteBtn'
-                    onClick={() => {
-                      setPk(id);
-                      setAlert('confirmDelete');
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'confirm',
-                        '정말 삭제하시겠습니까?'
-                      );
-                    }}>
-                    관리자 삭제
-                  </button>
-                ) : (
-                  ''
-                )}
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              {is_active ? (
+                <input
+                  type='checkbox'
+                  className='admin-check'
+                  value={id}
+                  onChange={checkEach}
+                />
+              ) : (
+                ''
+              )}
+            </td>
+            <td onClick={onModal}>{user_id}</td>
+            <td onClick={onModal}>{name}</td>
+            <td onClick={onModal}>
+              {admin_role === 'super_admin' ? '최상위 관리자' : '관리자'}
+            </td>
+            <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
+              {is_active ? '회원' : '탈퇴'}
+            </td>
+            <td onClick={onModal}>{created_at}</td>
+            <td onClick={onModal}>{is_active ? '' : expired_at}</td>
+            <td>
+              {is_active ? (
+                <button
+                  className='deleteBtn'
+                  onClick={() => {
+                    setPk(id);
+                    setAlert('confirmDelete');
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'confirm',
+                      '정말 삭제하시겠습니까?'
+                    );
+                  }}>
+                  관리자 삭제
+                </button>
+              ) : (
+                ''
+              )}
+            </td>
+          </tr>
         );
       },
       <></>

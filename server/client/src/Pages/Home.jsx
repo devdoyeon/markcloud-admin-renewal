@@ -148,43 +148,37 @@ const Home = () => {
   };
 
   const textKingBodyRender = () => {
-    return textKing.reduce((acc, { user_id, name, search_count }, idx) => {
+    return textKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
       return (
-        <>
-          {acc}
-          <tr>
-            <td>
-              <span className={`crown rank${rank}`}>
-                <FaCrown />
-              </span>
-            </td>
-            <td>{maskingInfo('id', user_id)}</td>
-            <td>{maskingInfo('name', name)}</td>
-            <td>{search_count}</td>
-          </tr>
-        </>
+        <tr>
+          <td>
+            <span className={`crown rank${rank}`}>
+              <FaCrown />
+            </span>
+          </td>
+          <td>{maskingInfo('id', user_id)}</td>
+          <td>{maskingInfo('name', name)}</td>
+          <td>{search_count}</td>
+        </tr>
       );
     }, <></>);
   };
 
   const imgKingBodyRender = () => {
-    return imgKing.reduce((acc, { user_id, name, search_count }, idx) => {
+    return imgKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
       return (
-        <>
-          {acc}
-          <tr>
-            <td>
-              <span className={`crown rank${rank}`}>
-                <FaCrown />
-              </span>
-            </td>
-            <td>{maskingInfo('id', user_id)}</td>
-            <td>{maskingInfo('name', name)}</td>
-            <td>{search_count}</td>
-          </tr>
-        </>
+        <tr>
+          <td>
+            <span className={`crown rank${rank}`}>
+              <FaCrown />
+            </span>
+          </td>
+          <td>{maskingInfo('id', user_id)}</td>
+          <td>{maskingInfo('name', name)}</td>
+          <td>{search_count}</td>
+        </tr>
       );
     }, <></>);
   };
@@ -192,20 +186,17 @@ const Home = () => {
   const noticeListRender = () => {
     return recentNotice
       .slice(0, 5)
-      .reduce((acc, { title, admin_name, created_at, id }) => {
+      .map(({ title, admin_name, created_at, id }) => {
         return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setNoticeId(id);
-                setNoticeModal(true);
-              }}>
-              <td className='title'>{title}</td>
-              <td>{admin_name}</td>
-              <td>{created_at.replaceAll('T', ' ')}</td>
-            </tr>
-          </>
+          <tr
+            onClick={() => {
+              setNoticeId(id);
+              setNoticeModal(true);
+            }}>
+            <td className='title'>{title}</td>
+            <td>{admin_name}</td>
+            <td>{created_at.replaceAll('T', ' ')}</td>
+          </tr>
         );
       }, <></>);
   };
@@ -213,20 +204,17 @@ const Home = () => {
   const inquiryListRender = () => {
     return recentInquiry
       .slice(0, 5)
-      .reduce((acc, { title, user_name, created_at, id }) => {
+      .map(({ title, user_name, created_at, id }) => {
         return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setInquiryId(id);
-                setInquiryModal(true);
-              }}>
-              <td className='title'>{title}</td>
-              <td>{maskingInfo('name', user_name)}</td>
-              <td>{created_at.replaceAll('T', ' ')}</td>
-            </tr>
-          </>
+          <tr
+            onClick={() => {
+              setInquiryId(id);
+              setInquiryModal(true);
+            }}>
+            <td className='title'>{title}</td>
+            <td>{maskingInfo('name', user_name)}</td>
+            <td>{created_at.replaceAll('T', ' ')}</td>
+          </tr>
         );
       }, <></>);
   };

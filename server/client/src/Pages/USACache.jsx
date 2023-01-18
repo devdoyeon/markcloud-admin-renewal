@@ -67,24 +67,21 @@ const USACache = () => {
   };
 
   const renderCacheList = () => {
-    return key.reduce((acc, code, idx) => {
+    return key.map((code, idx) => {
       return (
-        <>
-          {acc}
-          <tr>
-            <td>{code}</td>
-            <td
-              className={Array.isArray(value[idx]) && 'arr'}
-              onClick={() => {
-                if (Array.isArray(value[idx])) {
-                  setModal(true);
-                  setArr(value[idx]);
-                } else return;
-              }}>
-              {Array.isArray(value[idx]) ? '상세 보기' : value[idx]}
-            </td>
-          </tr>
-        </>
+        <tr>
+          <td>{code}</td>
+          <td
+            className={Array.isArray(value[idx]) && 'arr'}
+            onClick={() => {
+              if (Array.isArray(value[idx])) {
+                setModal(true);
+                setArr(value[idx]);
+              } else return;
+            }}>
+            {Array.isArray(value[idx]) ? '상세 보기' : value[idx]}
+          </td>
+        </tr>
       );
     }, <></>);
   };

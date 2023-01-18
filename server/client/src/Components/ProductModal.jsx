@@ -147,12 +147,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'service_code', e.target.value)
                 }>
-                {services.reduce((acc, service) => {
+                {services.map(service => {
                   return (
-                    <>
-                      {acc}
-                      <option value={service}>{serviceInfo[service]}</option>
-                    </>
+                    <option value={service}>{serviceInfo[service]}</option>
                   );
                 }, <></>)}
               </select>

@@ -186,14 +186,11 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'service_code', e.target.value)
                 }>
-                {Object.values(serviceList).reduce((acc, service) => {
+                {Object.values(serviceList).map(service => {
                   return (
-                    <>
-                      {acc}
-                      <option value={getKeyByValue(serviceList, service)}>
-                        {service}
-                      </option>
-                    </>
+                    <option value={getKeyByValue(serviceList, service)}>
+                      {service}
+                    </option>
                   );
                 }, <></>)}
               </select>

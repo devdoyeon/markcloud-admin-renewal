@@ -98,26 +98,23 @@ const Manage = () => {
   };
 
   const renderUserList = () => {
-    return user.reduce(
-      (
-        acc,
-        {
-          user_pk,
-          user_id,
-          name,
-          department,
-          gender,
-          voucher_name,
-          voucher_status,
-          event_name,
-          event_status,
-          created_at,
-          is_active,
-          birthday,
-          phone,
-          email,
-        }
-      ) => {
+    return user.map(
+      ({
+        user_pk,
+        user_id,
+        name,
+        department,
+        gender,
+        voucher_name,
+        voucher_status,
+        event_name,
+        event_status,
+        created_at,
+        is_active,
+        birthday,
+        phone,
+        email,
+      }) => {
         const couponCheck = () => {
           if (is_active) {
             if (event_status === 'Applied') return;
@@ -141,66 +138,66 @@ const Manage = () => {
           }
         };
 
+        const onModal = () => {
+          setInfo({
+            id: maskingInfo('id', user_id),
+            name: maskingInfo('name', name),
+            department: department,
+            gender: gender,
+            birth: birthday,
+            phone: maskingInfo(
+              'phone',
+              phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
+            ),
+            email: maskingInfo('email', email),
+          });
+          setEditModal(true);
+        };
+
         return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setInfo({
-                  id: maskingInfo('id', user_id),
-                  name: maskingInfo('name', name),
-                  department: department,
-                  gender: gender,
-                  birth: birthday,
-                  phone: maskingInfo(
-                    'phone',
-                    phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
-                  ),
-                  email: maskingInfo('email', email),
-                });
-                setEditModal(true);
-              }}>
-              <td className='checkBoxArea'>
-                {couponCheck() && (
-                  <input
-                    type='checkbox'
-                    className='coupon-check'
-                    value={user_pk}
-                    onChange={checkEach}
-                  />
-                )}
-              </td>
-              <td>{maskingInfo('id', user_id)}</td>
-              <td>{maskingInfo('name', name)}</td>
-              <td>{department === 'none' ? '없음' : department}</td>
-              <td>{voucher_name}</td>
-              <td>{statusArr[voucher_status]}</td>
-              <td>{event_name}</td>
-              <td>{statusArr[event_status]}</td>
-              <td>{created_at.split('T')[0]}</td>
-              <td className={is_active ? 'user' : 'resign'}>
-                {is_active ? '회원' : '탈퇴'}
-              </td>
-              <td>
-                {couponCheck() ? (
-                  <button
-                    className='couponBtn'
-                    onClick={() => {
-                      setCouponModal(true);
-                      setPk(prev => {
-                        const clone = [...prev];
-                        clone.push(user_pk);
-                        return clone;
-                      });
-                    }}>
-                    쿠폰 발급
-                  </button>
-                ) : (
-                  ''
-                )}
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td className='checkBoxArea'>
+              {couponCheck() && (
+                <input
+                  type='checkbox'
+                  className='coupon-check'
+                  value={user_pk}
+                  onChange={checkEach}
+                />
+              )}
+            </td>
+            <td onClick={onModal}>{maskingInfo('id', user_id)}</td>
+            <td onClick={onModal}>{maskingInfo('name', name)}</td>
+            <td onClick={onModal}>
+              {department === 'none' ? '없음' : department}
+            </td>
+            <td onClick={onModal}>{voucher_name}</td>
+            <td onClick={onModal}>{statusArr[voucher_status]}</td>
+            <td onClick={onModal}>{event_name}</td>
+            <td onClick={onModal}>{statusArr[event_status]}</td>
+            <td onClick={onModal}>{created_at.split('T')[0]}</td>
+            <td className={is_active ? 'user' : 'resign'} onClick={onModal}>
+              {is_active ? '회원' : '탈퇴'}
+            </td>
+            <td>
+              {couponCheck() ? (
+                <button
+                  className='couponBtn'
+                  onClick={() => {
+                    setCouponModal(true);
+                    setPk(prev => {
+                      const clone = [...prev];
+                      clone.push(user_pk);
+                      return clone;
+                    });
+                  }}>
+                  쿠폰 발급
+                </button>
+              ) : (
+                ''
+              )}
+            </td>
+          </tr>
         );
       },
       <></>
