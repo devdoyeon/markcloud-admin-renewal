@@ -8,8 +8,8 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
     result === 'tokenExpired' ||
     result === 'accessDenied'
   ) {
-    removeCookie('myToken');
-    removeCookie('rfToken');
+    removeCookie('adminMyToken');
+    removeCookie('adminRfToken');
     setAlert('logout')
     return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');

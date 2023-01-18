@@ -48,7 +48,7 @@ const Home = () => {
 
   //@ 10
   const getInquiry = async () => {
-    const result = await getInquiryList('no-answer', 1, 100);
+    const result = await getInquiryList('no_answer', 1, 5);
     if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
@@ -58,7 +58,7 @@ const Home = () => {
 
   //@ 9
   const getNotice = async () => {
-    const result = await getNoticeList(1, 100);
+    const result = await getNoticeList(1, 5);
     if (typeof result !== 'object')
       return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
@@ -184,39 +184,35 @@ const Home = () => {
   };
 
   const noticeListRender = () => {
-    return recentNotice
-      .slice(0, 5)
-      .map(({ title, admin_name, created_at, id }) => {
-        return (
-          <tr
-            onClick={() => {
-              setNoticeId(id);
-              setNoticeModal(true);
-            }}>
-            <td className='title'>{title}</td>
-            <td>{admin_name}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        );
-      }, <></>);
+    return recentNotice.map(({ title, admin_name, created_at, id }) => {
+      return (
+        <tr
+          onClick={() => {
+            setNoticeId(id);
+            setNoticeModal(true);
+          }}>
+          <td className='title'>{title}</td>
+          <td>{admin_name}</td>
+          <td>{created_at.replaceAll('T', ' ')}</td>
+        </tr>
+      );
+    }, <></>);
   };
 
   const inquiryListRender = () => {
-    return recentInquiry
-      .slice(0, 5)
-      .map(({ title, user_name, created_at, id }) => {
-        return (
-          <tr
-            onClick={() => {
-              setInquiryId(id);
-              setInquiryModal(true);
-            }}>
-            <td className='title'>{title}</td>
-            <td>{maskingInfo('name', user_name)}</td>
-            <td>{created_at.replaceAll('T', ' ')}</td>
-          </tr>
-        );
-      }, <></>);
+    return recentInquiry.map(({ title, user_name, created_at, id }) => {
+      return (
+        <tr
+          onClick={() => {
+            setInquiryId(id);
+            setInquiryModal(true);
+          }}>
+          <td className='title'>{title}</td>
+          <td>{maskingInfo('name', user_name)}</td>
+          <td>{created_at.replaceAll('T', ' ')}</td>
+        </tr>
+      );
+    }, <></>);
   };
 
   const tableColGroup = m => {

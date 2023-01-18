@@ -95,25 +95,22 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
   };
 
   useEffect(() => {
-    if (mode === 'apply') {
-      setInfo(prev => {
-        const clone = { ...prev };
-        clone.start = Math.floor(
-          new Date(
-            `${activeDate.start_date} ${activeDate.start_time}`
-          ).getTime() / 1000
-        );
-        clone.end = Math.floor(
-          new Date(`${activeDate.end_date} ${activeDate.end_time}`).getTime() /
-            1000
-        );
-        return clone;
-      });
-    }
+    setInfo(prev => {
+      const clone = { ...prev };
+      clone.start = Math.floor(
+        new Date(
+          `${activeDate.start_date} ${activeDate.start_time}`
+        ).getTime() / 1000
+      );
+      clone.end = Math.floor(
+        new Date(`${activeDate.end_date} ${activeDate.end_time}`).getTime() /
+          1000
+      );
+      return clone;
+    });
   }, [activeDate]);
 
   useEffect(() => {
-    console.log(info);
     if (mode === 'edit') {
       const start = new Date(info?.start * 1000);
       const end = new Date(info?.end * 1000);
@@ -132,7 +129,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
       setUpload(true);
       setUploadImg(`http://192.168.0.38:5555${info?.img}`);
     }
-  }, [info]);
+  }, []);
 
   return (
     <>

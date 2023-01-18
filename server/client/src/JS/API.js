@@ -4,14 +4,14 @@ import { getCookie, setCookie, removeCookie } from './cookie';
 const header = () => ({
   headers: {
     'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
+    'access-token': getCookie('adminMyToken'),
   },
 });
 
 const fileHeader = () => ({
   headers: {
     'Content-Type': 'multipart/form-data',
-    'access-token': getCookie('myToken'),
+    'access-token': getCookie('adminMyToken'),
   },
 });
 
@@ -58,13 +58,13 @@ const errorHandling = async error => {
 const tokenReissue = async () => {
   const headers = {
     'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
-    'refresh-token': getCookie('rfToken'),
+    'access-token': getCookie('adminMyToken'),
+    'refresh-token': getCookie('adminRfToken'),
   };
   try {
     const result = await axios.get(`/api/users/self/token`, { headers });
-    removeCookie('myToken');
-    setCookie('myToken', result.data.data.access_token, {
+    removeCookie('adminMyToken');
+    setCookie('adminMyToken', result.data.data.access_token, {
       path: '/',
     });
     window.location.reload();

@@ -113,8 +113,8 @@ const SideBar = () => {
         <div
           className='logoutBtn'
           onClick={() => {
-            removeCookie('myToken');
-            removeCookie('rfToken');
+            removeCookie('adminMyToken');
+            removeCookie('adminRfToken');
             localStorage.clear();
             return navigate('/');
           }}>

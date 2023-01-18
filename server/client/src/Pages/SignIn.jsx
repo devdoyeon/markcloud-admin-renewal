@@ -55,11 +55,11 @@ const SignIn = () => {
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
       const { access_token, refresh_token, role } = result?.data?.data;
-      setCookie('myToken', access_token, {
+      setCookie('adminMyToken', access_token, {
         path: '/',
         secure: false,
       });
-      setCookie('rfToken', refresh_token, {
+      setCookie('adminRfToken', refresh_token, {
         path: '/',
         secure: false,
       });
@@ -81,7 +81,7 @@ const SignIn = () => {
 
   useEffect(() => {
     //& 토큰을 가지고 있으면 홈으로 푸시
-    if (getCookie('myToken')) navigate('/home');
+    if (getCookie('adminMyToken')) navigate('/home');
     if (localStorage.getItem('save-id')) {
       setUserId(localStorage.getItem('save-id'));
       setCheck(true);
