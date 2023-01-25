@@ -130,9 +130,9 @@ const USACache = () => {
             </button>
           </div>
         </div>
-        {size ? (
-          key.length ? (
-            <div className='table-wrap'>
+        <div className='table-wrap'>
+          {size ? (
+            key.length ? (
               <table>
                 <colgroup>
                   <col width='80%' />
@@ -146,15 +146,15 @@ const USACache = () => {
                 </thead>
                 <tbody>{renderCacheList()}</tbody>
               </table>
-            </div>
+            ) : (
+              <div className='none-list'>캐시가 없습니다.</div>
+            )
           ) : (
-            <div className='empty-cache'>캐시가 없습니다.</div>
-          )
-        ) : (
-          <div className='loading'>
-            <img src={loading} alt='로딩 아이콘' />
-          </div>
-        )}
+            <div className='loading'>
+              <img src={loading} alt='로딩 아이콘' />
+            </div>
+          )}
+        </div>
       </div>
       {modal && <ViewCacheModal arr={arr} setModal={setModal} />}
       {alertBox.bool && (

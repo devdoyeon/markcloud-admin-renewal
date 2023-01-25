@@ -522,14 +522,6 @@
   }
 }
 
-.empty-cache {
-  @include flex-style();
-  height: 500px;
-  background-color: $thBackColor;
-  font-size: 20px;
-  font-family: $middleFont;
-}
-
 .loading {
   @include flex-style();
   @include position-style($top: 0, $left: null);
