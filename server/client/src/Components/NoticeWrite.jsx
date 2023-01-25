@@ -35,12 +35,14 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
 
   let prevent = false;
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServices(result?.data?.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 서비스 옵션 렌더
   const renderServiceList = () => {
     return Object.values(services).reduce((acc, service) => {
       return (
@@ -52,6 +54,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     }, <></>);
   };
 
+  //= 수정일 때 기존 공지사항 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = true;
@@ -69,6 +72,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 수정
   const editNotice = async () => {
     const data = {
       service_code: info.service_code,
@@ -87,6 +91,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 등록
   const writeNotice = async () => {
     if (!info.title && !info.context) {
       return commonModalSetting(
