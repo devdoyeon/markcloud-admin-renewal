@@ -32,12 +32,14 @@ const Notice = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 목록 불러오기
   const getNotice = async () => {
     if (prevent) return;
     prevent = true;
@@ -52,6 +54,7 @@ const Notice = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 다중 삭제
   const deleteNotices = async () => {
     const data = { items: idArr };
     const result = await noticeMultiDelete(data);
@@ -71,6 +74,7 @@ const Notice = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 전체 선택
   const checkAll = () => {
     let arr = [];
     if ($('.notice-all-check').is(':checked')) {
@@ -87,9 +91,12 @@ const Notice = () => {
     }
   };
 
+  //= 공지사항 목록 렌더
   const renderTableBody = () => {
     return noticeList.map(
       ({ title, created_at, service_code, id, admin_name }) => {
+        
+        //& 개별 선택
         const checkEach = () => {
           let all = $('.notice-check').length;
           let checked = $('.notice-check:checked').length;
@@ -106,6 +113,7 @@ const Notice = () => {
           }
         };
 
+        //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setModal(true);
           setId(id);

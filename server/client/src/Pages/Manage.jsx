@@ -40,6 +40,7 @@ const Manage = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 회원 목록 불러오기
   const userList = async () => {
     if (prevent) return;
     prevent = true;
@@ -53,6 +54,7 @@ const Manage = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 회원 검색
   const userSearch = async () => {
     if (!searchTxt)
       return commonModalSetting(
@@ -81,6 +83,7 @@ const Manage = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 전체 선택
   const checkAll = () => {
     let arr = [];
     if ($('.coupon-all-check').is(':checked')) {
@@ -97,6 +100,7 @@ const Manage = () => {
     }
   };
 
+  //= 회원 목록 테이블 렌더
   const renderUserList = () => {
     return user.map(
       ({
@@ -115,13 +119,13 @@ const Manage = () => {
         phone,
         email,
       }) => {
+        //& 쿠폰 발급 자격 확인
         const couponCheck = () => {
-          if (is_active) {
-            if (event_status === 'Applied') return;
-            else return true;
-          } else return false;
+          if (is_active && event_status !== 'Applied') return true;
+          else return false;
         };
 
+        //& 개별 선택
         const checkEach = () => {
           let all = $('.coupon-check').length;
           let checked = $('.coupon-check:checked').length;
@@ -137,7 +141,8 @@ const Manage = () => {
             }
           }
         };
-
+        
+        //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setInfo({
             id: maskingInfo('id', user_id),

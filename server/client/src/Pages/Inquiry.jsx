@@ -28,12 +28,14 @@ const Inquiry = () => {
 
   let prevent = false;
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 문의 사항 불러오기
   const getInquiry = async () => {
     if (prevent) return;
     prevent = true;
@@ -48,6 +50,7 @@ const Inquiry = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 문의 사항 테이블 렌더
   const renderTableBody = () => {
     return list.map(
       ({ title, created_at, user_name, status_flag, service_code, id }) => {
