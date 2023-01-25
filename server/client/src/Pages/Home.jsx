@@ -147,6 +147,7 @@ const Home = () => {
     }
   };
 
+  //= 텍스트 검색 순위 렌더
   const textKingBodyRender = () => {
     return textKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
@@ -165,6 +166,7 @@ const Home = () => {
     }, <></>);
   };
 
+  //= 이미지 검색 순위 렌더
   const imgKingBodyRender = () => {
     return imgKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
@@ -183,6 +185,7 @@ const Home = () => {
     }, <></>);
   };
 
+  //= 공지사항 5개 렌더
   const noticeListRender = () => {
     return recentNotice.map(({ title, admin_name, created_at, id }) => {
       return (
@@ -199,6 +202,7 @@ const Home = () => {
     }, <></>);
   };
 
+  //= 문의사항 5개 렌더
   const inquiryListRender = () => {
     return recentInquiry.map(({ title, user_name, created_at, id }) => {
       return (
@@ -215,6 +219,7 @@ const Home = () => {
     }, <></>);
   };
 
+  //= colGroup return Function
   const tableColGroup = m => {
     if (m === 'upload')
       return (

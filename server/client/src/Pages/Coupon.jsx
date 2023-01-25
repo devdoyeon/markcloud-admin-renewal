@@ -23,6 +23,7 @@ const Coupon = () => {
   const navigate = useNavigate();
   let prevent = false;
 
+  //= 쿠폰 발급 내역 불러오기
   const getList = async () => {
     if (prevent) return;
     prevent = true;
@@ -44,6 +45,7 @@ const Coupon = () => {
     getList();
   }, [pageInfo.page, pageInfo.limit]);
 
+  //= 쿠폰 발급 리스트 렌더
   const renderTableBody = () => {
     return list.map(
       ({
