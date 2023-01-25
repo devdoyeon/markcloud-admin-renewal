@@ -23,6 +23,7 @@ const Service = () => {
   });
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
   const serviceList = async () => {
     if (prevent) return;
     prevent = true;
@@ -34,6 +35,7 @@ const Service = () => {
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 서비스 목록 렌더
   const renderServiceList = () => {
     return Object.values(list).map(service => {
       return (

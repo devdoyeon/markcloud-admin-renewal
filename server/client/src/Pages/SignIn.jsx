@@ -30,7 +30,7 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
-  //~ 아이디 | 비밀번호 확인해서 틀리거나 빈 부분 알려주는 함수
+  //~ 아이디 비밀번호 EmptyInput 확인 함수
   const checkForm = async (checkStr, bool, failCount) => {
     const obj = {
       emptyBoth: false,

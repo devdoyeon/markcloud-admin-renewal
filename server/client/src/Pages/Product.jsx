@@ -27,6 +27,7 @@ const Product = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 상품 목록 불러오기
   const getProduct = async () => {
     if (prevent) return;
     prevent = true;
@@ -38,6 +39,7 @@ const Product = () => {
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 전체 선택
   const checkAll = () => {
     let arr = [];
     if ($('.product-all-check').is(':checked')) {
@@ -54,6 +56,7 @@ const Product = () => {
     }
   };
 
+  //= 서비스 다중 삭제
   const deleteMultiple = async () => {
     const data = { items: productArr }; // 데이터
     const result = await productMultiDelete(data); // API 호출
@@ -74,23 +77,28 @@ const Product = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 상품 목록 렌더
   const renderTableBody = () => {
-    const checkEach = () => {
-      let all = $('.product-check').length;
-      let checked = $('.product-check:checked').length;
-      let arr = [];
-      if (all !== checked) $('.product-all-check').prop('checked', false);
-      else $('.product-all-check').prop('checked', true);
-      for (let i = 0; i < all; i++) {
-        if (document.getElementsByClassName('product-check')[i].checked) {
-          const val = document.getElementsByClassName('product-check')[i].value;
-          arr.push(val);
-          setProductArr(arr);
-        }
-      }
-    };
     return merchantArr.map(
       ({ id, service_code, merchant_code, merchant_name, merchant_price }) => {
+        //& 개별 선택
+        const checkEach = () => {
+          let all = $('.product-check').length;
+          let checked = $('.product-check:checked').length;
+          let arr = [];
+          if (all !== checked) $('.product-all-check').prop('checked', false);
+          else $('.product-all-check').prop('checked', true);
+          for (let i = 0; i < all; i++) {
+            if (document.getElementsByClassName('product-check')[i].checked) {
+              const val =
+                document.getElementsByClassName('product-check')[i].value;
+              arr.push(val);
+              setProductArr(arr);
+            }
+          }
+        };
+
+        //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setMode('edit');
           setProductInfo({
@@ -102,6 +110,7 @@ const Product = () => {
           });
           setModal(true);
         };
+
         return (
           <tr>
             <td>

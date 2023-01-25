@@ -28,13 +28,15 @@ const USACache = () => {
 
   let prevent = false;
 
-  const getCacheSize = async () => {
+  //= 캐시 사이즈 불러오기
+  const getSize = async () => {
     const result = await getCacheSize();
     if (typeof result === 'object') setSize(result.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  const getCacheList = async () => {
+  //= 캐시 목록 불러오기
+  const getList = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
@@ -47,10 +49,11 @@ const USACache = () => {
     if (typeof result === 'object') {
       setKey(Object.keys(result.data));
       setValue(Object.values(result.data));
-      getCacheSize();
+      getSize();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 캐시 삭제
   const removeCacheList = async mode => {
     let result;
     if (mode === 'json') result = await removeCacheJson();
@@ -66,6 +69,7 @@ const USACache = () => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 캐시 목록 렌더
   const renderCacheList = () => {
     return key.map((code, idx) => {
       return (
@@ -87,7 +91,7 @@ const USACache = () => {
   };
 
   useEffect(() => {
-    getCacheList();
+    getList();
   }, []);
 
   return (

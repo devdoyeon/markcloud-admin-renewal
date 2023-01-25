@@ -5,7 +5,6 @@ import Pagination from 'Components/Pagination';
 import PopupApplyModal from 'Components/PopupApplyModal';
 import CommonModal from 'Components/CommonModal';
 import {
-  commonModalSetting,
   changeState,
   addZero,
   catchError,
@@ -40,6 +39,7 @@ const PopUp = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 날짜 정리해서 리턴해 주는 함수
   const returnDate = int => {
     const date = new Date(int * 1000);
     return `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(
@@ -47,6 +47,7 @@ const PopUp = () => {
     )} ${addZero(date.getHours())}:${addZero(date.getMinutes())}`;
   };
 
+  //= 게시 상태 계산 함수
   const returnStatus = (s, e) => {
     const now = new Date();
     const start = new Date(s);
@@ -57,12 +58,14 @@ const PopUp = () => {
     else return '';
   };
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
     else catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 팝업 리스트 불러오기
   const getList = async () => {
     if (prevent) return;
     prevent = true;
@@ -82,6 +85,7 @@ const PopUp = () => {
     } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 팝업 리스트 렌더
   const renderList = () => {
     return list?.map(
       ({ id, service_code, img_url, link_url, start_date, end_date }) => {
