@@ -20,6 +20,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
   });
   const navigate = useNavigate();
 
+  //= 서비스 등록
   const newService = async () => {
     if (info?.service_code.trim() === '')
       return commonModalSetting(
@@ -47,6 +48,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
     }
   };
 
+  //= 서비스 수정
   const modifyService = async () => {
     const result = await editService(origin, info);
     if (typeof result === 'object') {
@@ -58,6 +60,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 서비스 삭제
   const removeService = async () => {
     const result = await deleteService(info.service_code);
     if (typeof result === 'object') {

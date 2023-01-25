@@ -38,6 +38,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     if (prevent) return;
     prevent = true;
@@ -56,10 +57,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  useEffect(() => {
-    console.log(info)
-  }, [info])
-
+  //= 팝업 등록
   const newPopup = async () => {
     const result = await createPopup(info);
     if (typeof result === 'object') {
@@ -68,6 +66,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 팝업 수정
   const modifyPopup = async () => {
     const result = await editPopup(info);
     if (typeof result === 'object') {
@@ -76,6 +75,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 팝업 삭제
   const removePopup = async () => {
     const result = await deletePopup(info?.id);
     if (typeof result === 'object') {
@@ -89,6 +89,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     getServiceList();
   }, []);
 
+  //= 이미지 미리보기
   const imgPreview = inputFile => {
     if (!inputFile) return; //파일 없을때 처리
     const reader = new FileReader();
