@@ -94,20 +94,24 @@ const Coupon = () => {
           </div>
         </div>
         <div className='table-wrap'>
-          <table>
-            <thead>
-              <tr>
-                <th>이벤트 코드</th>
-                <th>발급 쿠폰명</th>
-                <th>발급일</th>
-                <th>적용일</th>
-                <th>만료일</th>
-                <th>유효기간</th>
-                <th>상태</th>
-              </tr>
-            </thead>
-            <tbody>{renderTableBody()}</tbody>
-          </table>
+          {list?.length ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>이벤트 코드</th>
+                  <th>발급 쿠폰명</th>
+                  <th>발급일</th>
+                  <th>적용일</th>
+                  <th>만료일</th>
+                  <th>유효기간</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody>{renderTableBody()}</tbody>
+            </table>
+          ) : (
+            <div className='none-list'>목록이 없습니다.</div>
+          )}
         </div>
         {pageInfo.totalPage === 1 ? (
           ''

@@ -293,6 +293,17 @@
   }
 }
 
+.none-list {
+  @include flex-style();
+  width: 100%;
+  background-color: $thBackColor;
+  height: 500px;
+  font-size: 20px;
+  &.service {
+    margin-top: 50px;
+  }
+}
+
 .table-wrap {
   > table {
     width: 100%;
@@ -856,7 +867,7 @@
       > .column {
         margin-top: 30px;
         width: 100%;
-        >input[type='file'] {
+        > input[type='file'] {
           display: none;
         }
         .imageInput {
@@ -883,7 +894,7 @@
             background-color: $gray04;
           }
         }
-        >.row {
+        > .row {
           margin-bottom: 20px;
           &:last-child {
             margin-bottom: 40px;
@@ -891,7 +902,9 @@
           > span {
             width: 100px;
           }
-          input[type='text'], .dateInput, select {
+          input[type='text'],
+          .dateInput,
+          select {
             background-color: white;
             border: none;
             width: 400px;

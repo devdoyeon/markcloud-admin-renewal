@@ -196,24 +196,28 @@ const Product = () => {
             </div>
           </div>
           <div className='table-wrap'>
-            <table>
-              <thead>
-                <tr>
-                  <th>
-                    <input
-                      type='checkbox'
-                      className='product-all-check'
-                      onChange={checkAll}
-                    />
-                  </th>
-                  <th>서비스 코드</th>
-                  <th>상품 코드</th>
-                  <th>상품명</th>
-                  <th>상품 가격</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableBody()}</tbody>
-            </table>
+            {merchantArr?.length ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      <input
+                        type='checkbox'
+                        className='product-all-check'
+                        onChange={checkAll}
+                      />
+                    </th>
+                    <th>서비스 코드</th>
+                    <th>상품 코드</th>
+                    <th>상품명</th>
+                    <th>상품 가격</th>
+                  </tr>
+                </thead>
+                <tbody>{renderTableBody()}</tbody>
+              </table>
+            ) : (
+              <div className='none-list'>목록이 없습니다.</div>
+            )}
           </div>
         </div>
       </div>

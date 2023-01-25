@@ -402,7 +402,7 @@
   .service-wrap {
     @include flex-style();
     flex-wrap: wrap;
-    margin-top: 100px;
+    margin-top: 50px;
     .serviceBox {
       cursor: pointer;
       position: relative;

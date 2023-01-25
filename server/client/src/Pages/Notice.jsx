@@ -195,30 +195,34 @@ const Notice = () => {
           </div>
         </div>
         <div className='table-wrap'>
-          <table>
-            <colgroup>
-              <col width='10%' />
-              <col width='30%' />
-              <col width='20%' />
-              <col width='10%' />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type='checkbox'
-                    className='notice-all-check'
-                    onChange={checkAll}
-                  />
-                </th>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>작성자</th>
-                <th>구분</th>
-              </tr>
-            </thead>
-            <tbody>{renderTableBody()}</tbody>
-          </table>
+          {noticeList?.length ? (
+            <table>
+              <colgroup>
+                <col width='10%' />
+                <col width='30%' />
+                <col width='20%' />
+                <col width='10%' />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type='checkbox'
+                      className='notice-all-check'
+                      onChange={checkAll}
+                    />
+                  </th>
+                  <th>제목</th>
+                  <th>등록일</th>
+                  <th>작성자</th>
+                  <th>구분</th>
+                </tr>
+              </thead>
+              <tbody>{renderTableBody()}</tbody>
+            </table>
+          ) : (
+            <div className='none-list'>목록이 없습니다.</div>
+          )}
         </div>
         {pageInfo.totalPage === 1 ? (
           ''

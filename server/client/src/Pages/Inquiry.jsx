@@ -112,25 +112,29 @@ const Inquiry = () => {
           </div>
         </div>
         <div className='table-wrap'>
-          <table>
-            <colgroup>
-              <col width='50%' />
-              <col width='10%' />
-              <col width='10%' />
-              <col width='10%' />
-              <col width='20%' />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>작성자</th>
-                <th>상태</th>
-                <th>구분</th>
-              </tr>
-            </thead>
-            <tbody>{renderTableBody()}</tbody>
-          </table>
+          {list?.length ? (
+            <table>
+              <colgroup>
+                <col width='50%' />
+                <col width='10%' />
+                <col width='10%' />
+                <col width='10%' />
+                <col width='20%' />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>제목</th>
+                  <th>등록일</th>
+                  <th>작성자</th>
+                  <th>상태</th>
+                  <th>구분</th>
+                </tr>
+              </thead>
+              <tbody>{renderTableBody()}</tbody>
+            </table>
+          ) : (
+            <div className='none-list'>목록이 없습니다.</div>
+          )}
         </div>
         <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
       </div>

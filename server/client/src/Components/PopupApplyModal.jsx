@@ -56,6 +56,10 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  useEffect(() => {
+    console.log(info)
+  }, [info])
+
   const newPopup = async () => {
     const result = await createPopup(info);
     if (typeof result === 'object') {

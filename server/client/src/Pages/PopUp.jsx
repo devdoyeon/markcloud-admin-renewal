@@ -167,6 +167,7 @@ const PopUp = () => {
             </div>
           </div>
           <div className='table-wrap'>
+            {list?.length ?
             <table>
               <colgroup>
                 <col width='10%' />
@@ -187,7 +188,8 @@ const PopUp = () => {
                 </tr>
               </thead>
               <tbody>{renderList()}</tbody>
-            </table>
+            </table> : <div className='none-list'>목록이 없습니다.</div>
+            }
           </div>
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>

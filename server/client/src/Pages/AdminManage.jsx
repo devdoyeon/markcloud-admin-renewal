@@ -334,37 +334,41 @@ const AdminManage = () => {
             </div>
           </div>
           <div className='table-wrap'>
-            <table>
-              <colgroup>
-                <col width='5%' />
-                <col width='15%' />
-                <col width='10%' />
-                <col width='10%' />
-                <col width='10%' />
-                <col width='15%' />
-                <col width='15%' />
-                <col width='10%' />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>
-                    <input
-                      type='checkbox'
-                      className='admin-all-check'
-                      onChange={checkAll}
-                    />
-                  </th>
-                  <th>아이디</th>
-                  <th>이름</th>
-                  <th>권한</th>
-                  <th>회원구분</th>
-                  <th>가입일</th>
-                  <th>탈퇴일</th>
-                  <th>관리자 삭제</th>
-                </tr>
-              </thead>
-              <tbody>{renderAdminList()}</tbody>
-            </table>
+            {user?.length ? (
+              <table>
+                <colgroup>
+                  <col width='5%' />
+                  <col width='15%' />
+                  <col width='10%' />
+                  <col width='10%' />
+                  <col width='10%' />
+                  <col width='15%' />
+                  <col width='15%' />
+                  <col width='10%' />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>
+                      <input
+                        type='checkbox'
+                        className='admin-all-check'
+                        onChange={checkAll}
+                      />
+                    </th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>권한</th>
+                    <th>회원구분</th>
+                    <th>가입일</th>
+                    <th>탈퇴일</th>
+                    <th>관리자 삭제</th>
+                  </tr>
+                </thead>
+                <tbody>{renderAdminList()}</tbody>
+              </table>
+            ) : (
+              <div className='none-list'>목록이 없습니다.</div>
+            )}
           </div>
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>

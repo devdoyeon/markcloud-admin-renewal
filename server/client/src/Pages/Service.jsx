@@ -90,7 +90,11 @@ const Service = () => {
               등록
             </button>
           </div>
-          <div className='service-wrap'>{renderServiceList()}</div>
+          {Object.values(list)?.length ? (
+            <div className='service-wrap'>{renderServiceList()}</div>
+          ) : (
+            <div className='none-list service'>목록이 없습니다.</div>
+          )}
         </div>
       </div>
       {modal ? (
