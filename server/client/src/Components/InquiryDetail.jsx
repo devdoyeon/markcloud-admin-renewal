@@ -38,12 +38,13 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   });
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
-
+  //= 문의 사항 상세 내역 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = true;
@@ -74,6 +75,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 등록
   const applyAnswer = async () => {
     if (!info.answer)
       return commonModalSetting(
@@ -90,6 +92,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 수정
   const editAnswer = async () => {
     if (!info.answer)
       return commonModalSetting(
@@ -106,6 +109,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 삭제
   const delAnswer = async () => {
     const result = await answerDelete(inquiryId);
     if (typeof result === 'object') {

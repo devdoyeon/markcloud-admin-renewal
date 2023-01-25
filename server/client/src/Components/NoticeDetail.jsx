@@ -18,7 +18,7 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
     title: 0,
     context: 0,
   });
-  const [serviceList, setServiceList] = useState({})
+  const [serviceList, setServiceList] = useState({});
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -29,12 +29,14 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
   let prevent = false;
   const domParser = new DOMParser();
 
+  //= 서비스 목록 불러오기
   const getServiceList = async () => {
     const result = await getServices();
     if (typeof result === 'object') setServiceList(result?.data?.data);
     else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 상세 내역 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = true;
@@ -57,10 +59,11 @@ const NoticeDetail = ({ noticeId, setModal, setEditor }) => {
         data?.context,
         'text/html'
       ).body.innerHTML;
-      getServiceList()
+      getServiceList();
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 삭제
   const delNotice = async () => {
     const result = await noticeDelete(noticeId);
     if (typeof result === 'object') {
