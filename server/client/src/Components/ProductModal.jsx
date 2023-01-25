@@ -101,14 +101,13 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
       obj.merchant_price = obj.merchant_price.replaceAll(',', '');
       const result = await editMerchant(info?.id, obj);
       if (typeof result === 'object') {
-        setInfo({
-          id: 0,
-          service_code: 100,
-          merchant_code: '',
-          merchant_name: '',
-          merchant_price: '',
-        });
-        setModal(false);
+        setAlert('completeEdit');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '수정이 완료되었습니다.'
+        );
       } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
@@ -242,7 +241,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 );
                 return;
               } else return catchError(result, navigate, setAlertBox, setAlert);
-            } else if (alert === 'completeDelete') {
+            } else if (alert === 'completeDelete' || alert === 'completeEdit') {
               setInfo({
                 id: 0,
                 service_code: 100,
