@@ -27,6 +27,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
     window.addEventListener('click', e => outClick(e, setModal));
   });
 
+  //= EmptyInput 확인
   const checkInputVal = () => {
     if (mode === 'apply' && !idCheck)
       return commonModalSetting(

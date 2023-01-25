@@ -15,6 +15,7 @@ const AssignCouponModal = ({ setCouponModal, pk }) => {
   });
   const navigate = useNavigate();
 
+  //= 쿠폰 발급
   const couponIssue = async () => {
     let data = {};
     if (!days) data = { user_pk: pk };

@@ -34,6 +34,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 서비스 리스트 불러오기
   const serviceList = async () => {
     if (prevent) return;
     prevent = true;
@@ -47,6 +48,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 새 상품 등록
   const newMerchant = async () => {
     if (info.merchant_code.trim() === '')
       return commonModalSetting(
@@ -80,6 +82,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     }
   };
 
+  //= 상품 수정
   const modifyMerchant = async () => {
     if (info.merchant_code.trim() === '')
       return commonModalSetting(
@@ -112,6 +115,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     }
   };
 
+  //= Comma Handling Functions
   const comma = str => {
     str = String(str);
     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
