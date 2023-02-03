@@ -27,6 +27,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
     window.addEventListener('click', e => outClick(e, setModal));
   });
 
+  //= EmptyInput 확인
   const checkInputVal = () => {
     if (mode === 'apply' && !idCheck)
       return commonModalSetting(
@@ -133,7 +134,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
           'alert',
           '수정이 완료되었습니다.'
         );
-      } else catchError(result, navigate, setAlertBox);
+      } else catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -151,7 +152,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
           'alert',
           '등록이 완료되었습니다.'
         );
-      } else catchError(result, navigate, setAlertBox);
+      } else catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
@@ -288,6 +289,7 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
                 <span>생년월일</span>
                 <input
                   type='date'
+                  max='9999-12-31'
                   value={info?.birthday}
                   onChange={e =>
                     changeState(setInfo, 'birthday', e.target.value)
@@ -326,9 +328,9 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               alert === 'completeEdit'
             )
               setModal(false);
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

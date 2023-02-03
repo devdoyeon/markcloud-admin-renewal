@@ -14,14 +14,14 @@ import {
   maskingInfo,
   outClick,
 } from 'JS/common';
-import { getInquiryDetail, answerPost, answerEdit, answerDelete } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
+import { getInquiryDetail, answerPost, answerEdit, answerDelete, getServices } from 'JS/API';
 
 const InquiryDetail = ({ inquiryId, setModal }) => {
   let prevent = false;
   const [byte, setByte] = useState(0);
   const [alert, setAlert] = useState('');
   const [edit, setEdit] = useState(false);
+  const [serviceList, setServiceList] = useState({})
   const [info, setInfo] = useState({
     service_code: '',
     user_name: '',
@@ -38,6 +38,13 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
   });
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+  //= 문의 사항 상세 내역 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = true;
@@ -64,9 +71,11 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         status: status_flag,
         answer: answer,
       });
-    } else return catchError(result, navigate, setAlertBox);
+      getServiceList()
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 등록
   const applyAnswer = async () => {
     if (!info.answer)
       return commonModalSetting(
@@ -80,9 +89,10 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     if (typeof result === 'object') {
       changeState(setInfo, 'status', true);
       getDetail();
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 수정
   const editAnswer = async () => {
     if (!info.answer)
       return commonModalSetting(
@@ -96,9 +106,10 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
     if (typeof result === 'object') {
       setEdit(false);
       getDetail();
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 답변 삭제
   const delAnswer = async () => {
     const result = await answerDelete(inquiryId);
     if (typeof result === 'object') {
@@ -115,7 +126,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
         'alert',
         '정상적으로 삭제되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -139,7 +150,7 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
                 <thead>
                   <tr>
                     <th>서비스 구분</th>
-                    <th>{serviceCodeToString[info.service_code]}</th>
+                    <th>{serviceList[info.service_code]}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -254,9 +265,9 @@ const InquiryDetail = ({ inquiryId, setModal }) => {
           okFn={() => {
             if (alert === 'edit') setEdit(false);
             else if (alert === 'deleteComplete') getDetail();
+            else if (alert === 'logout') navigate('/');
             else delAnswer();
           }}
-          failFn={() => {}}
         />
       )}
     </>

@@ -4,7 +4,7 @@ import SideBar from 'Components/SideBar';
 import ServiceModal from 'Components/ServiceModal';
 import CommonModal from 'Components/CommonModal';
 import { getServices } from 'JS/API';
-import { catchError } from 'JS/common';
+import { catchError, commonModalSetting, getKeyByValue } from 'JS/common';
 
 const Service = () => {
   const [mode, setMode] = useState('apply');
@@ -15,6 +15,7 @@ const Service = () => {
     service_name: '',
   });
   let prevent = false;
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -22,10 +23,7 @@ const Service = () => {
   });
   const navigate = useNavigate();
 
-  const getKeyByValue = (obj, value) => {
-    return Object.keys(obj).find(key => obj[key] === value);
-  };
-
+  //= 서비스 목록 불러오기
   const serviceList = async () => {
     if (prevent) return;
     prevent = true;
@@ -34,34 +32,48 @@ const Service = () => {
     }, 200);
     const result = await getServices();
     if (typeof result === 'object') setList(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 서비스 목록 렌더
   const renderServiceList = () => {
-    return Object.values(list).reduce((acc, service) => {
+    return Object.values(list).map(service => {
       return (
-        <>
-          {acc}
-          <div
-            className='serviceBox'
-            onClick={() => {
-              setInfo({
-                service_code: getKeyByValue(list, service),
-                service_name: service,
-              });
-              setMode('edit');
-              setModal(true);
-            }}>
-            <span>서비스 코드: {getKeyByValue(list, service)}</span>
-            {service}
-          </div>
-        </>
+        <div
+          className='serviceBox'
+          onClick={() => {
+            setInfo({
+              service_code: getKeyByValue(list, service),
+              service_name: service,
+            });
+            setMode('edit');
+            setModal(true);
+          }}>
+          <span>서비스 코드: {getKeyByValue(list, service)}</span>
+          {service}
+        </div>
       );
     }, <></>);
   };
 
   useEffect(() => {
-    if (!modal) serviceList();
+    if (!modal) {
+      document.title = '마크클라우드 관리자 > 서비스 관리';
+      if (localStorage.getItem('admin_role') === 'admin') {
+        setAlert('notAuthority');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '접근 권한이 없습니다.'
+        );
+      }
+      setInfo({
+        service_code: '',
+        service_name: '',
+      });
+      serviceList();
+    }
   }, [modal]);
 
   return (
@@ -80,7 +92,11 @@ const Service = () => {
               등록
             </button>
           </div>
-          <div className='service-wrap'>{renderServiceList()}</div>
+          {Object.values(list)?.length ? (
+            <div className='service-wrap'>{renderServiceList()}</div>
+          ) : (
+            <div className='none-list service'>목록이 없습니다.</div>
+          )}
         </div>
       </div>
       {modal ? (
@@ -94,7 +110,15 @@ const Service = () => {
         ''
       )}
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'notAuthority') return navigate('/home');
+            else if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </>
   );

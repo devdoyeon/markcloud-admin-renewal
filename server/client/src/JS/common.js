@@ -1,17 +1,17 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
-export const catchError = async (result, navigate, setModal) => {
+export const catchError = async (result, navigate, setModal, setAlert) => {
   if (
     result === 'duplicateLogin' ||
     result === 'tokenError' ||
     result === 'tokenExpired' ||
     result === 'accessDenied'
   ) {
-    removeCookie('myToken');
-    removeCookie('rfToken');
-    navigate('/');
-    return alert(errorList[result]);
+    removeCookie('adminMyToken');
+    removeCookie('adminRfToken');
+    setAlert('logout')
+    return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
   else if (result === 'AccessTokenExpired') return;
@@ -125,5 +125,14 @@ export const addHyphen = phone => {
 
 export const addZero = t => {
   if (t < 10) return `0${t}`;
-  else return t;
+else return t;
+};
+
+export const getWeek = () => {
+  const date = new Date(this.getFullYear(), 0, 1);
+  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
+};
+
+export const getKeyByValue = (obj, value) => {
+  return Object.keys(obj).find(key => obj[key] === value);
 };

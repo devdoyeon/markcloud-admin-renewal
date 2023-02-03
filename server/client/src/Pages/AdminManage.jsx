@@ -58,7 +58,7 @@ const AdminManage = () => {
     if (typeof result === 'object') {
       setUser(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 관리자 삭제
@@ -73,7 +73,7 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPk(0);
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 관리자 다중 삭제
@@ -88,7 +88,7 @@ const AdminManage = () => {
         '정상적으로 삭제되었습니다.'
       );
       setPkArr([]);
-    } else catchError(result, navigate, setAlertBox);
+    } else catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 전체 체크
@@ -109,23 +109,20 @@ const AdminManage = () => {
   };
 
   const renderAdminList = () => {
-    return user.reduce(
-      (
-        acc,
-        {
-          id,
-          user_id,
-          name,
-          is_active,
-          created_at,
-          expired_at,
-          gender,
-          phone,
-          birthday,
-          email,
-          admin_role,
-        }
-      ) => {
+    return user.map(
+      ({
+        id,
+        user_id,
+        name,
+        is_active,
+        created_at,
+        expired_at,
+        gender,
+        phone,
+        birthday,
+        email,
+        admin_role,
+      }) => {
         //= 각자 체크
         const checkEach = () => {
           let all = $('.admin-check').length;
@@ -168,53 +165,50 @@ const AdminManage = () => {
         };
 
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                {is_active ? (
-                  <input
-                    type='checkbox'
-                    className='admin-check'
-                    value={id}
-                    onChange={checkEach}
-                  />
-                ) : (
-                  ''
-                )}
-              </td>
-              <td onClick={onModal}>{user_id}</td>
-              <td onClick={onModal}>{name}</td>
-              <td onClick={onModal}>
-                {admin_role === 'super_admin' ? '최상위 관리자' : '관리자'}
-              </td>
-              <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
-                {is_active ? '회원' : '탈퇴'}
-              </td>
-              <td onClick={onModal}>{created_at}</td>
-              <td onClick={onModal}>{is_active ? '' : expired_at}</td>
-              <td>
-                {is_active ? (
-                  <button
-                    className='deleteBtn'
-                    onClick={() => {
-                      setPk(id);
-                      setAlert('confirmDelete');
-                      commonModalSetting(
-                        setAlertBox,
-                        true,
-                        'confirm',
-                        '정말 삭제하시겠습니까?'
-                      );
-                    }}>
-                    관리자 삭제
-                  </button>
-                ) : (
-                  ''
-                )}
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              {is_active ? (
+                <input
+                  type='checkbox'
+                  className='admin-check'
+                  value={id}
+                  onChange={checkEach}
+                />
+              ) : (
+                ''
+              )}
+            </td>
+            <td onClick={onModal}>{user_id}</td>
+            <td onClick={onModal}>{name}</td>
+            <td onClick={onModal}>
+              {admin_role === 'super_admin' ? '최상위 관리자' : '관리자'}
+            </td>
+            <td onClick={onModal} className={is_active ? 'user' : 'resign'}>
+              {is_active ? '회원' : '탈퇴'}
+            </td>
+            <td onClick={onModal}>{created_at}</td>
+            <td onClick={onModal}>{is_active ? '' : expired_at}</td>
+            <td>
+              {is_active ? (
+                <button
+                  className='deleteBtn'
+                  onClick={() => {
+                    setPk(id);
+                    setAlert('confirmDelete');
+                    commonModalSetting(
+                      setAlertBox,
+                      true,
+                      'confirm',
+                      '정말 삭제하시겠습니까?'
+                    );
+                  }}>
+                  관리자 삭제
+                </button>
+              ) : (
+                ''
+              )}
+            </td>
+          </tr>
         );
       },
       <></>
@@ -222,6 +216,7 @@ const AdminManage = () => {
   };
 
   useEffect(() => {
+    document.title = '마크클라우드 관리자 > 관리자 계정 관리';
     if (localStorage.getItem('admin_role') === 'admin') {
       setAlert('notAuthority');
       return commonModalSetting(
@@ -339,37 +334,41 @@ const AdminManage = () => {
             </div>
           </div>
           <div className='table-wrap'>
-            <table>
-              <colgroup>
-                <col width='5%' />
-                <col width='15%' />
-                <col width='10%' />
-                <col width='10%' />
-                <col width='10%' />
-                <col width='15%' />
-                <col width='15%' />
-                <col width='10%' />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>
-                    <input
-                      type='checkbox'
-                      className='admin-all-check'
-                      onChange={checkAll}
-                    />
-                  </th>
-                  <th>아이디</th>
-                  <th>이름</th>
-                  <th>권한</th>
-                  <th>회원구분</th>
-                  <th>가입일</th>
-                  <th>탈퇴일</th>
-                  <th>관리자 삭제</th>
-                </tr>
-              </thead>
-              <tbody>{renderAdminList()}</tbody>
-            </table>
+            {user?.length ? (
+              <table>
+                <colgroup>
+                  <col width='5%' />
+                  <col width='15%' />
+                  <col width='10%' />
+                  <col width='10%' />
+                  <col width='10%' />
+                  <col width='15%' />
+                  <col width='15%' />
+                  <col width='10%' />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>
+                      <input
+                        type='checkbox'
+                        className='admin-all-check'
+                        onChange={checkAll}
+                      />
+                    </th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>권한</th>
+                    <th>회원구분</th>
+                    <th>가입일</th>
+                    <th>탈퇴일</th>
+                    <th>관리자 삭제</th>
+                  </tr>
+                </thead>
+                <tbody>{renderAdminList()}</tbody>
+              </table>
+            ) : (
+              <div className='none-list'>목록이 없습니다.</div>
+            )}
           </div>
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         </div>
@@ -390,10 +389,10 @@ const AdminManage = () => {
             if (alert === 'confirmMultiDelete') duplicateDelete();
             else if (alert === 'completeDelete') adminList();
             else if (alert === 'confirmDelete') deleteAdmin();
-            else if (alert === 'notAuthority') navigate('/home')
+            else if (alert === 'notAuthority') navigate('/home');
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

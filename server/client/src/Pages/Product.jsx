@@ -27,6 +27,7 @@ const Product = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 상품 목록 불러오기
   const getProduct = async () => {
     if (prevent) return;
     prevent = true;
@@ -35,9 +36,10 @@ const Product = () => {
     }, 200);
     const result = await getMerchant();
     if (typeof result === 'object') setMerchantArr(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox);
+    else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 전체 선택
   const checkAll = () => {
     let arr = [];
     if ($('.product-all-check').is(':checked')) {
@@ -54,6 +56,7 @@ const Product = () => {
     }
   };
 
+  //= 서비스 다중 삭제
   const deleteMultiple = async () => {
     const data = { items: productArr }; // 데이터
     const result = await productMultiDelete(data); // API 호출
@@ -71,29 +74,31 @@ const Product = () => {
         '정상적으로 삭제되었습니다.'
       );
       return;
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 상품 목록 렌더
   const renderTableBody = () => {
-    const checkEach = () => {
-      let all = $('.product-check').length;
-      let checked = $('.product-check:checked').length;
-      let arr = [];
-      if (all !== checked) $('.product-all-check').prop('checked', false);
-      else $('.product-all-check').prop('checked', true);
-      for (let i = 0; i < all; i++) {
-        if (document.getElementsByClassName('product-check')[i].checked) {
-          const val = document.getElementsByClassName('product-check')[i].value;
-          arr.push(val);
-          setProductArr(arr);
-        }
-      }
-    };
-    return merchantArr.reduce(
-      (
-        acc,
-        { id, service_code, merchant_code, merchant_name, merchant_price }
-      ) => {
+    return merchantArr.map(
+      ({ id, service_code, merchant_code, merchant_name, merchant_price }) => {
+        //& 개별 선택
+        const checkEach = () => {
+          let all = $('.product-check').length;
+          let checked = $('.product-check:checked').length;
+          let arr = [];
+          if (all !== checked) $('.product-all-check').prop('checked', false);
+          else $('.product-all-check').prop('checked', true);
+          for (let i = 0; i < all; i++) {
+            if (document.getElementsByClassName('product-check')[i].checked) {
+              const val =
+                document.getElementsByClassName('product-check')[i].value;
+              arr.push(val);
+              setProductArr(arr);
+            }
+          }
+        };
+
+        //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setMode('edit');
           setProductInfo({
@@ -105,27 +110,25 @@ const Product = () => {
           });
           setModal(true);
         };
+
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                {' '}
-                <input
-                  type='checkbox'
-                  className='product-check'
-                  onChange={checkEach}
-                  value={id}
-                />
-              </td>
-              <td onClick={onModal}>{service_code}</td>
-              <td onClick={onModal}>{merchant_code}</td>
-              <td onClick={onModal}>{merchant_name}</td>
-              <td onClick={onModal} className='price'>
-                {merchant_price.toLocaleString()}원
-              </td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              {' '}
+              <input
+                type='checkbox'
+                className='product-check'
+                onChange={checkEach}
+                value={id}
+              />
+            </td>
+            <td onClick={onModal}>{service_code}</td>
+            <td onClick={onModal}>{merchant_code}</td>
+            <td onClick={onModal}>{merchant_name}</td>
+            <td onClick={onModal} className='price'>
+              {merchant_price.toLocaleString()}원
+            </td>
+          </tr>
         );
       },
       <></>
@@ -133,7 +136,19 @@ const Product = () => {
   };
 
   useEffect(() => {
-    if (!modal) getProduct();
+    if (!modal) {
+      document.title = '마크클라우드 관리자 > 상품 관리';
+      if (localStorage.getItem('admin_role') === 'admin') {
+        setAlert('notAuthority');
+        return commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '접근 권한이 없습니다.'
+        );
+      }
+      getProduct();
+    }
   }, [modal]);
 
   return (
@@ -190,24 +205,28 @@ const Product = () => {
             </div>
           </div>
           <div className='table-wrap'>
-            <table>
-              <thead>
-                <tr>
-                  <th>
-                    <input
-                      type='checkbox'
-                      className='product-all-check'
-                      onChange={checkAll}
-                    />
-                  </th>
-                  <th>서비스 코드</th>
-                  <th>상품 코드</th>
-                  <th>상품명</th>
-                  <th>상품 가격</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableBody()}</tbody>
-            </table>
+            {merchantArr?.length ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>
+                      <input
+                        type='checkbox'
+                        className='product-all-check'
+                        onChange={checkAll}
+                      />
+                    </th>
+                    <th>서비스 코드</th>
+                    <th>상품 코드</th>
+                    <th>상품명</th>
+                    <th>상품 가격</th>
+                  </tr>
+                </thead>
+                <tbody>{renderTableBody()}</tbody>
+              </table>
+            ) : (
+              <div className='none-list'>목록이 없습니다.</div>
+            )}
           </div>
         </div>
       </div>
@@ -218,12 +237,9 @@ const Product = () => {
           okFn={() => {
             if (alert === 'multipleDelete') deleteMultiple();
             else if (alert === 'completeDelete') setModal(false);
+            else if (alert === 'notAuthority') navigate('/home');
+            else if (alert === 'logout') navigate('/');
             else return;
-          }}
-          failFn={() => {
-            $('.product-all-check').prop('checked', false);
-            $('.product-check').prop('checked', false);
-            return setProductArr([]);
           }}
         />
       )}

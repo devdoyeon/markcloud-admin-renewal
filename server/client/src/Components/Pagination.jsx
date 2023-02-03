@@ -56,16 +56,13 @@ const Pagination = ({ pageInfo, setPageInfo }) => {
 
   const renderPagination = () => {
     const prevCheck = page >= 11;
-    const middle = pageGroup.reduce((acc, nowPage) => {
+    const middle = pageGroup.map(nowPage => {
       return (
-        <>
-          {acc}
-          <li
-            onClick={() => changePage(nowPage)}
-            className={nowPage === page ? 'now' : ''}>
-            {nowPage}
-          </li>
-        </>
+        <li
+          onClick={() => changePage(nowPage)}
+          className={nowPage === page ? 'now' : ''}>
+          {nowPage}
+        </li>
       );
     }, <></>);
     const nextCheck =

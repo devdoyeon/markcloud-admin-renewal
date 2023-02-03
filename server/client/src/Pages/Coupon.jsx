@@ -14,6 +14,7 @@ const Coupon = () => {
     limit: 10,
   });
   const [list, setList] = useState([]);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -22,6 +23,7 @@ const Coupon = () => {
   const navigate = useNavigate();
   let prevent = false;
 
+  //= 쿠폰 발급 내역 불러오기
   const getList = async () => {
     if (prevent) return;
     prevent = true;
@@ -32,7 +34,7 @@ const Coupon = () => {
     if (typeof result === 'object') {
       setList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -43,33 +45,28 @@ const Coupon = () => {
     getList();
   }, [pageInfo.page, pageInfo.limit]);
 
+  //= 쿠폰 발급 리스트 렌더
   const renderTableBody = () => {
-    return list.reduce(
-      (
-        acc,
-        {
-          event_uid,
-          merchant_name,
-          created_at,
-          applied_at,
-          expired_at,
-          service_days,
-          status,
-        }
-      ) => {
+    return list.map(
+      ({
+        event_uid,
+        merchant_name,
+        created_at,
+        applied_at,
+        expired_at,
+        service_days,
+        status,
+      }) => {
         return (
-          <>
-            {acc}
-            <tr>
-              <td>{event_uid}</td>
-              <td>{merchant_name}</td>
-              <td>{created_at.replace('T', ' ')}</td>
-              <td>{applied_at.replace('T', ' ')}</td>
-              <td>{expired_at.replace('T', ' ')}</td>
-              <td>{service_days}</td>
-              <td>{statusArr[status]}</td>
-            </tr>
-          </>
+          <tr>
+            <td>{event_uid}</td>
+            <td>{merchant_name}</td>
+            <td>{created_at.replace('T', ' ')}</td>
+            <td>{applied_at.replace('T', ' ')}</td>
+            <td>{expired_at.replace('T', ' ')}</td>
+            <td>{service_days}</td>
+            <td>{statusArr[status]}</td>
+          </tr>
         );
       },
       <></>
@@ -99,20 +96,24 @@ const Coupon = () => {
           </div>
         </div>
         <div className='table-wrap'>
-          <table>
-            <thead>
-              <tr>
-                <th>이벤트 코드</th>
-                <th>발급 쿠폰명</th>
-                <th>발급일</th>
-                <th>적용일</th>
-                <th>만료일</th>
-                <th>유효기간</th>
-                <th>상태</th>
-              </tr>
-            </thead>
-            <tbody>{renderTableBody()}</tbody>
-          </table>
+          {list?.length ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>이벤트 코드</th>
+                  <th>발급 쿠폰명</th>
+                  <th>발급일</th>
+                  <th>적용일</th>
+                  <th>만료일</th>
+                  <th>유효기간</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody>{renderTableBody()}</tbody>
+            </table>
+          ) : (
+            <div className='none-list'>목록이 없습니다.</div>
+          )}
         </div>
         {pageInfo.totalPage === 1 ? (
           ''
@@ -121,7 +122,14 @@ const Coupon = () => {
         )}
       </div>
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

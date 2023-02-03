@@ -7,6 +7,7 @@ import { applyToken } from 'JS/API';
 
 const AssignCouponModal = ({ setCouponModal, pk }) => {
   const [days, setDays] = useState('');
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -14,11 +15,11 @@ const AssignCouponModal = ({ setCouponModal, pk }) => {
   });
   const navigate = useNavigate();
 
+  //= 쿠폰 발급
   const couponIssue = async () => {
     let data = {};
-    if (!days) {
-      data = { user_pk: pk };
-    } else {
+    if (!days) data = { user_pk: pk };
+    else {
       if (days < 1 || days > 30)
         return commonModalSetting(
           setAlertBox,
@@ -30,10 +31,16 @@ const AssignCouponModal = ({ setCouponModal, pk }) => {
     }
     const result = await applyToken(data);
     if (typeof result === 'object') {
-      alert('쿠폰 발급이 완료되었습니다.');
+      setAlert('completeApply');
+      commonModalSetting(
+        setAlertBox,
+        true,
+        'alert',
+        '쿠폰 발급이 완료되었습니다.'
+      );
       setCouponModal(false);
       setDays('');
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -70,7 +77,17 @@ const AssignCouponModal = ({ setCouponModal, pk }) => {
           </div>
         </div>
       </div>
-      {alertBox.bool && <CommonModal setCouponModal={setAlertBox} modal={alertBox} />}
+      {alertBox.bool && (
+        <CommonModal
+          setCouponModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'completeApply') setCouponModal(false);
+            else if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
+      )}
     </>
   );
 };

@@ -43,15 +43,21 @@ const SideBar = () => {
           <Link to='/notice'>
             <li className={path === '/notice' && 'active'}>공지 사항 관리</li>
           </Link>
-          {/* <Link to='/popup'>
+          <Link to='/popup'>
             <li className={path === '/popup' && 'active'}>팝업 관리</li>
-          </Link> */}
-          <Link to='/service'>
-            <li className={path === '/service' && 'active'}>서비스 관리</li>
           </Link>
-          <Link to='/product'>
-            <li className={path === '/product' && 'active'}>상품 관리</li>
-          </Link>
+          {localStorage.getItem('admin_role') === 'super_admin' ? (
+            <>
+              <Link to='/service'>
+                <li className={path === '/service' && 'active'}>서비스 관리</li>
+              </Link>
+              <Link to='/product'>
+                <li className={path === '/product' && 'active'}>상품 관리</li>
+              </Link>
+            </>
+          ) : (
+            ''
+          )}
           <Link to='/usa-cache'>
             <li className={path === '/usa-cache' && 'active'}>
               해외 데이터 캐시 관리
@@ -63,6 +69,10 @@ const SideBar = () => {
               이벤트 쿠폰 발급 내역
             </li>
           </Link>
+          {/* <li className='main'>통계</li>
+          <Link to='/statistic'>
+            <li className={path === '/statistic' && 'active'}>통계</li>
+          </Link> */}
           <li className='main'>바로가기</li>
           <a
             href='https://markcloud.co.kr'
@@ -103,8 +113,8 @@ const SideBar = () => {
         <div
           className='logoutBtn'
           onClick={() => {
-            removeCookie('myToken');
-            removeCookie('rfToken');
+            removeCookie('adminMyToken');
+            removeCookie('adminRfToken');
             localStorage.clear();
             return navigate('/');
           }}>

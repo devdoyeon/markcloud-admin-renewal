@@ -36,6 +36,7 @@ const Home = () => {
   const [inquiryModal, setInquiryModal] = useState(false);
   const [editor, setEditor] = useState(false);
 
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -47,9 +48,9 @@ const Home = () => {
 
   //@ 10
   const getInquiry = async () => {
-    const result = await getInquiryList('no-answer', 1, 100);
+    const result = await getInquiryList('no_answer', 1, 5);
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
     for (let obj of result.data.data) arr.push(obj);
     setRecentInquiry(arr);
@@ -57,9 +58,9 @@ const Home = () => {
 
   //@ 9
   const getNotice = async () => {
-    const result = await getNoticeList(1, 100);
+    const result = await getNoticeList(1, 5);
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     const arr = [];
     for (let obj of result.data.data) arr.push(obj);
     setRecentNotice(arr);
@@ -70,7 +71,7 @@ const Home = () => {
   const getTextKing = async () => {
     const result = await getSearchKing('text');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTextKing(result?.data?.data);
     getNotice();
   };
@@ -79,7 +80,7 @@ const Home = () => {
   const getImgKing = async () => {
     const result = await getSearchKing('img');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgKing(result?.data?.data);
     getTextKing();
   };
@@ -88,7 +89,7 @@ const Home = () => {
   const getTodayImgSearch = async () => {
     const result = await getSearchCount('img_today');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgToday(result?.data?.data);
     getImgKing();
   };
@@ -97,7 +98,7 @@ const Home = () => {
   const getAllImgSearch = async () => {
     const result = await getSearchCount('img_all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setImgAll(result?.data?.data);
     getTodayImgSearch();
   };
@@ -106,7 +107,7 @@ const Home = () => {
   const getTodayTxtSearch = async () => {
     const result = await getSearchCount('text_today');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTxtToday(result?.data?.data);
     getAllImgSearch();
   };
@@ -115,7 +116,7 @@ const Home = () => {
   const getAllTxtSearch = async () => {
     const result = await getSearchCount('text_all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setTxtAll(result?.data?.data);
     getTodayTxtSearch();
   };
@@ -124,7 +125,7 @@ const Home = () => {
   const getTodayUser = async () => {
     const result = await getUserCount('month');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     setNewUser(result?.data?.data);
     getAllTxtSearch();
   };
@@ -138,7 +139,7 @@ const Home = () => {
     }, 200);
     const result = await getUserCount('all');
     if (typeof result !== 'object')
-      return catchError(result, navigate, setAlertBox);
+      return catchError(result, navigate, setAlertBox, setAlert);
     else {
       setState('ok');
       setAllUser(result?.data?.data);
@@ -146,90 +147,79 @@ const Home = () => {
     }
   };
 
+  //= 텍스트 검색 순위 렌더
   const textKingBodyRender = () => {
-    return textKing.reduce((acc, { user_id, name, search_count }, idx) => {
+    return textKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
       return (
-        <>
-          {acc}
-          <tr>
-            <td>
-              <span className={`crown rank${rank}`}>
-                <FaCrown />
-              </span>
-            </td>
-            <td>{maskingInfo('id', user_id)}</td>
-            <td>{maskingInfo('name', name)}</td>
-            <td>{search_count}</td>
-          </tr>
-        </>
+        <tr>
+          <td>
+            <span className={`crown rank${rank}`}>
+              <FaCrown />
+            </span>
+          </td>
+          <td>{maskingInfo('id', user_id)}</td>
+          <td>{maskingInfo('name', name)}</td>
+          <td>{search_count}</td>
+        </tr>
       );
     }, <></>);
   };
 
+  //= 이미지 검색 순위 렌더
   const imgKingBodyRender = () => {
-    return imgKing.reduce((acc, { user_id, name, search_count }, idx) => {
+    return imgKing.map(({ user_id, name, search_count }, idx) => {
       const rank = idx + 1;
       return (
-        <>
-          {acc}
-          <tr>
-            <td>
-              <span className={`crown rank${rank}`}>
-                <FaCrown />
-              </span>
-            </td>
-            <td>{maskingInfo('id', user_id)}</td>
-            <td>{maskingInfo('name', name)}</td>
-            <td>{search_count}</td>
-          </tr>
-        </>
+        <tr>
+          <td>
+            <span className={`crown rank${rank}`}>
+              <FaCrown />
+            </span>
+          </td>
+          <td>{maskingInfo('id', user_id)}</td>
+          <td>{maskingInfo('name', name)}</td>
+          <td>{search_count}</td>
+        </tr>
       );
     }, <></>);
   };
 
+  //= 공지사항 5개 렌더
   const noticeListRender = () => {
-    return recentNotice
-      .slice(0, 5)
-      .reduce((acc, { title, admin_name, created_at, id }) => {
-        return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setNoticeId(id);
-                setNoticeModal(true);
-              }}>
-              <td className='title'>{title}</td>
-              <td>{admin_name}</td>
-              <td>{created_at.replaceAll('T', ' ')}</td>
-            </tr>
-          </>
-        );
-      }, <></>);
+    return recentNotice.map(({ title, admin_name, created_at, id }) => {
+      return (
+        <tr
+          onClick={() => {
+            setNoticeId(id);
+            setNoticeModal(true);
+          }}>
+          <td className='title'>{title}</td>
+          <td>{admin_name}</td>
+          <td>{created_at.replaceAll('T', ' ')}</td>
+        </tr>
+      );
+    }, <></>);
   };
 
+  //= 문의사항 5개 렌더
   const inquiryListRender = () => {
-    return recentInquiry
-      .slice(0, 5)
-      .reduce((acc, { title, user_name, created_at, id }) => {
-        return (
-          <>
-            {acc}
-            <tr
-              onClick={() => {
-                setInquiryId(id);
-                setInquiryModal(true);
-              }}>
-              <td className='title'>{title}</td>
-              <td>{maskingInfo('name', user_name)}</td>
-              <td>{created_at.replaceAll('T', ' ')}</td>
-            </tr>
-          </>
-        );
-      }, <></>);
+    return recentInquiry.map(({ title, user_name, created_at, id }) => {
+      return (
+        <tr
+          onClick={() => {
+            setInquiryId(id);
+            setInquiryModal(true);
+          }}>
+          <td className='title'>{title}</td>
+          <td>{maskingInfo('name', user_name)}</td>
+          <td>{created_at.replaceAll('T', ' ')}</td>
+        </tr>
+      );
+    }, <></>);
   };
 
+  //= colGroup return Function
   const tableColGroup = m => {
     if (m === 'upload')
       return (
@@ -269,49 +259,37 @@ const Home = () => {
             <div className='title-wrap'>
               <h2>최근 업로드한 공지 사항</h2>
             </div>
-            {!recentNotice.length ? (
-              <div className='none-list'>
-                <MdOutlineMoodBad />
-              </div>
-            ) : (
-              <div className='table-wrap'>
-                <table>
-                  {tableColGroup('upload')}
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>공지 날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>{noticeListRender()}</tbody>
-                </table>
-              </div>
-            )}
+            <div className='table-wrap'>
+              <table>
+                {tableColGroup('upload')}
+                <thead>
+                  <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>공지 날짜</th>
+                  </tr>
+                </thead>
+                <tbody>{noticeListRender()}</tbody>
+              </table>
+            </div>
           </div>
           <div>
             <div className='title-wrap'>
               <h2>최근 업로드 된 문의 사항</h2>
             </div>
-            {!recentInquiry.length ? (
-              <div className='none-list'>
-                <MdOutlineMoodBad />
-              </div>
-            ) : (
-              <div className='table-wrap'>
-                <table>
-                  {tableColGroup('upload')}
-                  <thead>
-                    <tr>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>문의 날짜</th>
-                    </tr>
-                  </thead>
-                  <tbody>{inquiryListRender()}</tbody>
-                </table>
-              </div>
-            )}
+            <div className='table-wrap'>
+              <table>
+                {tableColGroup('upload')}
+                <thead>
+                  <tr>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>문의 날짜</th>
+                  </tr>
+                </thead>
+                <tbody>{inquiryListRender()}</tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div className='row'>
@@ -421,7 +399,16 @@ const Home = () => {
           setEditor={setEditor}
         />
       )}
-      {alertBox.bool && <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}}/>}
+      {alertBox.bool && (
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
+      )}
     </div>
   );
 };

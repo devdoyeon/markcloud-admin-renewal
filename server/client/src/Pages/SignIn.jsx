@@ -21,6 +21,7 @@ const SignIn = () => {
   const [check, setCheck] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
   const [formCheck, setFormCheck] = useState(obj);
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -29,7 +30,7 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
-  //~ 아이디 | 비밀번호 확인해서 틀리거나 빈 부분 알려주는 함수
+  //~ 아이디 비밀번호 EmptyInput 확인 함수
   const checkForm = async (checkStr, bool, failCount) => {
     const obj = {
       emptyBoth: false,
@@ -54,11 +55,11 @@ const SignIn = () => {
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
       const { access_token, refresh_token, role } = result?.data?.data;
-      setCookie('myToken', access_token, {
+      setCookie('adminMyToken', access_token, {
         path: '/',
         secure: false,
       });
-      setCookie('rfToken', refresh_token, {
+      setCookie('adminRfToken', refresh_token, {
         path: '/',
         secure: false,
       });
@@ -74,13 +75,13 @@ const SignIn = () => {
       else if (result === `wrongPw,${failCount}`)
         checkForm('wrongPw', true, failCount);
       else if (result === 'retired') checkForm('retired', true);
-      else return catchError(result, navigate, setAlertBox);
+      else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
   useEffect(() => {
     //& 토큰을 가지고 있으면 홈으로 푸시
-    if (getCookie('myToken')) navigate('/home');
+    if (getCookie('adminMyToken')) navigate('/home');
     if (localStorage.getItem('save-id')) {
       setUserId(localStorage.getItem('save-id'));
       setCheck(true);
@@ -156,7 +157,14 @@ const SignIn = () => {
         <button onClick={login}>로그인</button>
       </div>
       {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
+        <CommonModal
+          setModal={setAlertBox}
+          modal={alertBox}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
+        />
       )}
     </div>
   );

@@ -4,7 +4,7 @@ export const errorList = {
   retired: '탈퇴된 아이디입니다.',
   tokenError: '비정상적인 요청이 감지되어 로그아웃 합니다.',
   serverError: '잠시 후 다시 시도해 주세요.',
-  duplicateLogin: '중복 로그인 되었습니다.<br/>다시 로그인해 주세요.',
+  duplicateLogin: '중복 로그인 되었습니다.\n다시 로그인해 주세요.',
   refresh: '새로 고침 후 다시 시도해 주세요.',
   addDays: '날짜 입력 형식이 잘못되었습니다.<br/>다시 입력해 주세요.',
   dataPasses:
@@ -21,11 +21,4 @@ export const statusArr = {
   Inactive: '만료',
   Refunded: '환불',
   Revoked: '취소',
-};
-
-export const serviceCodeToString = {
-  100: '마크클라우드',
-  110: '마크뷰',
-  120: '마크그룹웨어',
-  130: '마크링크',
 };

@@ -7,7 +7,7 @@ import NoticeDetail from 'Components/NoticeDetail';
 import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
 import { catchError, changeState, commonModalSetting } from 'JS/common';
-import { getNoticeList, noticeMultiDelete } from 'JS/API';
+import { getNoticeList, noticeMultiDelete, getServices } from 'JS/API';
 import { serviceCodeToString } from 'JS/array';
 
 const Notice = () => {
@@ -22,6 +22,7 @@ const Notice = () => {
   const [noticeList, setNoticeList] = useState([]);
   const [idArr, setIdArr] = useState([]);
   const [alert, setAlert] = useState('');
+  const [serviceList, setServiceList] = useState({});
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -31,6 +32,14 @@ const Notice = () => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 서비스 목록 불러오기
+  const getServiceList = async () => {
+    const result = await getServices();
+    if (typeof result === 'object') setServiceList(result?.data?.data);
+    else return catchError(result, navigate, setAlertBox, setAlert);
+  };
+
+  //= 공지사항 목록 불러오기
   const getNotice = async () => {
     if (prevent) return;
     prevent = true;
@@ -41,9 +50,11 @@ const Notice = () => {
     if (typeof result === 'object') {
       setNoticeList(result?.data?.data);
       changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
-    } else return catchError(result, navigate, setAlertBox);
+      getServiceList();
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 공지사항 다중 삭제
   const deleteNotices = async () => {
     const data = { items: idArr };
     const result = await noticeMultiDelete(data);
@@ -60,9 +71,10 @@ const Notice = () => {
         'alert',
         '정상적으로 삭제되었습니다.'
       );
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 전체 선택
   const checkAll = () => {
     let arr = [];
     if ($('.notice-all-check').is(':checked')) {
@@ -79,9 +91,12 @@ const Notice = () => {
     }
   };
 
+  //= 공지사항 목록 렌더
   const renderTableBody = () => {
-    return noticeList.reduce(
-      (acc, { title, created_at, service_code, id, admin_name }) => {
+    return noticeList.map(
+      ({ title, created_at, service_code, id, admin_name }) => {
+        
+        //& 개별 선택
         const checkEach = () => {
           let all = $('.notice-check').length;
           let checked = $('.notice-check:checked').length;
@@ -97,31 +112,30 @@ const Notice = () => {
             }
           }
         };
+
+        //& 목록 클릭 시 실행할 함수
+        const onModal = () => {
+          setModal(true);
+          setId(id);
+        };
+
         return (
-          <>
-            {acc}
-            <tr>
-              <td>
-                <input
-                  type='checkbox'
-                  className='notice-check'
-                  onChange={checkEach}
-                  value={id}
-                />
-              </td>
-              <td
-                className='title'
-                onClick={() => {
-                  setModal(true);
-                  setId(id);
-                }}>
-                {title}
-              </td>
-              <td>{created_at.split('T')[0]}</td>
-              <td>{admin_name}</td>
-              <td>{serviceCodeToString[service_code]}</td>
-            </tr>
-          </>
+          <tr>
+            <td>
+              <input
+                type='checkbox'
+                className='notice-check'
+                onChange={checkEach}
+                value={id}
+              />
+            </td>
+            <td className='title' onClick={onModal}>
+              {title}
+            </td>
+            <td onClick={onModal}>{created_at.split('T')[0]}</td>
+            <td onClick={onModal}>{admin_name}</td>
+            <td onClick={onModal}>{serviceList[service_code]}</td>
+          </tr>
         );
       },
       <></>
@@ -189,30 +203,34 @@ const Notice = () => {
           </div>
         </div>
         <div className='table-wrap'>
-          <table>
-            <colgroup>
-              <col width='10%' />
-              <col width='30%' />
-              <col width='20%' />
-              <col width='10%' />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>
-                  <input
-                    type='checkbox'
-                    className='notice-all-check'
-                    onChange={checkAll}
-                  />
-                </th>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>작성자</th>
-                <th>구분</th>
-              </tr>
-            </thead>
-            <tbody>{renderTableBody()}</tbody>
-          </table>
+          {noticeList?.length ? (
+            <table>
+              <colgroup>
+                <col width='10%' />
+                <col width='30%' />
+                <col width='20%' />
+                <col width='10%' />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type='checkbox'
+                      className='notice-all-check'
+                      onChange={checkAll}
+                    />
+                  </th>
+                  <th>제목</th>
+                  <th>등록일</th>
+                  <th>작성자</th>
+                  <th>구분</th>
+                </tr>
+              </thead>
+              <tbody>{renderTableBody()}</tbody>
+            </table>
+          ) : (
+            <div className='none-list'>목록이 없습니다.</div>
+          )}
         </div>
         {pageInfo.totalPage === 1 ? (
           ''
@@ -233,6 +251,7 @@ const Notice = () => {
           okFn={() => {
             if (alert === 'deleteConfirm') deleteNotices();
             else if (alert === 'completeDelete') getNotice();
+            else if (alert === 'logout') navigate('/');
             else return;
           }}
         />

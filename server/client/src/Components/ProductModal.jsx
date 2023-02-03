@@ -34,6 +34,7 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
   let prevent = false;
   const navigate = useNavigate();
 
+  //= 서비스 리스트 불러오기
   const serviceList = async () => {
     if (prevent) return;
     prevent = true;
@@ -44,9 +45,10 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
     if (typeof result === 'object') {
       setServices(Object.keys(result?.data?.data));
       setServiceInfo(result?.data?.data);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 새 상품 등록
   const newMerchant = async () => {
     if (info.merchant_code.trim() === '')
       return commonModalSetting(
@@ -76,10 +78,11 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
           merchant_price: '',
         });
         setModal(false);
-      } else return catchError(result, navigate, setAlertBox);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
+  //= 상품 수정
   const modifyMerchant = async () => {
     if (info.merchant_code.trim() === '')
       return commonModalSetting(
@@ -101,18 +104,18 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
       obj.merchant_price = obj.merchant_price.replaceAll(',', '');
       const result = await editMerchant(info?.id, obj);
       if (typeof result === 'object') {
-        setInfo({
-          id: 0,
-          service_code: 100,
-          merchant_code: '',
-          merchant_name: '',
-          merchant_price: '',
-        });
-        setModal(false);
-      } else return catchError(result, navigate, setAlertBox);
+        setAlert('completeEdit');
+        commonModalSetting(
+          setAlertBox,
+          true,
+          'alert',
+          '수정이 완료되었습니다.'
+        );
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
+  //= Comma Handling Functions
   const comma = str => {
     str = String(str);
     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -147,12 +150,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 onChange={e =>
                   changeState(setInfo, 'service_code', e.target.value)
                 }>
-                {services.reduce((acc, service) => {
+                {services.map(service => {
                   return (
-                    <>
-                      {acc}
-                      <option value={service}>{serviceInfo[service]}</option>
-                    </>
+                    <option value={service}>{serviceInfo[service]}</option>
                   );
                 }, <></>)}
               </select>
@@ -244,8 +244,8 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                   '정상적으로 삭제되었습니다.'
                 );
                 return;
-              }
-            } else if (alert === 'completeDelete') {
+              } else return catchError(result, navigate, setAlertBox, setAlert);
+            } else if (alert === 'completeDelete' || alert === 'completeEdit') {
               setInfo({
                 id: 0,
                 service_code: 100,
@@ -254,9 +254,9 @@ const ProductModal = ({ setModal, mode, productInfo }) => {
                 merchant_price: '',
               });
               setModal(false);
-            } else return;
+            } else if (alert === 'logout') navigate('/');
+            else return;
           }}
-          failFn={() => {}}
         />
       )}
     </>

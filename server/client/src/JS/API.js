@@ -4,7 +4,14 @@ import { getCookie, setCookie, removeCookie } from './cookie';
 const header = () => ({
   headers: {
     'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
+    'access-token': getCookie('adminMyToken'),
+  },
+});
+
+const fileHeader = () => ({
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'access-token': getCookie('adminMyToken'),
   },
 });
 
@@ -51,13 +58,13 @@ const errorHandling = async error => {
 const tokenReissue = async () => {
   const headers = {
     'Content-Type': 'application/json',
-    'access-token': getCookie('myToken'),
-    'refresh-token': getCookie('rfToken'),
+    'access-token': getCookie('adminMyToken'),
+    'refresh-token': getCookie('adminRfToken'),
   };
   try {
     const result = await axios.get(`/api/users/self/token`, { headers });
-    removeCookie('myToken');
-    setCookie('myToken', result.data.data.access_token, {
+    removeCookie('adminMyToken');
+    setCookie('adminMyToken', result.data.data.access_token, {
       path: '/',
     });
     window.location.reload();
@@ -150,13 +157,9 @@ export const applyToken = async data => {
 //~ Inquiry
 // 문의 내역 조회
 export const getInquiryList = async (target, page, limit) => {
-  const param = () => {
-    if (target === 'all') return 'inquirys';
-    else if (target === 'no-answer') return 'inquirys/no-answer';
-  };
   try {
     return await axios.get(
-      `api/admin/${param()}?page=${page}&limit=${limit}`,
+      `api/admin/inquiry?filter_type=${target}&page=${page}&limit=${limit}`,
       header()
     );
   } catch (error) {
@@ -487,6 +490,65 @@ export const adminEdit = async ({
       email: email,
     };
     return await axios.post(`/api/admin/accounts/edit/${pk}`, query, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 팝업 관리
+// 팝업 불러오기
+export const getPopUpList = async (due, { page, limit }) => {
+  try {
+    return await axios.get(
+      `/api/admin/popup?filter_type=${due}&page=${page}&limit=${limit}`,
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 등록
+export const createPopup = async ({ service_code, start, end, img, link }) => {
+  try {
+    return await axios.post(
+      `/api/admin/popup?service_code=${service_code}&start_date=${start}&end_date=${end}${
+        link.trim() === '' ? '' : `&link_url=${link}`
+      }`,
+      { file: img },
+      fileHeader()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 수정
+export const editPopup = async ({
+  id,
+  service_code,
+  start,
+  end,
+  img,
+  link,
+}) => {
+  try {
+    return await axios.post(
+      `/api/admin/popup/edit/${id}?service_code=${service_code}&start_date=${start}&end_date=${end}${
+        link.trim() === '' ? '' : `&link_url=${link}`
+      }`,
+      typeof img === 'string' ? {} : { file: img },
+      typeof img === 'string' ? header() : fileHeader()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 팝업 삭제
+export const deletePopup = async id => {
+  try {
+    return await axios.post(`/api/admin/popup/delete/${id}`, {}, header());
   } catch (error) {
     return await errorHandling(error);
   }

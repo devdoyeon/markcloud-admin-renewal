@@ -6,12 +6,13 @@ import {
   commonModalSetting,
   enterFn,
   catchError,
-  outClick
+  outClick,
 } from 'JS/common';
 import { createService, editService, deleteService } from 'JS/API';
 
 const ServiceModal = ({ mode, setModal, info, setInfo }) => {
   const [origin, setOrigin] = useState('');
+  const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
     context: '',
@@ -19,6 +20,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
   });
   const navigate = useNavigate();
 
+  //= 서비스 등록
   const newService = async () => {
     if (info?.service_code.trim() === '')
       return commonModalSetting(
@@ -42,10 +44,11 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
           service_name: '',
         });
         setModal(false);
-      } else return catchError(result, navigate, setAlertBox);
+      } else return catchError(result, navigate, setAlertBox, setAlert);
     }
   };
 
+  //= 서비스 수정
   const modifyService = async () => {
     const result = await editService(origin, info);
     if (typeof result === 'object') {
@@ -54,9 +57,10 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         service_name: '',
       });
       setModal(false);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
+  //= 서비스 삭제
   const removeService = async () => {
     const result = await deleteService(info.service_code);
     if (typeof result === 'object') {
@@ -65,7 +69,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         service_name: '',
       });
       setModal(false);
-    } else return catchError(result, navigate, setAlertBox);
+    } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   useEffect(() => {
@@ -75,7 +79,7 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
 
   useEffect(() => {
     window.addEventListener('click', e => outClick(e, setModal));
-  }, [])
+  }, []);
 
   return (
     <>
@@ -134,8 +138,10 @@ const ServiceModal = ({ mode, setModal, info, setInfo }) => {
         <CommonModal
           setModal={setAlertBox}
           modal={alertBox}
-          okFn={() => {}}
-          failFn={() => {}}
+          okFn={() => {
+            if (alert === 'logout') navigate('/');
+            else return;
+          }}
         />
       )}
     </>
