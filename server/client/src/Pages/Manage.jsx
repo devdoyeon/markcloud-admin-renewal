@@ -174,7 +174,7 @@ const Manage = () => {
             <td onClick={onModal}>{maskingInfo('id', user_id)}</td>
             <td onClick={onModal}>{maskingInfo('name', name)}</td>
             <td onClick={onModal}>
-              {department === 'none' ? '없음' : department}
+              {department === '' ? '없음' : department}
             </td>
             <td onClick={onModal}>{voucher_name}</td>
             <td onClick={onModal}>{statusArr[voucher_status]}</td>

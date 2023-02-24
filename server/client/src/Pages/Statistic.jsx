@@ -34,7 +34,8 @@ const Statistic = () => {
         i <= 12;
         i++
       ) {
-        if (date.getMonth() + 1 === 12) monthArr.push(`${date.getFullYear()}.${addZero(i)}`)
+        if (date.getMonth() + 1 === 12)
+          monthArr.push(`${date.getFullYear()}.${addZero(i)}`);
         else monthArr.push(`${date.getFullYear() - 1}.${addZero(i)}`);
       }
       if (monthArr.length < 12) {
@@ -42,8 +43,8 @@ const Statistic = () => {
           monthArr.push(`${date.getFullYear()}.${addZero(i)}`);
       }
       setArr(monthArr);
+      console.log(monthArr)
     } else if (type === 'week') {
-      
     }
   };
 

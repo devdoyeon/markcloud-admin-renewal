@@ -175,6 +175,7 @@
         border: 1px solid $gray03;
         &.none-list {
           @include flex-style();
+          background-color: white;
           height: 200px;
           > svg {
             font-size: 100px;

@@ -57,7 +57,7 @@ const AdminManage = () => {
     const result = await getAdmin(pageInfo, select, searchTxt);
     if (typeof result === 'object') {
       setUser(result?.data?.data);
-      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.total_page);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 

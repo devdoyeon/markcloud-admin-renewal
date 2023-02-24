@@ -177,6 +177,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background-color: white;
   height: 200px;
 }
 .dashboard > .row > div > div.none-list > svg {

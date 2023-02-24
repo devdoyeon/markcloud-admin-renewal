@@ -69,10 +69,10 @@ const SideBar = () => {
               이벤트 쿠폰 발급 내역
             </li>
           </Link>
-          {/* <li className='main'>통계</li>
+          <li className='main'>통계</li>
           <Link to='/statistic'>
             <li className={path === '/statistic' && 'active'}>통계</li>
-          </Link> */}
+          </Link>
           <li className='main'>바로가기</li>
           <a
             href='https://markcloud.co.kr'
