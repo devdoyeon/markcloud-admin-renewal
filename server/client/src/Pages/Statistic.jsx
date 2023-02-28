@@ -108,23 +108,17 @@ const Statistic = () => {
           </ul>
           <ul className='column'>
             <li
-              className={`chart ${
-                info.chart === 'bar' ? 'active' : ''
-              }`}
+              className={`chart ${info.chart === 'bar' ? 'active' : ''}`}
               onClick={() => changeState(setInfo, 'chart', 'bar')}>
               BAR
             </li>
             <li
-              className={`chart ${
-                info.chart === 'pie' ? 'active' : ''
-              }`}
+              className={`chart ${info.chart === 'pie' ? 'active' : ''}`}
               onClick={() => changeState(setInfo, 'chart', 'pie')}>
               PIE
             </li>
             <li
-              className={`chart ${
-                info.chart === 'line' ? 'active' : ''
-              }`}
+              className={`chart ${info.chart === 'line' ? 'active' : ''}`}
               onClick={() => changeState(setInfo, 'chart', 'line')}>
               LINE
             </li>
