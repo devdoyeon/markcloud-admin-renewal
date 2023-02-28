@@ -287,15 +287,18 @@ const AdminApplyModal = ({ setModal, mode, setInfo, info }) => {
               </div>
               <div className='row'>
                 <span>생년월일</span>
-                <input
-                  type='date'
-                  max='9999-12-31'
-                  value={info?.birthday}
-                  onChange={e =>
-                    changeState(setInfo, 'birthday', e.target.value)
-                  }
-                  readOnly={mode === 'edit'}
-                />
+                {mode === 'edit' ? (
+                  <span className='fixedInput'>{info?.birthday}</span>
+                ) : (
+                  <input
+                    type='date'
+                    max='9999-12-31'
+                    value={info?.birthday}
+                    onChange={e =>
+                      changeState(setInfo, 'birthday', e.target.value)
+                    }
+                  />
+                )}
               </div>
               <div className='row'>
                 <span>이메일</span>
