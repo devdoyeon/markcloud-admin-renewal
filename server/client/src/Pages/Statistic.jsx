@@ -43,7 +43,6 @@ const Statistic = () => {
           monthArr.push(`${date.getFullYear()}.${addZero(i)}`);
       }
       setArr(monthArr);
-      console.log(monthArr)
     } else if (type === 'week') {
     }
   };
