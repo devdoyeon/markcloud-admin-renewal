@@ -8,7 +8,7 @@ const Statistic = () => {
   const [info, setInfo] = useState({
     period: 'year',
     subject: 'newJoin',
-    selectChart: 'bar',
+    chart: 'bar',
   });
   let prevent = false;
 
@@ -108,24 +108,24 @@ const Statistic = () => {
           </ul>
           <ul className='column'>
             <li
-              className={`selectChart ${
-                info.selectChart === 'bar' ? 'active' : ''
+              className={`chart ${
+                info.chart === 'bar' ? 'active' : ''
               }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'bar')}>
+              onClick={() => changeState(setInfo, 'chart', 'bar')}>
               BAR
             </li>
             <li
-              className={`selectChart ${
-                info.selectChart === 'pie' ? 'active' : ''
+              className={`chart ${
+                info.chart === 'pie' ? 'active' : ''
               }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'pie')}>
+              onClick={() => changeState(setInfo, 'chart', 'pie')}>
               PIE
             </li>
             <li
-              className={`selectChart ${
-                info.selectChart === 'line' ? 'active' : ''
+              className={`chart ${
+                info.chart === 'line' ? 'active' : ''
               }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'line')}>
+              onClick={() => changeState(setInfo, 'chart', 'line')}>
               LINE
             </li>
           </ul>
