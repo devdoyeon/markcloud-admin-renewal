@@ -47,10 +47,6 @@ const Statistic = () => {
     }
   };
 
-  useEffect(() => {
-    makeArr('month');
-  }, []);
-
   return (
     <div className='container'>
       <SideBar />
@@ -123,7 +119,7 @@ const Statistic = () => {
               LINE
             </li>
           </ul>
-          <div className='chart'></div>
+          <div className='chart-area'></div>
         </div>
       </div>
     </div>

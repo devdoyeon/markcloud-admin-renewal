@@ -298,7 +298,7 @@
       height: 100%;
       border-top-left-radius: 16px;
       padding-top: 50px;
-      .selectChart {
+      > .chart {
         @include flex-style();
         cursor: pointer;
         border-top-left-radius: 8px;
@@ -313,7 +313,7 @@
         }
       }
     }
-    .chart {
+    > .chart-area {
       @include position-style($top: 50px, $left: 50px);
       width: calc(100% - 50px);
       height: calc(100% - 50px);

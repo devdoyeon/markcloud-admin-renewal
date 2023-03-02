@@ -114,7 +114,6 @@ const Product = () => {
         return (
           <tr>
             <td>
-              {' '}
               <input
                 type='checkbox'
                 className='product-check'
