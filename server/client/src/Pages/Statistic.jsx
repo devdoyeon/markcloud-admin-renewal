@@ -44,6 +44,7 @@ const Statistic = () => {
       }
       setArr(monthArr);
     } else if (type === 'week') {
+      //
     }
   };
 
