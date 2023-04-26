@@ -104,7 +104,7 @@ const SideBar = () => {
             마크링크
           </li>
           <a
-            href='https://markcloud.co.kr/mark-groupware'
+            href='https://markcloud.co.kr/mark-group'
             target='_blank'
             rel='noopener noreferrer'>
             <li>마크그룹웨어</li>

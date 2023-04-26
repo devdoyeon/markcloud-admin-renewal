@@ -141,7 +141,7 @@ const Manage = () => {
             }
           }
         };
-        
+
         //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setInfo({
@@ -173,9 +173,7 @@ const Manage = () => {
             </td>
             <td onClick={onModal}>{maskingInfo('id', user_id)}</td>
             <td onClick={onModal}>{maskingInfo('name', name)}</td>
-            <td onClick={onModal}>
-              {department === '' ? '없음' : department}
-            </td>
+            <td onClick={onModal}>{department === '' ? '없음' : department}</td>
             <td onClick={onModal}>{voucher_name}</td>
             <td onClick={onModal}>{statusArr[voucher_status]}</td>
             <td onClick={onModal}>{event_name}</td>

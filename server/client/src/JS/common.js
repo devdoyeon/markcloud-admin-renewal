@@ -1,6 +1,7 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
+//! Error Handling Function
 export const catchError = async (result, navigate, setModal, setAlert) => {
   if (
     result === 'duplicateLogin' ||
@@ -10,7 +11,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
   ) {
     removeCookie('adminMyToken');
     removeCookie('adminRfToken');
-    setAlert('logout')
+    setAlert('logout');
     return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
@@ -18,6 +19,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
   else commonModalSetting(setModal, true, 'alert', errorList[result]);
 };
 
+//& Common Function
 export const changeState = (setState, column, value) => {
   setState(prev => {
     const clone = { ...prev };
@@ -29,22 +31,6 @@ export const changeState = (setState, column, value) => {
 export const enterFn = (e, okFn) => {
   if (e.key === 'Enter') okFn();
   else return;
-};
-
-export const commonModalSetting = (setAlertBox, bool, mode, context) => {
-  if (bool) {
-    setAlertBox({
-      mode: mode,
-      context: context,
-      bool: bool,
-    });
-  } else {
-    setAlertBox({
-      mode: '',
-      context: '',
-      bool: bool,
-    });
-  }
 };
 
 export const byteCount = (text, setText, setByte, column, maxByte) => {
@@ -96,6 +82,45 @@ export const maskingInfo = (type, str) => {
   }
 };
 
+export const addHyphen = phone => {
+  return phone
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+    .replace(/(\-{1,2})$/g, '');
+};
+
+export const addZero = t => {
+  if (t < 10) return `0${t}`;
+  else return t;
+};
+
+export const getWeek = () => {
+  const date = new Date(this.getFullYear(), 0, 1);
+  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
+};
+
+export const getKeyByValue = (obj, value) => {
+  return Object.keys(obj).find(key => obj[key] === value);
+};
+
+//= CommonModal Component Handling Function
+export const commonModalSetting = (setAlertBox, bool, mode, context) => {
+  if (bool) {
+    setAlertBox({
+      mode: mode,
+      context: context,
+      bool: bool,
+    });
+  } else {
+    setAlertBox({
+      mode: '',
+      context: '',
+      bool: bool,
+    });
+  }
+};
+
+//- return RegExp Function
 export const regularExpression = (type, str) => {
   let regExp;
   switch (type) {
@@ -114,25 +139,4 @@ export const regularExpression = (type, str) => {
       break;
   }
   return regExp.test(str.trim());
-};
-
-export const addHyphen = phone => {
-  return phone
-    .replace(/[^0-9]/g, '')
-    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
-    .replace(/(\-{1,2})$/g, '');
-};
-
-export const addZero = t => {
-  if (t < 10) return `0${t}`;
-else return t;
-};
-
-export const getWeek = () => {
-  const date = new Date(this.getFullYear(), 0, 1);
-  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
-};
-
-export const getKeyByValue = (obj, value) => {
-  return Object.keys(obj).find(key => obj[key] === value);
 };
