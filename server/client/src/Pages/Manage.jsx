@@ -78,6 +78,7 @@ const Manage = () => {
     );
     if (typeof result === 'object') {
       setUser(result?.data?.data);
+      changeState(setPageInfo, 'totalPage', result?.meta?.totalPage)
       setSelect('all');
       setSearchTxt('');
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -147,12 +148,12 @@ const Manage = () => {
           setInfo({
             id: maskingInfo('id', user_id),
             name: maskingInfo('name', name),
-            department: department,
+            department: department === '' ? '없음' : department,
             gender: gender,
-            birth: birthday,
+            birth: !birthday ? '' : birthday,
             phone: maskingInfo(
               'phone',
-              phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
+              phone?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
             ),
             email: maskingInfo('email', email),
           });
