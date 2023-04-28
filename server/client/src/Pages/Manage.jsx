@@ -36,6 +36,7 @@ const Manage = () => {
   const [editModal, setEditModal] = useState(false);
   const [user, setUser] = useState([]);
   const [pk, setPk] = useState([]);
+  const [mode, setMode] = useState('all');
 
   let prevent = false;
   const navigate = useNavigate();
@@ -56,20 +57,26 @@ const Manage = () => {
 
   //= 회원 검색
   const userSearch = async () => {
-    if (!searchTxt)
+    if (!searchTxt && select === 'all') {
+      userList();
+      changeState(setPageInfo, 'page', 1)
+      return;
+    }
+    if (!searchTxt && mode === 'all')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '검색어를 입력해 주세요.'
       );
-    if (select === 'all')
+    if (select === 'all' && mode === 'all')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '검색하실 종류를 선택해 주세요.'
       );
+    setMode('search');
     const result = await searchUser(
       select,
       searchTxt,
@@ -78,9 +85,7 @@ const Manage = () => {
     );
     if (typeof result === 'object') {
       setUser(result?.data?.data);
-      changeState(setPageInfo, 'totalPage', result?.meta?.totalPage)
-      setSelect('all');
-      setSearchTxt('');
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -213,7 +218,10 @@ const Manage = () => {
   }, []);
 
   useEffect(() => {
-    if (!couponModal) userList();
+    if (!couponModal) {
+      if (mode === 'all') userList();
+      else userSearch();
+    }
   }, [pageInfo.page, pageInfo.limit, couponModal]);
 
   return (
