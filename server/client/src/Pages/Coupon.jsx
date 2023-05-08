@@ -44,8 +44,8 @@ const Coupon = () => {
   }, []);
 
   useEffect(() => {
-    getList();
-  }, [pageInfo.page, pageInfo.limit]);
+    if (!modal) getList();
+  }, [pageInfo.page, pageInfo.limit, modal]);
 
   //= 쿠폰 발급 리스트 렌더
   const renderTableBody = () => {

@@ -37,6 +37,7 @@ const errorHandling = async error => {
         return 'exceedCharOfDate';
       else if (detail === 'Duplicated Id') return 'duplicateId';
       else if (detail === 'Retired User') return 'retired';
+      else if (detail === 'Not admin') return 'retired';
       break;
     case 499:
       return 'tokenError';
@@ -149,6 +150,19 @@ export const searchUser = async (target, search_word, page, limit) => {
 export const applyToken = async data => {
   try {
     return await axios.post(`/api/admin/service/apply/token`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 쿠폰 직접 발금
+export const applyNewCoupon = async couponInfo => {
+  try {
+    return await axios.post(
+      `/api/admin/service/issue/coupon`,
+      couponInfo,
+      header()
+    );
   } catch (error) {
     return await errorHandling(error);
   }

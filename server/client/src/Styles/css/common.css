@@ -1007,6 +1007,7 @@
 }
 .modal-background .modal.new-coupon {
   height: auto;
+  width: 40%;
 }
 .modal-background .modal.new-coupon h2 {
   font-size: 30px;
@@ -1017,9 +1018,6 @@
 }
 .modal-background .modal.new-coupon .column .row {
   margin-bottom: 30px;
-}
-.modal-background .modal.new-coupon .column .row:last-child {
-  margin-bottom: 0;
 }
 .modal-background .modal.new-coupon .column .row span {
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
@@ -1040,6 +1038,14 @@
   padding: 10px;
   width: 200px;
   border-radius: 8px;
+}
+.modal-background .modal.new-coupon .column p {
+  font-size: 12px;
+  color: #333333;
+}
+.modal-background .modal.new-coupon .footer {
+  margin-top: -30px;
+  width: auto;
 }
 
 @media screen and (max-width: 1440px) {

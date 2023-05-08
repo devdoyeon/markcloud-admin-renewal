@@ -945,6 +945,8 @@
     }
     &.new-coupon {
       height: auto;
+      width: 40%;
+
       h2 {
         font-size: 30px;
       }
@@ -953,9 +955,6 @@
         padding: 50px 0;
         .row {
           margin-bottom: 30px;
-          &:last-child {
-            margin-bottom: 0;
-          }
           span {
             font-family: $middleFont;
             text-align: left;
@@ -977,6 +976,14 @@
             border-radius: 8px;
           }
         }
+        p {
+          font-size: 12px;
+          color: $gray02;
+        }
+      }
+      .footer {
+        margin-top: -30px;
+        width: auto;
       }
     }
   }
