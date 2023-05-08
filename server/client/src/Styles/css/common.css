@@ -1005,6 +1005,42 @@
 .modal-background .modal.applyPopup .btnWrap > button:last-child {
   margin-right: 0;
 }
+.modal-background .modal.new-coupon {
+  height: auto;
+}
+.modal-background .modal.new-coupon h2 {
+  font-size: 30px;
+}
+.modal-background .modal.new-coupon .column {
+  align-items: flex-start;
+  padding: 50px 0;
+}
+.modal-background .modal.new-coupon .column .row {
+  margin-bottom: 30px;
+}
+.modal-background .modal.new-coupon .column .row:last-child {
+  margin-bottom: 0;
+}
+.modal-background .modal.new-coupon .column .row span {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  text-align: left;
+  width: 100px;
+  margin-right: 40px;
+}
+.modal-background .modal.new-coupon .column .row select {
+  width: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border: none;
+}
+.modal-background .modal.new-coupon .column .row input {
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: 200px;
+  border-radius: 8px;
+}
 
 @media screen and (max-width: 1440px) {
   .container .content-wrap {

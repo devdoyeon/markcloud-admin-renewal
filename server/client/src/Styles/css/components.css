@@ -510,9 +510,9 @@
     font-size: 12px !important;
   }
   .manage .table-wrap > table thead th,
-.manage .table-wrap > table thead td,
-.manage .table-wrap tbody th,
-.manage .table-wrap tbody td {
+  .manage .table-wrap > table thead td,
+  .manage .table-wrap tbody th,
+  .manage .table-wrap tbody td {
     white-space: nowrap;
   }
 }

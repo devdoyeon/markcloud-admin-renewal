@@ -59,7 +59,7 @@ const Manage = () => {
   const userSearch = async () => {
     if (!searchTxt && select === 'all') {
       userList();
-      changeState(setPageInfo, 'page', 1)
+      changeState(setPageInfo, 'page', 1);
       return;
     }
     if (!searchTxt && mode === 'all')
@@ -233,14 +233,14 @@ const Manage = () => {
           <div>
             <select
               value={pageInfo.limit}
-              onChange={e => {
+              onChange={e =>
                 setPageInfo(prev => {
                   const clone = { ...prev };
                   clone.page = 1;
                   clone.limit = e.target.value;
                   return clone;
-                });
-              }}>
+                })
+              }>
               <option value='10'>10명씩 보기</option>
               <option value='30'>30명씩 보기</option>
               <option value='50'>50명씩 보기</option>

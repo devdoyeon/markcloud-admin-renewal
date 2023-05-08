@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SideBar from 'Components/SideBar';
 import Pagination from 'Components/Pagination';
 import CommonModal from 'Components/CommonModal';
+import NewCouponModal from 'Components/NewCouponModal';
 import { catchError, changeState } from 'JS/common';
 import { getCouponList } from 'JS/API';
 import { statusArr } from 'JS/array';
@@ -20,6 +21,7 @@ const Coupon = () => {
     context: '',
     bool: false,
   });
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
   let prevent = false;
 
@@ -62,7 +64,7 @@ const Coupon = () => {
             <td>{event_uid}</td>
             <td>{merchant_name}</td>
             <td>{created_at.replace('T', ' ')}</td>
-            <td>{applied_at.replace('T', ' ')}</td>
+            <td>{applied_at?.replace('T', ' ')}</td>
             <td>{expired_at.replace('T', ' ')}</td>
             <td>{service_days}</td>
             <td>{statusArr[status]}</td>
@@ -73,65 +75,69 @@ const Coupon = () => {
     );
   };
   return (
-    <div className='container'>
-      <SideBar />
-      <div className='content-wrap event'>
-        <div className='topBar'>
-          <h2>EVENT</h2>
-          <div>
-            <select
-              value={pageInfo.limit}
-              onChange={e =>
-                setPageInfo(prev => {
-                  const clone = { ...prev };
-                  clone.page = 1;
-                  clone.limit = e.target.value;
-                  return clone;
-                })
-              }>
-              <option value={10}>10개씩 보기</option>
-              <option value={30}>30개씩 보기</option>
-              <option value={50}>50개씩 보기</option>
-            </select>
+    <>
+      <div className='container'>
+        <SideBar />
+        <div className='content-wrap event'>
+          <div className='topBar'>
+            <h2>EVENT</h2>
+            <div className='row'>
+              <select
+                value={pageInfo.limit}
+                onChange={e =>
+                  setPageInfo(prev => {
+                    const clone = { ...prev };
+                    clone.page = 1;
+                    clone.limit = e.target.value;
+                    return clone;
+                  })
+                }>
+                <option value={10}>10개씩 보기</option>
+                <option value={30}>30개씩 보기</option>
+                <option value={50}>50개씩 보기</option>
+              </select>
+              <button onClick={() => setModal(true)}>쿠폰 발급하기</button>
+            </div>
           </div>
-        </div>
-        <div className='table-wrap'>
-          {list?.length ? (
-            <table>
-              <thead>
-                <tr>
-                  <th>이벤트 코드</th>
-                  <th>발급 쿠폰명</th>
-                  <th>발급일</th>
-                  <th>적용일</th>
-                  <th>만료일</th>
-                  <th>유효기간</th>
-                  <th>상태</th>
-                </tr>
-              </thead>
-              <tbody>{renderTableBody()}</tbody>
-            </table>
+          <div className='table-wrap'>
+            {list?.length ? (
+              <table>
+                <thead>
+                  <tr>
+                    <th>이벤트 코드</th>
+                    <th>발급 쿠폰명</th>
+                    <th>발급일</th>
+                    <th>적용일</th>
+                    <th>만료일</th>
+                    <th>유효기간</th>
+                    <th>상태</th>
+                  </tr>
+                </thead>
+                <tbody>{renderTableBody()}</tbody>
+              </table>
+            ) : (
+              <div className='none-list'>목록이 없습니다.</div>
+            )}
+          </div>
+          {pageInfo.totalPage === 1 ? (
+            ''
           ) : (
-            <div className='none-list'>목록이 없습니다.</div>
+            <Pagination setPageInfo={setPageInfo} pageInfo={pageInfo} />
           )}
         </div>
-        {pageInfo.totalPage === 1 ? (
-          ''
-        ) : (
-          <Pagination setPageInfo={setPageInfo} pageInfo={pageInfo} />
+        {alertBox.bool && (
+          <CommonModal
+            setModal={setAlertBox}
+            modal={alertBox}
+            okFn={() => {
+              if (alert === 'logout') navigate('/');
+              else return;
+            }}
+          />
         )}
       </div>
-      {alertBox.bool && (
-        <CommonModal
-          setModal={setAlertBox}
-          modal={alertBox}
-          okFn={() => {
-            if (alert === 'logout') navigate('/');
-            else return;
-          }}
-        />
-      )}
-    </div>
+      {modal ? <NewCouponModal setModal={setModal} /> : ''}
+    </>
   );
 };
 
