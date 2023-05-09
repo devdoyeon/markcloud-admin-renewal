@@ -38,8 +38,8 @@ export const byteCount = (text, setText, setByte, column, maxByte) => {
   let byte = 0;
   let returnLength = 0;
 
-  for (let i = 0; i < text.length; i++) {
-    countByte = text.charAt(i);
+  for (let i = 0; i < text?.length; i++) {
+    countByte = text?.charAt(i);
     if (escape(countByte).length > 4) byte += 2;
     else byte++;
     if (byte <= maxByte) returnLength = i + 1;

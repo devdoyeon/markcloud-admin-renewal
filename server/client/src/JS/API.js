@@ -567,3 +567,57 @@ export const deletePopup = async id => {
     return await errorHandling(error);
   }
 };
+
+//~ 상표 QNA
+// QNA 불러오기
+export const getQna = async ({ page, limit }) => {
+  try {
+    return await axios.get(`/api/general/qna?page=${page}&limit=${limit}`);
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA Detail 불러오기
+export const getQnaDetail = async id => {
+  try {
+    return await axios.get(`/api/general/qna/${id}`);
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 등록
+export const newQna = async postInfo => {
+  try {
+    return await axios.post(`/api/admin/qna`, postInfo, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 삭제
+export const deleteQna = async idArr => {
+  try {
+    return await axios.post(
+      `/api/admin/qna/delete`,
+      { items: idArr },
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 수정
+export const editQna = async (id, { title, context }) => {
+  try {
+    return await axios.post(
+      `/api/admin/qna/edit/${id}`,
+      { title: title, context: context },
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};

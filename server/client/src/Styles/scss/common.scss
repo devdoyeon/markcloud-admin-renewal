@@ -161,7 +161,7 @@
       text-justify: center;
       border-bottom: 1px solid $gray01;
       color: white;
-      padding: 12px 15px;
+      padding: 10px 15px;
       &:hover {
         background-color: $gray;
         font-family: $middleFont;
@@ -414,6 +414,7 @@
         font-size: 25px;
         margin-right: 10px;
         color: $gray;
+        min-width: 30px;
       }
       h1 {
         display: inline-block;
@@ -521,13 +522,23 @@
           border: 1px solid $borderColor;
           border-right: none;
         }
-        input {
+        input,
+        textarea {
           border: 1px solid $borderColor !important;
           font-size: 26px;
+          line-height: 28px;
           padding: 23px 15px !important;
           border-top-right-radius: 8px;
           border-bottom-right-radius: 8px;
           font-family: $boldFont;
+          resize: none;
+          &:focus {
+            border: none;
+            outline: 0;
+          }
+          &.long {
+            width: 750px;
+          }
         }
       }
       .footer {
@@ -984,6 +995,54 @@
       .footer {
         margin-top: -30px;
         width: auto;
+      }
+    }
+    &.qna-detail {
+      > .column {
+        margin-top: 40px;
+        width: 100%;
+        hr {
+          width: 100%;
+          height: 1px;
+          margin: 50px 0;
+          border: none;
+          background-color: $gray03;
+        }
+        .icon {
+          font-size: 30px;
+          width: 100%;
+          position: relative;
+          svg {
+            @include position-style($left: 0, $zIndex: 5);
+            transform: translate(-10px, -10px);
+            opacity: 0.2;
+          }
+        }
+        .content-area {
+          @include flex-style();
+          z-index: 6;
+          width: 100%;
+          background-color: white;
+          min-height: 300px;
+          border-radius: 30px;
+          box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+          padding: 0 20px;
+          font-size: 16px;
+        }
+      }
+      .btn-wrap {
+        margin-top: 40px;
+        button {
+          padding: 10px 15px;
+          background-color: $gray;
+          color: white;
+          border-radius: 8px;
+          font-family: $middleFont;
+          font-size: 16px;
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
       }
     }
   }

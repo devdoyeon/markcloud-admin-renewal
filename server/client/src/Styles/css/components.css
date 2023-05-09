@@ -376,11 +376,9 @@
   color: #de5d60;
 }
 
-.notice .topBar > div > button:nth-child(2) {
+.notice .topBar > div > button:nth-child(2),
+.mark-qna .topBar > div > button:nth-child(2) {
   border-right: 1px solid white;
-}
-.notice .topBar > div > button:nth-child(2) a {
-  color: white;
 }
 
 .service .topBar > button {

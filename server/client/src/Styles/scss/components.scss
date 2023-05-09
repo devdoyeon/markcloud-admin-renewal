@@ -376,13 +376,11 @@
   }
 }
 
-.notice {
+.notice,
+.mark-qna {
   .topBar {
     > div > button {
       &:nth-child(2) {
-        a {
-          color: white;
-        }
         border-right: 1px solid white;
       }
     }

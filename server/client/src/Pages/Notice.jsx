@@ -8,7 +8,6 @@ import NoticeWrite from 'Components/NoticeWrite';
 import CommonModal from 'Components/CommonModal';
 import { catchError, changeState, commonModalSetting } from 'JS/common';
 import { getNoticeList, noticeMultiDelete, getServices } from 'JS/API';
-import { serviceCodeToString } from 'JS/array';
 
 const Notice = () => {
   const [pageInfo, setPageInfo] = useState({
@@ -95,7 +94,6 @@ const Notice = () => {
   const renderTableBody = () => {
     return noticeList.map(
       ({ title, created_at, service_code, id, admin_name }) => {
-        
         //& 개별 선택
         const checkEach = () => {
           let all = $('.notice-check').length;
@@ -239,10 +237,10 @@ const Notice = () => {
         )}
       </div>
       {modal && (
-        <NoticeDetail noticeId={id} setModal={setModal} setEditor={setEditor} />
+        <NoticeDetail id={id} setModal={setModal} setEditor={setEditor} />
       )}
       {editor && (
-        <NoticeWrite noticeId={id} setModal={setModal} setEditor={setEditor} />
+        <NoticeWrite id={id} setModal={setModal} setEditor={setEditor} />
       )}
       {alertBox.bool && (
         <CommonModal

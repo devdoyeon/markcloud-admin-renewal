@@ -8,6 +8,7 @@ import Manage from 'Pages/Manage';
 import AdminManage from 'Pages/AdminManage';
 import Inquiry from 'Pages/Inquiry';
 import Coupon from 'Pages/Coupon';
+import MarkQNA from 'Pages/MarkQNA';
 import PopUp from 'Pages/PopUp';
 import Product from 'Pages/Product';
 import Service from 'Pages/Service';
@@ -27,6 +28,7 @@ function App() {
         <Route path='/notice' element={<Notice />} />
         <Route path='/product' element={<Product />} />
         <Route path='/service' element={<Service />} />
+        <Route path='/mark-qna' element={<MarkQNA />} />
         <Route path='/popup' element={<PopUp />} />
         <Route path='/event' element={<Coupon />} />
         <Route path='/usa-cache' element={<USACache />} />

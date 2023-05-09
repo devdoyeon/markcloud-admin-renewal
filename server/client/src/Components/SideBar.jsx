@@ -46,6 +46,9 @@ const SideBar = () => {
           <Link to='/popup'>
             <li className={path === '/popup' && 'active'}>팝업 관리</li>
           </Link>
+          <Link to='/mark-qna'>
+            <li className={path === '/mark-qna' && 'active'}>상표 Q&A 관리</li>
+          </Link>
           {localStorage.getItem('admin_role') === 'super_admin' ? (
             <>
               <Link to='/service'>
