@@ -7,7 +7,7 @@ services:
     volumes:
       - ./server/conf.d.dev:/etc/nginx/conf.d
     ports:
-      - "7902:80"
+      - "7444:80"
     # - "7903:443"
 
     restart: always
