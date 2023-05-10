@@ -1060,48 +1060,70 @@
   margin-top: -30px;
   width: auto;
 }
-.modal-background .modal.qna-detail > .column {
+.modal-background .modal.qna-detail > .column, .modal-background .modal.qna-write > .column {
   margin-top: 40px;
   width: 100%;
 }
-.modal-background .modal.qna-detail > .column hr {
+.modal-background .modal.qna-detail > .column hr, .modal-background .modal.qna-write > .column hr {
   width: 100%;
   height: 1px;
   margin: 50px 0;
   border: none;
   background-color: #cdcdcd;
 }
-.modal-background .modal.qna-detail > .column .icon {
+.modal-background .modal.qna-detail > .column .icon, .modal-background .modal.qna-write > .column .icon {
   font-size: 30px;
   width: 100%;
   position: relative;
 }
-.modal-background .modal.qna-detail > .column .icon svg {
+.modal-background .modal.qna-detail > .column .icon svg, .modal-background .modal.qna-write > .column .icon svg {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 5;
-  transform: translate(-10px, -10px);
+  transform: translate(-20px, -20px);
   opacity: 0.2;
 }
-.modal-background .modal.qna-detail > .column .content-area {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+.modal-background .modal.qna-detail > .column .content-area,
+.modal-background .modal.qna-detail > .column textarea, .modal-background .modal.qna-write > .column .content-area,
+.modal-background .modal.qna-write > .column textarea {
   z-index: 6;
   width: 100%;
   background-color: white;
   min-height: 300px;
-  border-radius: 30px;
+  border: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
-  padding: 0 20px;
+  padding: 10px;
   font-size: 16px;
+  resize: none;
 }
-.modal-background .modal.qna-detail .btn-wrap {
+.modal-background .modal.qna-detail > .column .content-area:focus,
+.modal-background .modal.qna-detail > .column textarea:focus, .modal-background .modal.qna-write > .column .content-area:focus,
+.modal-background .modal.qna-write > .column textarea:focus {
+  outline: none;
+}
+.modal-background .modal.qna-detail > .column .content-area::placeholder,
+.modal-background .modal.qna-detail > .column textarea::placeholder, .modal-background .modal.qna-write > .column .content-area::placeholder,
+.modal-background .modal.qna-write > .column textarea::placeholder {
+  color: #cdcdcd;
+}
+.modal-background .modal.qna-detail > .column .byte, .modal-background .modal.qna-write > .column .byte {
+  padding: 5px 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.modal-background .modal.qna-detail > .column .byte p, .modal-background .modal.qna-write > .column .byte p {
+  display: inline-block;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.qna-detail .btn-wrap, .modal-background .modal.qna-write .btn-wrap {
   margin-top: 40px;
 }
-.modal-background .modal.qna-detail .btn-wrap button {
+.modal-background .modal.qna-detail .btn-wrap button, .modal-background .modal.qna-write .btn-wrap button {
   padding: 10px 15px;
   background-color: #434343;
   color: white;
@@ -1109,7 +1131,7 @@
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
   font-size: 16px;
 }
-.modal-background .modal.qna-detail .btn-wrap button:first-child {
+.modal-background .modal.qna-detail .btn-wrap button:first-child, .modal-background .modal.qna-write .btn-wrap button:first-child {
   margin-right: 10px;
 }
 

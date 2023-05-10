@@ -70,11 +70,7 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
 
   //= 수정
   const editNotice = async () => {
-    const data = {
-      service_code: info.service_code,
-      title: info.title,
-      context: info.context,
-    };
+    const data = { ...info };
     const result = await noticeEdit(id, data);
     if (typeof result === 'object') {
       setAlert('completeEdit');
