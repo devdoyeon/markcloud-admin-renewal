@@ -76,22 +76,28 @@ const tokenReissue = async () => {
 
 //~ LogIn
 export const signIn = async (userId, userPw) => {
-  try {
-    let ip;
-    const mainIpReq = await axios.get(`https://api.ip.pe.kr`, { timeout: 500 });
-    if (!mainIpReq) {
-      const subIpReq = await axios.get(
-        `https://ipinfo.io/?token=fb0e9f29da28de`
-      );
-      ip = subIpReq?.data?.ip;
-    } else ip = mainIpReq?.data;
+  let ip;
+  const loginFn = async () => {
     return await axios.post('/api/admin/login', {
       user_id: userId,
       password: userPw,
       login_ip: ip,
     });
+  };
+  try {
+    const mainIpReq = await axios.get(`https://api.ip.pe.kr`, { timeout: 500 });
+    if (mainIpReq) ip = mainIpReq?.data;
+    return await loginFn();
   } catch (error) {
-    return await errorHandling(error);
+    try {
+      const subIpReq = await axios.get(
+        `https://ipinfo.io/?token=fb0e9f29da28de`
+      );
+      ip = subIpReq?.data?.ip;
+      return await loginFn();
+    } catch (error) {
+      return await errorHandling(error);
+    }
   }
 };
 
