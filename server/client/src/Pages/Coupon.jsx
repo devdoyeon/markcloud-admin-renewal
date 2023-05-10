@@ -63,9 +63,9 @@ const Coupon = () => {
           <tr>
             <td>{event_uid}</td>
             <td>{merchant_name}</td>
-            <td>{created_at.replace('T', ' ')}</td>
+            <td>{created_at?.replace('T', ' ')}</td>
             <td>{applied_at?.replace('T', ' ')}</td>
-            <td>{expired_at.replace('T', ' ')}</td>
+            <td>{expired_at?.replace('T', ' ')}</td>
             <td>{service_days}</td>
             <td>{statusArr[status]}</td>
           </tr>
