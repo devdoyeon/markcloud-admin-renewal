@@ -46,6 +46,9 @@ const SideBar = () => {
           <Link to='/popup'>
             <li className={path === '/popup' && 'active'}>팝업 관리</li>
           </Link>
+          <Link to='/mark-qna'>
+            <li className={path === '/mark-qna' && 'active'}>상표 Q&A 관리</li>
+          </Link>
           {localStorage.getItem('admin_role') === 'super_admin' ? (
             <>
               <Link to='/service'>
@@ -69,10 +72,10 @@ const SideBar = () => {
               이벤트 쿠폰 발급 내역
             </li>
           </Link>
-          {/* <li className='main'>통계</li>
+          <li className='main'>통계</li>
           <Link to='/statistic'>
             <li className={path === '/statistic' && 'active'}>통계</li>
-          </Link> */}
+          </Link>
           <li className='main'>바로가기</li>
           <a
             href='https://markcloud.co.kr'
@@ -104,7 +107,7 @@ const SideBar = () => {
             마크링크
           </li>
           <a
-            href='https://markcloud.co.kr/mark-groupware'
+            href='https://markcloud.co.kr/mark-group'
             target='_blank'
             rel='noopener noreferrer'>
             <li>마크그룹웨어</li>

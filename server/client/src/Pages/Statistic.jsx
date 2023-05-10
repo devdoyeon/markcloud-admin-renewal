@@ -8,7 +8,7 @@ const Statistic = () => {
   const [info, setInfo] = useState({
     period: 'year',
     subject: 'newJoin',
-    selectChart: 'bar',
+    chart: 'bar',
   });
   let prevent = false;
 
@@ -34,7 +34,8 @@ const Statistic = () => {
         i <= 12;
         i++
       ) {
-        if (date.getMonth() + 1 === 12) monthArr.push(`${date.getFullYear()}.${addZero(i)}`)
+        if (date.getMonth() + 1 === 12)
+          monthArr.push(`${date.getFullYear()}.${addZero(i)}`);
         else monthArr.push(`${date.getFullYear() - 1}.${addZero(i)}`);
       }
       if (monthArr.length < 12) {
@@ -43,13 +44,9 @@ const Statistic = () => {
       }
       setArr(monthArr);
     } else if (type === 'week') {
-      
+      //
     }
   };
-
-  useEffect(() => {
-    makeArr('month');
-  }, []);
 
   return (
     <div className='container'>
@@ -108,28 +105,22 @@ const Statistic = () => {
           </ul>
           <ul className='column'>
             <li
-              className={`selectChart ${
-                info.selectChart === 'bar' ? 'active' : ''
-              }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'bar')}>
+              className={`chart ${info.chart === 'bar' ? 'active' : ''}`}
+              onClick={() => changeState(setInfo, 'chart', 'bar')}>
               BAR
             </li>
             <li
-              className={`selectChart ${
-                info.selectChart === 'pie' ? 'active' : ''
-              }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'pie')}>
+              className={`chart ${info.chart === 'pie' ? 'active' : ''}`}
+              onClick={() => changeState(setInfo, 'chart', 'pie')}>
               PIE
             </li>
             <li
-              className={`selectChart ${
-                info.selectChart === 'line' ? 'active' : ''
-              }`}
-              onClick={() => changeState(setInfo, 'selectChart', 'line')}>
+              className={`chart ${info.chart === 'line' ? 'active' : ''}`}
+              onClick={() => changeState(setInfo, 'chart', 'line')}>
               LINE
             </li>
           </ul>
-          <div className='chart'></div>
+          <div className='chart-area'></div>
         </div>
       </div>
     </div>

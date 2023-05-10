@@ -1,18 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
-import { AiFillNotification } from 'react-icons/ai';
+import {
+  BsFillQuestionCircleFill,
+  BsExclamationCircleFill,
+} from 'react-icons/bs';
 import CommonModal from './CommonModal';
-import { byteCount, catchError, commonModalSetting, outClick } from 'JS/common';
-import { getNoticeDetail, noticeDelete, getServices } from 'JS/API';
+import { deleteQna, getQnaDetail } from 'JS/API';
+import { catchError, outClick, commonModalSetting, byteCount } from 'JS/common';
 
-const NoticeDetail = ({ id, setModal, setEditor }) => {
+const QnaDetail = ({ id, setModal, setEditor }) => {
   const [info, setInfo] = useState({});
   const [byte, setByte] = useState({
     title: 0,
     context: 0,
   });
-  const [serviceList, setServiceList] = useState({});
   const [alert, setAlert] = useState('');
   const [alertBox, setAlertBox] = useState({
     mode: '',
@@ -23,13 +25,6 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
   let prevent = false;
   const domParser = new DOMParser();
 
-  //= 서비스 목록 불러오기
-  const getServiceList = async () => {
-    const result = await getServices();
-    if (typeof result === 'object') setServiceList(result?.data?.data);
-    else return catchError(result, navigate, setAlertBox, setAlert);
-  };
-
   //= 상세 내역 불러오기
   const getDetail = async () => {
     if (prevent) return;
@@ -37,28 +32,29 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getNoticeDetail(id);
+    const result = await getQnaDetail(id);
     if (typeof result === 'object') {
-      const { service_code, created_at, title, context, admin_name } =
-        result?.data?.data;
+      const { created_at, title, context, admin_name } = result?.data?.data;
       setInfo({
-        service_code: service_code,
         created_at: created_at,
         title: title,
         context: context,
         admin_name: admin_name,
       });
-      document.querySelector('.context').innerHTML = domParser.parseFromString(
-        context,
+      document.querySelector('.qna-title').innerHTML = domParser.parseFromString(
+        title?.replaceAll('\n', '<br />'),
         'text/html'
       ).body.innerHTML;
-      getServiceList();
+      document.querySelector('.qna-context').innerHTML = domParser.parseFromString(
+        context?.replaceAll('\n', '<br />'),
+        'text/html'
+      ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
   //= 삭제
   const delFn = async () => {
-    const result = await noticeDelete(id);
+    const result = await deleteQna([id]);
     if (typeof result === 'object') {
       setAlert('completeDelete');
       commonModalSetting(
@@ -76,25 +72,20 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
   }, []);
 
   useEffect(() => {
+    byteCount(info.title, setInfo, setByte, 'title', 3000);
+  }, [info.title]);
+
+  useEffect(() => {
     byteCount(info.context, setInfo, setByte, 'context', 3000);
   }, [info.context]);
 
-  useEffect(() => {
-    byteCount(info.title, setInfo, setByte, 'title', 300);
-  }, [info.title]);
   return (
     <>
       <div className='modal-background'>
-        <div className='modal notice'>
+        <div className='modal qna-detail'>
           <div className='topBar'>
             <div>
               <table>
-                <thead>
-                  <tr>
-                    <th>서비스 구분</th>
-                    <th>{serviceList[info.service_code]}</th>
-                  </tr>
-                </thead>
                 <tbody>
                   <tr>
                     <td>작성자</td>
@@ -111,46 +102,43 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
               <FaWindowClose />
             </div>
           </div>
-          <hr />
-          <div className='title-wrap'>
-            <AiFillNotification />
-            <h1>{info?.title}</h1>
-          </div>
-          <div className='context'></div>
-          <div className='footer'>
-            <div className='viewBytes'>
-              <span>{byte.context} / 3000</span>
+          <div className='column'>
+            <div className='icon'>
+              <BsFillQuestionCircleFill />
             </div>
-            <div>
-              <button
-                onClick={() => {
-                  setEditor(true);
-                  setModal(false);
-                }}>
-                수정
-              </button>
-              <button
-                className='btn'
-                onClick={() => {
-                  setAlert('deleteConfirm');
-                  commonModalSetting(
-                    setAlertBox,
-                    true,
-                    'confirm',
-                    `해당 공지를 삭제하시겠습니까?`
-                  );
-                }}>
-                삭제
-              </button>
+            <div className='content-area qna-title'></div>
+            <span className='byte'>
+              <p>{byte.title}</p>/3000
+            </span>
+            <hr />
+            <div className='icon'>
+              <BsExclamationCircleFill />
             </div>
+            <div className='content-area qna-context'></div>
+            <span className='byte'>
+              <p>{byte.context}</p>/3000
+            </span>
           </div>
-          <div className='go-service'>
-            <a
-              href={`https://markcloud.co.kr/mark-notice/${id}`}
-              target='_blank'
-              rel='noopener noreferrer'>
-              실제 업로드된 모습 확인하기 &#62;&#62;
-            </a>
+          <div className='btn-wrap'>
+            <button
+              onClick={() => {
+                setEditor(true);
+                setModal(false);
+              }}>
+              수정
+            </button>
+            <button
+              onClick={() => {
+                setAlert('deleteConfirm');
+                commonModalSetting(
+                  setAlertBox,
+                  true,
+                  'confirm',
+                  `해당 Q&A를 삭제하시겠습니까?`
+                );
+              }}>
+              삭제
+            </button>
           </div>
         </div>
       </div>
@@ -170,4 +158,4 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
   );
 };
 
-export default NoticeDetail;
+export default QnaDetail;

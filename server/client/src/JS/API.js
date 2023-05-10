@@ -37,6 +37,7 @@ const errorHandling = async error => {
         return 'exceedCharOfDate';
       else if (detail === 'Duplicated Id') return 'duplicateId';
       else if (detail === 'Retired User') return 'retired';
+      else if (detail === 'Not admin') return 'retired';
       break;
     case 499:
       return 'tokenError';
@@ -75,15 +76,11 @@ const tokenReissue = async () => {
 
 //~ LogIn
 export const signIn = async (userId, userPw) => {
-  const header = { 'Content-Type': 'application/json' };
   try {
-    const ipSearch = await axios.get('https://api.ip.pe.kr/');
-    const ip = ipSearch.data;
-    return await axios.post(
-      '/api/admin/login',
-      { user_id: userId, password: userPw, login_ip: ip },
-      { header }
-    );
+    return await axios.post('/api/admin/login', {
+      user_id: userId,
+      password: userPw,
+    });
   } catch (error) {
     return await errorHandling(error);
   }
@@ -149,6 +146,19 @@ export const searchUser = async (target, search_word, page, limit) => {
 export const applyToken = async data => {
   try {
     return await axios.post(`/api/admin/service/apply/token`, data, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// 쿠폰 직접 발금
+export const applyNewCoupon = async couponInfo => {
+  try {
+    return await axios.post(
+      `/api/admin/service/issue/coupon`,
+      couponInfo,
+      header()
+    );
   } catch (error) {
     return await errorHandling(error);
   }
@@ -549,6 +559,60 @@ export const editPopup = async ({
 export const deletePopup = async id => {
   try {
     return await axios.post(`/api/admin/popup/delete/${id}`, {}, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+//~ 상표 QNA
+// QNA 불러오기
+export const getQna = async ({ page, limit }) => {
+  try {
+    return await axios.get(`/api/general/qna?page=${page}&limit=${limit}`);
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA Detail 불러오기
+export const getQnaDetail = async id => {
+  try {
+    return await axios.get(`/api/general/qna/${id}`);
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 등록
+export const newQna = async postInfo => {
+  try {
+    return await axios.post(`/api/admin/qna`, postInfo, header());
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 삭제
+export const deleteQna = async idArr => {
+  try {
+    return await axios.post(
+      `/api/admin/qna/delete`,
+      { items: idArr },
+      header()
+    );
+  } catch (error) {
+    return await errorHandling(error);
+  }
+};
+
+// QNA 수정
+export const editQna = async (id, { title, context }) => {
+  try {
+    return await axios.post(
+      `/api/admin/qna/edit/${id}`,
+      { title: title, context: context },
+      header()
+    );
   } catch (error) {
     return await errorHandling(error);
   }

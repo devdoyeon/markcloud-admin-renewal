@@ -13,12 +13,8 @@ import {
 } from 'JS/common';
 import { getNoticeDetail, noticeEdit, noticeWrite, getServices } from 'JS/API';
 
-const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
-  const [info, setInfo] = useState({
-    service_code: '',
-    title: '',
-    context: '',
-  });
+const NoticeWrite = ({ id, setModal, setEditor }) => {
+  const [info, setInfo] = useState({});
   const [byte, setByte] = useState({
     title: 0,
     context: 0,
@@ -54,32 +50,28 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     }, <></>);
   };
 
-  //= 수정일 때 기존 공지사항 불러오기
+  //= 수정일 때 기존 내용 불러오기
   const getDetail = async () => {
     if (prevent) return;
     prevent = true;
     setTimeout(() => {
       prevent = false;
     }, 200);
-    const result = await getNoticeDetail(noticeId);
+    const result = await getNoticeDetail(id);
     if (typeof result === 'object') {
-      const { title, context, service_code } = result?.data?.data;
+      const { service_code, title, context } = result?.data?.data;
       setInfo({
         title: title,
-        service_code: service_code,
         context: context,
+        service_code: service_code,
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  //= 공지사항 수정
+  //= 수정
   const editNotice = async () => {
-    const data = {
-      service_code: info.service_code,
-      title: info.title,
-      context: info.context,
-    };
-    const result = await noticeEdit(noticeId, data);
+    const data = { ...info };
+    const result = await noticeEdit(id, data);
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(
@@ -91,7 +83,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
-  //= 공지사항 등록
+  //= 등록
   const writeNotice = async () => {
     if (!info.title && !info.context) {
       return commonModalSetting(
@@ -129,7 +121,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
   };
 
   useEffect(() => {
-    if (!!noticeId) {
+    if (!!id) {
       setMode('edit');
       getDetail();
     } else {
@@ -168,7 +160,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
                 onChange={e => changeState(setInfo, 'title', e.target.value)}
               />
               <div className='viewBytes'>
-                <span>{byte.title}</span>/300
+                <span>{byte.title}</span>/{300}
               </div>
             </div>
             <div
@@ -215,7 +207,7 @@ const NoticeWrite = ({ noticeId, setModal, setEditor }) => {
               </button>
               <button
                 onClick={() => {
-                  if (noticeId) editNotice();
+                  if (id) editNotice();
                   else writeNotice();
                 }}>
                 완료

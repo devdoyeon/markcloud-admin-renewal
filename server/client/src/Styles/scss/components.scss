@@ -175,6 +175,7 @@
         border: 1px solid $gray03;
         &.none-list {
           @include flex-style();
+          background-color: white;
           height: 200px;
           > svg {
             font-size: 100px;
@@ -297,7 +298,7 @@
       height: 100%;
       border-top-left-radius: 16px;
       padding-top: 50px;
-      .selectChart {
+      > .chart {
         @include flex-style();
         cursor: pointer;
         border-top-left-radius: 8px;
@@ -312,7 +313,7 @@
         }
       }
     }
-    .chart {
+    > .chart-area {
       @include position-style($top: 50px, $left: 50px);
       width: calc(100% - 50px);
       height: calc(100% - 50px);
@@ -375,13 +376,11 @@
   }
 }
 
-.notice {
+.notice,
+.mark-qna {
   .topBar {
     > div > button {
       &:nth-child(2) {
-        a {
-          color: white;
-        }
         border-right: 1px solid white;
       }
     }

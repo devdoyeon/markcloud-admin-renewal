@@ -192,7 +192,7 @@
   text-justify: center;
   border-bottom: 1px solid #858585;
   color: white;
-  padding: 12px 15px;
+  padding: 10px 15px;
 }
 .sideBar > .mainMenu li:hover {
   background-color: #434343;
@@ -463,6 +463,7 @@
   font-size: 25px;
   margin-right: 10px;
   color: #434343;
+  min-width: 30px;
 }
 .modal-background .modal > .title-wrap h1 {
   display: inline-block;
@@ -582,13 +583,25 @@
   border: 1px solid #cdcdcd;
   border-right: none;
 }
-.modal-background .modal.editor > .topBar input {
+.modal-background .modal.editor > .topBar input,
+.modal-background .modal.editor > .topBar textarea {
   border: 1px solid #cdcdcd !important;
   font-size: 26px;
+  line-height: 28px;
   padding: 23px 15px !important;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   font-family: "NotoSansB", "맑은 고딕", "sans-serif";
+  resize: none;
+}
+.modal-background .modal.editor > .topBar input:focus,
+.modal-background .modal.editor > .topBar textarea:focus {
+  border: none;
+  outline: 0;
+}
+.modal-background .modal.editor > .topBar input.long,
+.modal-background .modal.editor > .topBar textarea.long {
+  width: 750px;
 }
 .modal-background .modal.editor .footer {
   margin-top: 10px;
@@ -634,8 +647,17 @@
   height: 90vh;
   padding-bottom: 0;
 }
+.modal-background .modal.cache .none-cache {
+  background-color: #f5f5f5;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  margin-bottom: 50px;
+}
 .modal-background .modal.cache .codeBlock {
   width: 100%;
+  margin-bottom: 20px;
 }
 .modal-background .modal.cache .codeBlock > div > span > code > span {
   font-family: "Cascadia", "NotoSansR", "sans-serif" !important;
@@ -995,6 +1017,122 @@
 }
 .modal-background .modal.applyPopup .btnWrap > button:last-child {
   margin-right: 0;
+}
+.modal-background .modal.new-coupon {
+  height: auto;
+  width: 40%;
+}
+.modal-background .modal.new-coupon h2 {
+  font-size: 30px;
+}
+.modal-background .modal.new-coupon .column {
+  align-items: flex-start;
+  padding: 50px 0;
+}
+.modal-background .modal.new-coupon .column .row {
+  margin-bottom: 30px;
+}
+.modal-background .modal.new-coupon .column .row span {
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  text-align: left;
+  width: 100px;
+  margin-right: 40px;
+}
+.modal-background .modal.new-coupon .column .row select {
+  width: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border: none;
+}
+.modal-background .modal.new-coupon .column .row input {
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  width: 200px;
+  border-radius: 8px;
+}
+.modal-background .modal.new-coupon .column p {
+  font-size: 12px;
+  color: #333333;
+}
+.modal-background .modal.new-coupon .footer {
+  margin-top: -30px;
+  width: auto;
+}
+.modal-background .modal.qna-detail > .column, .modal-background .modal.qna-write > .column {
+  margin-top: 40px;
+  width: 100%;
+}
+.modal-background .modal.qna-detail > .column hr, .modal-background .modal.qna-write > .column hr {
+  width: 100%;
+  height: 1px;
+  margin: 50px 0;
+  border: none;
+  background-color: #cdcdcd;
+}
+.modal-background .modal.qna-detail > .column .icon, .modal-background .modal.qna-write > .column .icon {
+  font-size: 30px;
+  width: 100%;
+  position: relative;
+}
+.modal-background .modal.qna-detail > .column .icon svg, .modal-background .modal.qna-write > .column .icon svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  transform: translate(-20px, -20px);
+  opacity: 0.2;
+}
+.modal-background .modal.qna-detail > .column .content-area,
+.modal-background .modal.qna-detail > .column textarea, .modal-background .modal.qna-write > .column .content-area,
+.modal-background .modal.qna-write > .column textarea {
+  z-index: 6;
+  width: 100%;
+  background-color: white;
+  min-height: 300px;
+  border: 0px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+}
+.modal-background .modal.qna-detail > .column .content-area:focus,
+.modal-background .modal.qna-detail > .column textarea:focus, .modal-background .modal.qna-write > .column .content-area:focus,
+.modal-background .modal.qna-write > .column textarea:focus {
+  outline: none;
+}
+.modal-background .modal.qna-detail > .column .content-area::placeholder,
+.modal-background .modal.qna-detail > .column textarea::placeholder, .modal-background .modal.qna-write > .column .content-area::placeholder,
+.modal-background .modal.qna-write > .column textarea::placeholder {
+  color: #cdcdcd;
+}
+.modal-background .modal.qna-detail > .column .byte, .modal-background .modal.qna-write > .column .byte {
+  padding: 5px 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.modal-background .modal.qna-detail > .column .byte p, .modal-background .modal.qna-write > .column .byte p {
+  display: inline-block;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.qna-detail .btn-wrap, .modal-background .modal.qna-write .btn-wrap {
+  margin-top: 40px;
+}
+.modal-background .modal.qna-detail .btn-wrap button, .modal-background .modal.qna-write .btn-wrap button {
+  padding: 10px 15px;
+  background-color: #434343;
+  color: white;
+  border-radius: 8px;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  font-size: 16px;
+}
+.modal-background .modal.qna-detail .btn-wrap button:first-child, .modal-background .modal.qna-write .btn-wrap button:first-child {
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 1440px) {

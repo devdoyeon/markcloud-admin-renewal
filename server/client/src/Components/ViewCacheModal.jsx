@@ -25,36 +25,52 @@ const ViewCacheModal = ({ arr, setModal }) => {
             <FaWindowClose />
           </div>
         </div>
-        <div className='codeBlock'>
-          <CopyBlock
-            text={JSON.stringify(arr[pageInfo.page - 1], null, 2)}
-            language={'json'}
-            showLineNumbers={false}
-            theme={monokaiSublime}
-          />
-        </div>
-        <div className='pagination-wrap'>
-          <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
-          <div className='searchPage'>
-            <input
-              type='text'
-              defaultValue={pageInfo.page}
-              onChange={e => setMovePage(Number(e.target.value))}
-              onKeyDown={e =>
-                enterFn(e, () =>
-                  changeState(setPageInfo, 'page', Number(movePage))
-                )
-              }
-            />
-            /{pageInfo.totalPage}
-            <button
-              onClick={() =>
-                changeState(setPageInfo, 'page', Number(movePage))
-              }>
-              이동
-            </button>
+        {arr.length <= 0 ? (
+          <div className='column none-cache'>
+            캐시가 없습니다.
           </div>
-        </div>
+        ) : (
+          <>
+            {' '}
+            <div className='codeBlock'>
+              <CopyBlock
+                text={JSON.stringify(arr[pageInfo.page - 1], null, 2)}
+                language={'json'}
+                showLineNumbers={false}
+                theme={monokaiSublime}
+              />
+            </div>
+            <div className='pagination-wrap'>
+              <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
+              <div className='searchPage'>
+                <input
+                  type='text'
+                  defaultValue={pageInfo.page}
+                  onChange={e => setMovePage(Number(e.target.value))}
+                  onKeyDown={e =>
+                    enterFn(e, () => {
+                      if (
+                        Number(movePage) > arr.length ||
+                        Number(movePage) <= 0
+                      )
+                        return alert('페이지를 정확히 입력해 주세요.');
+                      changeState(setPageInfo, 'page', Number(movePage));
+                    })
+                  }
+                />
+                /{pageInfo.totalPage}
+                <button
+                  onClick={() => {
+                    if (Number(movePage) > arr.length || Number(movePage) <= 0)
+                      return alert('페이지를 정확히 입력해 주세요.');
+                    changeState(setPageInfo, 'page', Number(movePage));
+                  }}>
+                  이동
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

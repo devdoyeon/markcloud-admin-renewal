@@ -177,6 +177,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background-color: white;
   height: 200px;
 }
 .dashboard > .row > div > div.none-list > svg {
@@ -300,7 +301,7 @@
   border-top-left-radius: 16px;
   padding-top: 50px;
 }
-.statistic .section .column .selectChart {
+.statistic .section .column > .chart {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -314,10 +315,10 @@
   border: 1px solid #434343;
   border-bottom: none;
 }
-.statistic .section .column .selectChart:last-child {
+.statistic .section .column > .chart:last-child {
   border-bottom: 1px solid #434343;
 }
-.statistic .section .chart {
+.statistic .section > .chart-area {
   position: absolute;
   left: 50px;
   top: 50px;
@@ -375,11 +376,9 @@
   color: #de5d60;
 }
 
-.notice .topBar > div > button:nth-child(2) {
+.notice .topBar > div > button:nth-child(2),
+.mark-qna .topBar > div > button:nth-child(2) {
   border-right: 1px solid white;
-}
-.notice .topBar > div > button:nth-child(2) a {
-  color: white;
 }
 
 .service .topBar > button {
@@ -509,9 +508,9 @@
     font-size: 12px !important;
   }
   .manage .table-wrap > table thead th,
-.manage .table-wrap > table thead td,
-.manage .table-wrap tbody th,
-.manage .table-wrap tbody td {
+  .manage .table-wrap > table thead td,
+  .manage .table-wrap tbody th,
+  .manage .table-wrap tbody td {
     white-space: nowrap;
   }
 }

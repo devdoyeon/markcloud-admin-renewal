@@ -36,6 +36,7 @@ const Manage = () => {
   const [editModal, setEditModal] = useState(false);
   const [user, setUser] = useState([]);
   const [pk, setPk] = useState([]);
+  const [mode, setMode] = useState('all');
 
   let prevent = false;
   const navigate = useNavigate();
@@ -56,20 +57,26 @@ const Manage = () => {
 
   //= 회원 검색
   const userSearch = async () => {
-    if (!searchTxt)
+    if (!searchTxt && select === 'all') {
+      userList();
+      changeState(setPageInfo, 'page', 1);
+      return;
+    }
+    if (!searchTxt && mode === 'all')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '검색어를 입력해 주세요.'
       );
-    if (select === 'all')
+    if (select === 'all' && mode === 'all')
       return commonModalSetting(
         setAlertBox,
         true,
         'alert',
         '검색하실 종류를 선택해 주세요.'
       );
+    setMode('search');
     const result = await searchUser(
       select,
       searchTxt,
@@ -78,8 +85,7 @@ const Manage = () => {
     );
     if (typeof result === 'object') {
       setUser(result?.data?.data);
-      setSelect('all');
-      setSearchTxt('');
+      changeState(setPageInfo, 'totalPage', result?.data?.meta?.totalPage);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -141,18 +147,18 @@ const Manage = () => {
             }
           }
         };
-        
+
         //& 목록 클릭 시 실행할 함수
         const onModal = () => {
           setInfo({
             id: maskingInfo('id', user_id),
             name: maskingInfo('name', name),
-            department: department,
+            department: department === '' ? '없음' : department,
             gender: gender,
-            birth: birthday,
+            birth: !birthday ? '' : birthday,
             phone: maskingInfo(
               'phone',
-              phone.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
+              phone?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)
             ),
             email: maskingInfo('email', email),
           });
@@ -173,9 +179,7 @@ const Manage = () => {
             </td>
             <td onClick={onModal}>{maskingInfo('id', user_id)}</td>
             <td onClick={onModal}>{maskingInfo('name', name)}</td>
-            <td onClick={onModal}>
-              {department === 'none' ? '없음' : department}
-            </td>
+            <td onClick={onModal}>{department === '' ? '없음' : department}</td>
             <td onClick={onModal}>{voucher_name}</td>
             <td onClick={onModal}>{statusArr[voucher_status]}</td>
             <td onClick={onModal}>{event_name}</td>
@@ -214,7 +218,10 @@ const Manage = () => {
   }, []);
 
   useEffect(() => {
-    if (!couponModal) userList();
+    if (!couponModal) {
+      if (mode === 'all') userList();
+      else userSearch();
+    }
   }, [pageInfo.page, pageInfo.limit, couponModal]);
 
   return (
@@ -226,14 +233,14 @@ const Manage = () => {
           <div>
             <select
               value={pageInfo.limit}
-              onChange={e => {
+              onChange={e =>
                 setPageInfo(prev => {
                   const clone = { ...prev };
                   clone.page = 1;
                   clone.limit = e.target.value;
                   return clone;
-                });
-              }}>
+                })
+              }>
               <option value='10'>10명씩 보기</option>
               <option value='30'>30명씩 보기</option>
               <option value='50'>50명씩 보기</option>

@@ -15,7 +15,7 @@ export const errorList = {
 
 export const statusArr = {
   Pending: '결제대기',
-  Issued: '발급완료',
+  Issued: '발급 완료',
   Active: '사용중',
   Applied: '적용 완료',
   Inactive: '만료',

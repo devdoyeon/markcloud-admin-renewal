@@ -161,7 +161,7 @@
       text-justify: center;
       border-bottom: 1px solid $gray01;
       color: white;
-      padding: 12px 15px;
+      padding: 10px 15px;
       &:hover {
         background-color: $gray;
         font-family: $middleFont;
@@ -414,6 +414,7 @@
         font-size: 25px;
         margin-right: 10px;
         color: $gray;
+        min-width: 30px;
       }
       h1 {
         display: inline-block;
@@ -521,13 +522,23 @@
           border: 1px solid $borderColor;
           border-right: none;
         }
-        input {
+        input,
+        textarea {
           border: 1px solid $borderColor !important;
           font-size: 26px;
+          line-height: 28px;
           padding: 23px 15px !important;
           border-top-right-radius: 8px;
           border-bottom-right-radius: 8px;
           font-family: $boldFont;
+          resize: none;
+          &:focus {
+            border: none;
+            outline: 0;
+          }
+          &.long {
+            width: 750px;
+          }
         }
       }
       .footer {
@@ -578,8 +589,17 @@
     &.cache {
       height: 90vh;
       padding-bottom: 0;
+      .none-cache {
+        background-color: $gray05;
+        width: 100%;
+        height: 100%;
+        font-size: 20px;
+        font-family: $middleFont;
+        margin-bottom: 50px;
+      }
       .codeBlock {
         width: 100%;
+        margin-bottom: 20px;
         > div > span > code > span {
           font-family: $codeFont !important;
         }
@@ -930,6 +950,118 @@
           margin-right: 10px;
           &:last-child {
             margin-right: 0;
+          }
+        }
+      }
+    }
+    &.new-coupon {
+      height: auto;
+      width: 40%;
+
+      h2 {
+        font-size: 30px;
+      }
+      .column {
+        align-items: flex-start;
+        padding: 50px 0;
+        .row {
+          margin-bottom: 30px;
+          span {
+            font-family: $middleFont;
+            text-align: left;
+            width: 100px;
+            margin-right: 40px;
+          }
+          select {
+            width: 200px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 3px rgba($color: #000000, $alpha: 0.2);
+            background-color: white;
+            border: none;
+          }
+          input {
+            box-shadow: 0px 0px 3px rgba($color: #000000, $alpha: 0.2);
+            padding: 10px;
+            width: 200px;
+            border-radius: 8px;
+          }
+        }
+        p {
+          font-size: 12px;
+          color: $gray02;
+        }
+      }
+      .footer {
+        margin-top: -30px;
+        width: auto;
+      }
+    }
+    &.qna-detail,
+    &.qna-write {
+      > .column {
+        margin-top: 40px;
+        width: 100%;
+        hr {
+          width: 100%;
+          height: 1px;
+          margin: 50px 0;
+          border: none;
+          background-color: $gray03;
+        }
+        .icon {
+          font-size: 30px;
+          width: 100%;
+        position: relative;
+          svg {
+            @include position-style($left: 0, $zIndex: 5);
+            transform: translate(-20px, -20px);
+            opacity: 0.2;
+          }
+        }
+        .content-area,
+        textarea {
+          z-index: 6;
+          width: 100%;
+          background-color: white;
+          min-height: 300px;
+          border: 0px;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+          padding: 10px;
+          font-size: 16px;
+          resize: none;
+          &:focus {
+            outline: none;
+          }
+          &::placeholder {
+            color: $gray03;
+          }
+        }
+        .byte {
+          padding: 5px 10px;
+          box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+          width: 100%;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          p {
+            display: inline-block;
+            font-family: $middleFont;
+          }
+        }
+      }
+      .btn-wrap {
+        margin-top: 40px;
+        button {
+          padding: 10px 15px;
+          background-color: $gray;
+          color: white;
+          border-radius: 8px;
+          font-family: $middleFont;
+          font-size: 16px;
+          &:first-child {
+            margin-right: 10px;
           }
         }
       }

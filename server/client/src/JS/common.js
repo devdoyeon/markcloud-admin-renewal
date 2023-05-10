@@ -1,6 +1,7 @@
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
+//! Error Handling Function
 export const catchError = async (result, navigate, setModal, setAlert) => {
   if (
     result === 'duplicateLogin' ||
@@ -10,7 +11,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
   ) {
     removeCookie('adminMyToken');
     removeCookie('adminRfToken');
-    setAlert('logout')
+    setAlert('logout');
     return commonModalSetting(setModal, true, 'alert', errorList[result]);
   } else if (result === 'renderErrorPage') navigate('/error');
   else if (result === 'notFound') navigate('/not-found');
@@ -18,6 +19,7 @@ export const catchError = async (result, navigate, setModal, setAlert) => {
   else commonModalSetting(setModal, true, 'alert', errorList[result]);
 };
 
+//& Common Function
 export const changeState = (setState, column, value) => {
   setState(prev => {
     const clone = { ...prev };
@@ -31,29 +33,13 @@ export const enterFn = (e, okFn) => {
   else return;
 };
 
-export const commonModalSetting = (setAlertBox, bool, mode, context) => {
-  if (bool) {
-    setAlertBox({
-      mode: mode,
-      context: context,
-      bool: bool,
-    });
-  } else {
-    setAlertBox({
-      mode: '',
-      context: '',
-      bool: bool,
-    });
-  }
-};
-
 export const byteCount = (text, setText, setByte, column, maxByte) => {
   let countByte;
   let byte = 0;
   let returnLength = 0;
 
-  for (let i = 0; i < text.length; i++) {
-    countByte = text.charAt(i);
+  for (let i = 0; i < text?.length; i++) {
+    countByte = text?.charAt(i);
     if (escape(countByte).length > 4) byte += 2;
     else byte++;
     if (byte <= maxByte) returnLength = i + 1;
@@ -79,23 +65,62 @@ export const outClick = (e, setModal) => {
 
 export const maskingInfo = (type, str) => {
   if (type === 'email')
-    return `${str.split('@')[0].slice(0, 2)}${'*'.repeat(
-      str.split('@')[0].length - 2
-    )}@${str.split('@')[1]}`;
+    return `${str?.split('@')[0].slice(0, 2)}${'*'.repeat(
+      str?.split('@')[0].length - 2
+    )}@${str?.split('@')[1]}`;
   else if (type === 'phone')
-    return `${str.split('-')[0]}-****-${str.split('-')[2]}`;
+    return `${str?.split('-')[0]}-****-${str?.split('-')[2]}`;
   else if (type === 'name') {
-    if (str.length === 2) return `${str.slice(0, 1)}*`;
-    else if (str.length === 3) return `${str.slice(0, 1)}*${str.slice(2)}`;
-    else if (str.length >= 4) return `${str.slice(0, 1)}**${str.slice(3)}`;
+    if (str?.length === 2) return `${str?.slice(0, 1)}*`;
+    else if (str?.length === 3) return `${str?.slice(0, 1)}*${str?.slice(2)}`;
+    else if (str?.length >= 4) return `${str?.slice(0, 1)}**${str?.slice(3)}`;
   } else if (type === 'id') {
-    if (str.length <= 6)
-      if (str.length < 3) return str;
-      else return `${str.slice(0, 2)}${'*'.repeat(Number(str.length) - 2)}`;
-    else return `${str.slice(0, 4)}${'*'.repeat(Number(str.length) - 4)}`;
+    if (str?.length <= 6)
+      if (str?.length < 3) return str;
+      else return `${str?.slice(0, 2)}${'*'.repeat(Number(str?.length) - 2)}`;
+    else return `${str?.slice(0, 4)}${'*'.repeat(Number(str?.length) - 4)}`;
   }
 };
 
+export const addHyphen = phone => {
+  return phone
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+    .replace(/(\-{1,2})$/g, '');
+};
+
+export const addZero = t => {
+  if (t < 10) return `0${t}`;
+  else return t;
+};
+
+export const getWeek = () => {
+  const date = new Date(this.getFullYear(), 0, 1);
+  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
+};
+
+export const getKeyByValue = (obj, value) => {
+  return Object.keys(obj).find(key => obj[key] === value);
+};
+
+//= CommonModal Component Handling Function
+export const commonModalSetting = (setAlertBox, bool, mode, context) => {
+  if (bool) {
+    setAlertBox({
+      mode: mode,
+      context: context,
+      bool: bool,
+    });
+  } else {
+    setAlertBox({
+      mode: '',
+      context: '',
+      bool: bool,
+    });
+  }
+};
+
+//- return RegExp Function
 export const regularExpression = (type, str) => {
   let regExp;
   switch (type) {
@@ -114,25 +139,4 @@ export const regularExpression = (type, str) => {
       break;
   }
   return regExp.test(str.trim());
-};
-
-export const addHyphen = phone => {
-  return phone
-    .replace(/[^0-9]/g, '')
-    .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
-    .replace(/(\-{1,2})$/g, '');
-};
-
-export const addZero = t => {
-  if (t < 10) return `0${t}`;
-else return t;
-};
-
-export const getWeek = () => {
-  const date = new Date(this.getFullYear(), 0, 1);
-  return Math.ceil(((this - date) / 86400000 + date.getDay()) / 7);
-};
-
-export const getKeyByValue = (obj, value) => {
-  return Object.keys(obj).find(key => obj[key] === value);
 };
