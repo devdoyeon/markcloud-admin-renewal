@@ -51,7 +51,6 @@ const SignIn = () => {
       return checkForm('emptyBoth', true);
     else if (userId.trim() === '') return checkForm('emptyId', true);
     else if (userPw.trim() === '') return checkForm('emptyPw', true);
-
     const result = await signIn(userId, userPw);
     if (typeof result === 'object') {
       const { access_token, refresh_token, role } = result?.data?.data;
