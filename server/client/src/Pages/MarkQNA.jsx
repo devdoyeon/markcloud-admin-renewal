@@ -141,7 +141,7 @@ const MarkQNA = () => {
           <div className='topBar'>
             <h2>MARK Q&A</h2>
             <div>
-              <select>
+              <select onChange={e => changeState(setPageInfo, 'limit', e.target.value)}>
                 <option value='10'>10개씩 보기</option>
                 <option value='30'>30개씩 보기</option>
                 <option value='50'>50개씩 보기</option>
