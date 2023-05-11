@@ -249,6 +249,8 @@ const Home = () => {
     if (state === 'ok' && !inquiryModal) getInquiry();
   }, [noticeModal, editor, inquiryModal]);
 
+  const props = { noticeId, setNoticeModal, setEditor };
+
   return (
     <div className='container'>
       <SideBar />
@@ -382,23 +384,11 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {noticeModal && (
-        <NoticeDetail
-          id={noticeId}
-          setModal={setNoticeModal}
-          setEditor={setEditor}
-        />
-      )}
+      {noticeModal && <NoticeDetail {...props} />}
       {inquiryModal && (
         <InquiryDetail inquiryId={inquiryId} setModal={setInquiryModal} />
       )}
-      {editor && (
-        <NoticeWrite
-          id={noticeId}
-          setModal={setNoticeModal}
-          setEditor={setEditor}
-        />
-      )}
+      {editor && <NoticeWrite {...props} />}
       {alertBox.bool && (
         <CommonModal
           setModal={setAlertBox}
