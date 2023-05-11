@@ -2,7 +2,7 @@ import 'App.css';
 import { Routes, Route } from 'react-router-dom';
 import SignIn from 'Pages/SignIn';
 import Home from 'Pages/Home';
-import Statistic from 'Pages/Statistic';
+// import Statistic from 'Pages/Statistic';
 import Notice from 'Pages/Notice';
 import Manage from 'Pages/Manage';
 import AdminManage from 'Pages/AdminManage';
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<SignIn />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/statistic' element={<Statistic />} />
+        {/* <Route path='/statistic' element={<Statistic />} /> */}
         <Route path='/manage' element={<Manage />} />
         <Route path='/admin-manage' element={<AdminManage />} />
         <Route path='/inquiry' element={<Inquiry />} />

@@ -91,6 +91,7 @@ const USACache = () => {
   };
 
   useEffect(() => {
+    document.title = '마크클라우드 관리자 > 해외 데이터 캐시 관리';
     getList();
   }, []);
 
