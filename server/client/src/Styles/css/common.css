@@ -1148,6 +1148,9 @@
   border-radius: 15px;
   margin: 3px;
 }
+.modal-background .modal.qna-detail > .column .qna-keyword-list span svg, .modal-background .modal.qna-write > .column .qna-keyword-list span svg {
+  font-size: 16px;
+}
 .modal-background .modal.qna-detail > .column .qna-keyword-list span svg.hashtagIcon, .modal-background .modal.qna-write > .column .qna-keyword-list span svg.hashtagIcon {
   margin-right: 10px;
 }
