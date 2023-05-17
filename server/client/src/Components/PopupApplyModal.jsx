@@ -150,7 +150,18 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
           <div className='column'>
             <input
               type='file'
-              onChange={e => imgPreview(e.target.files)}
+              onChange={e => {
+                const files = e?.target?.files;
+                if (files?.length > 1)
+                  return commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'alert',
+                    '한 장만 업로드하실 수 있습니다.'
+                  );
+                changeState(setInfo, 'img', files[0]);
+                imgPreview(files);
+              }}
               accept='image/*'
               id='fileInput'
             />
