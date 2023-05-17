@@ -95,6 +95,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     const reader = new FileReader();
     reader.onload = () => {
       setUploadImg(reader.result);
+      setUpload(true);
     };
     reader.readAsDataURL(inputFile[0]);
   };
@@ -175,7 +176,6 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
                     changeState(setInfo, 'img', files[0]);
                     imgPreview(files);
                     setDragState('leave');
-                    setUpload(true);
                   }}
                   onDragEnter={() => setDragState('enter')}
                   onDragLeave={() => setDragState('leave')}>
