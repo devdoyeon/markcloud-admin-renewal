@@ -4,13 +4,15 @@ import {
   BsFillQuestionCircleFill,
   BsExclamationCircleFill,
 } from 'react-icons/bs';
-import { FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose, FaSlackHash } from 'react-icons/fa';
+import { IoClose } from 'react-icons/io5';
 import CommonModal from './CommonModal';
 import {
   changeState,
   commonModalSetting,
   catchError,
   byteCount,
+  enterFn,
 } from 'JS/common';
 import { editQna, getQnaDetail, newQna } from 'JS/API';
 
@@ -26,6 +28,8 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
     context: '',
     bool: false,
   });
+  const [keyword, setKeyword] = useState('');
+  const [keywordArr, setKeywordArr] = useState([]);
   const [byte, setByte] = useState({
     title: 0,
     context: 0,
@@ -43,11 +47,14 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
     }, 200);
     const result = await getQnaDetail(id);
     if (typeof result === 'object') {
-      const { title, context } = result?.data?.data;
+      const { title, context, keyword } = result?.data?.data;
       setPostInfo({
         title: title,
         context: context,
       });
+      const arr = keyword?.split('#');
+      arr.shift();
+      setKeywordArr(arr);
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -75,7 +82,15 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
         '내용을 입력해 주세요.'
       );
     } else {
-      const result = await newQna(postInfo);
+      const query = { ...postInfo };
+      if (keywordArr.length) {
+        let str = '';
+        keywordArr.forEach(word => {
+          str += `#${word}`;
+        });
+        query.keyword = str;
+      }
+      const result = await newQna(query);
       if (typeof result === 'object') {
         setAlert('completeApply');
         commonModalSetting(
@@ -91,6 +106,13 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
   //= Q&A 수정
   const editFn = async () => {
     const data = { ...postInfo };
+    if (keywordArr.length) {
+      let str = '';
+      keywordArr.forEach(word => {
+        str += `#${word}`;
+      });
+      data.keyword = str;
+    }
     const result = await editQna(id, data);
     if (typeof result === 'object') {
       setAlert('completeEdit');
@@ -169,6 +191,45 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
             <span className='byte'>
               <p>{byte.context}</p>/3000
             </span>
+            <div className='row qna-keyword-list'>
+              {keywordArr?.map(keyword => {
+                return (
+                  <span>
+                    <FaSlackHash className='hashtagIcon' />
+                    {keyword}
+                    <IoClose
+                      className='closeIcon'
+                      onClick={() =>
+                        setKeywordArr(prev => {
+                          const clone = [...prev];
+                          clone.splice(clone.indexOf(keyword), 1);
+                          return clone;
+                        })
+                      }
+                    />
+                  </span>
+                );
+              }, <></>)}
+            </div>
+            <input
+              type='text'
+              className='qna-keyword-input'
+              placeholder='해시태그를 입력해 주세요.'
+              value={keyword}
+              onChange={e => setKeyword(e.target.value)}
+              onKeyDown={e =>
+                enterFn(e, () => {
+                  if (e.target.value) {
+                    setKeywordArr(prev => {
+                      const clone = [...prev];
+                      clone.push(e.target.value);
+                      return clone;
+                    });
+                    setKeyword('');
+                  }
+                })
+              }
+            />
           </div>
           <div className='btn-wrap'>
             <button onClick={() => (id ? editFn() : postQna())}>

@@ -606,13 +606,9 @@ export const deleteQna = async idArr => {
 };
 
 // QNA 수정
-export const editQna = async (id, { title, context }) => {
+export const editQna = async (id, postInfo) => {
   try {
-    return await axios.post(
-      `/api/admin/qna/edit/${id}`,
-      { title: title, context: context },
-      header()
-    );
+    return await axios.post(`/api/admin/qna/edit/${id}`, postInfo, header());
   } catch (error) {
     return await errorHandling(error);
   }
