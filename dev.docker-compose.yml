@@ -1,27 +1,13 @@
-version: "3.6"
+version: "3.9"
 services:
-  frontend:
-    build: ./frontend
-    image: "markcloud-admin-page:dev"
-    container_name: "markcloud-admin-page"
+  server:
+    build: ./server
+    image: "markcloud-admin-server:2.0.0"
+    container_name: "markcloud-admin-server-dev"
     volumes:
-      - frontend_html:/frontend/app/build
-
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile-dev
-    image: "markcloud-admin-server:dev"
-    container_name: "markcloud-admin-server"
-    volumes:
-      - frontend_html:/var/www/html/admin.markcloud.kr
+      - ./server/conf.d.dev:/etc/nginx/conf.d
     ports:
-    - "7902:80"
+      - "7444:80"
     # - "7903:443"
-  
-    restart: always
-    depends_on:
-      - frontend
 
-volumes:
-  frontend_html:
+    restart: always
