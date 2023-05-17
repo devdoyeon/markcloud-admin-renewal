@@ -384,7 +384,7 @@ const Home = () => {
       </div>
       {noticeModal && (
         <NoticeDetail
-          noticeId={noticeId}
+          id={noticeId}
           setModal={setNoticeModal}
           setEditor={setEditor}
         />
@@ -394,7 +394,7 @@ const Home = () => {
       )}
       {editor && (
         <NoticeWrite
-          noticeId={noticeId}
+          id={noticeId}
           setModal={setNoticeModal}
           setEditor={setEditor}
         />

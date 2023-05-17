@@ -891,6 +891,11 @@
         > input[type='file'] {
           display: none;
         }
+        label {
+          @include flex-style();
+          cursor: pointer;
+          width: 100%;
+        }
         .imageInput {
           background-color: $bgColor;
           border: 2px dashed $gray;
@@ -1012,7 +1017,7 @@
         .icon {
           font-size: 30px;
           width: 100%;
-        position: relative;
+          position: relative;
           svg {
             @include position-style($left: 0, $zIndex: 5);
             transform: translate(-20px, -20px);
@@ -1048,6 +1053,54 @@
           p {
             display: inline-block;
             font-family: $middleFont;
+          }
+        }
+        .qna-keyword-list {
+          width: 100%;
+          padding: 5px 10px;
+          margin-top: 40px;
+          min-height: 50px;
+          border-radius: 8px;
+          flex-wrap: wrap;
+          box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+          span {
+            @include flex-style();
+            border: 1px solid $gray04;
+            background-color: $gray05;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin: 3px;
+            svg {
+              font-size: 16px;
+              &.hashtagIcon {
+                margin-right: 10px;
+              }
+              &.closeIcon {
+                margin-left: 10px;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .qna-keyword-input-wrap {
+          margin-top: 20px;
+          .qna-keyword-input {
+            box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+            padding: 5px 10px;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            height: 40px;
+            width: 300px;
+          }
+          .applyBtn {
+            box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.3);
+            height: 40px;
+            padding: 0px 15px;
+            background-color: $gray;
+            font-family: $middleFont;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            color: white;
           }
         }
       }

@@ -131,6 +131,10 @@ const MarkQNA = () => {
     if (!modal || !editor) getQnaList();
   }, [pageInfo.page, pageInfo.limit, modal, editor]);
 
+  useEffect(() => {
+    document.title = '마크클라우드 관리자 > 상표 Q&A 관리';
+  }, [])
+
   const props = { id, setModal, setEditor };
 
   return (

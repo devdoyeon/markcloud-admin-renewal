@@ -11,6 +11,7 @@ export const errorList = {
     '이벤트 쿠폰 발급 가능 기한이 초과되었습니다.<br/>다시 입력해 주세요.',
   integrityError:
     '상품 등록이 되어 있는 서비스입니다.<br/>해당 서비스를 삭제하시려면 상품을 먼저 삭제해 주세요.',
+  keywordTooLong: '해시태그가 너무 길거나 많습니다.',
 };
 
 export const statusArr = {

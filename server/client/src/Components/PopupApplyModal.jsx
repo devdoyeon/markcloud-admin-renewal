@@ -95,6 +95,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
     const reader = new FileReader();
     reader.onload = () => {
       setUploadImg(reader.result);
+      setUpload(true);
     };
     reader.readAsDataURL(inputFile[0]);
   };
@@ -149,37 +150,50 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
           <div className='column'>
             <input
               type='file'
-              onChange={e => imgPreview(e.target.files)}
+              onChange={e => {
+                const files = e?.target?.files;
+                if (files?.length > 1)
+                  return commonModalSetting(
+                    setAlertBox,
+                    true,
+                    'alert',
+                    '한 장만 업로드하실 수 있습니다.'
+                  );
+                changeState(setInfo, 'img', files[0]);
+                imgPreview(files);
+              }}
               accept='image/*'
+              id='fileInput'
             />
             {upload ? (
               <div className='imageInput'>
                 <img src={uploadImg} alt='업로드된 이미지' />
               </div>
             ) : (
-              <div
-                className={`imageInput column ${dragState}`}
-                onDragOver={e => e.preventDefault()}
-                onDrop={e => {
-                  e.preventDefault();
-                  const files = e.dataTransfer?.files;
-                  if (files.length > 1)
-                    return commonModalSetting(
-                      setAlertBox,
-                      true,
-                      'alert',
-                      '한 장만 업로드하실 수 있습니다.'
-                    );
-                  changeState(setInfo, 'img', files[0]);
-                  imgPreview(files);
-                  setDragState('leave');
-                  setUpload(true);
-                }}
-                onDragEnter={() => setDragState('enter')}
-                onDragLeave={() => setDragState('leave')}>
-                <TbDragDrop />
-                <span>이미지를 업로드해 주세요.</span>
-              </div>
+              <label htmlFor='fileInput'>
+                <div
+                  className={`imageInput column ${dragState}`}
+                  onDragOver={e => e.preventDefault()}
+                  onDrop={e => {
+                    e.preventDefault();
+                    const files = e.dataTransfer?.files;
+                    if (files.length > 1)
+                      return commonModalSetting(
+                        setAlertBox,
+                        true,
+                        'alert',
+                        '한 장만 업로드하실 수 있습니다.'
+                      );
+                    changeState(setInfo, 'img', files[0]);
+                    imgPreview(files);
+                    setDragState('leave');
+                  }}
+                  onDragEnter={() => setDragState('enter')}
+                  onDragLeave={() => setDragState('leave')}>
+                  <TbDragDrop />
+                  <span>이미지를 업로드해 주세요.</span>
+                </div>
+              </label>
             )}
             <div className='row'>
               <span>서비스 구분</span>

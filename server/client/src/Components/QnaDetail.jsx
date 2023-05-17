@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose, FaSlackHash } from 'react-icons/fa';
 import {
   BsFillQuestionCircleFill,
   BsExclamationCircleFill,
@@ -34,21 +34,25 @@ const QnaDetail = ({ id, setModal, setEditor }) => {
     }, 200);
     const result = await getQnaDetail(id);
     if (typeof result === 'object') {
-      const { created_at, title, context, admin_name } = result?.data?.data;
+      const { created_at, title, context, admin_name, keyword } =
+        result?.data?.data;
       setInfo({
         created_at: created_at,
         title: title,
         context: context,
         admin_name: admin_name,
+        keyword: keyword,
       });
-      document.querySelector('.qna-title').innerHTML = domParser.parseFromString(
-        title?.replaceAll('\n', '<br />'),
-        'text/html'
-      ).body.innerHTML;
-      document.querySelector('.qna-context').innerHTML = domParser.parseFromString(
-        context?.replaceAll('\n', '<br />'),
-        'text/html'
-      ).body.innerHTML;
+      document.querySelector('.qna-title').innerHTML =
+        domParser.parseFromString(
+          title?.replaceAll('\n', '<br />'),
+          'text/html'
+        ).body.innerHTML;
+      document.querySelector('.qna-context').innerHTML =
+        domParser.parseFromString(
+          context?.replaceAll('\n', '<br />'),
+          'text/html'
+        ).body.innerHTML;
     } else return catchError(result, navigate, setAlertBox, setAlert);
   };
 
@@ -118,6 +122,22 @@ const QnaDetail = ({ id, setModal, setEditor }) => {
             <span className='byte'>
               <p>{byte.context}</p>/3000
             </span>
+            {info?.keyword ? (
+              <div className='qna-keyword-list row'>
+                {info?.keyword?.split('#')?.map(str => {
+                  return str ? (
+                    <span>
+                      <FaSlackHash className='hashtagIcon' />
+                      {str}
+                    </span>
+                  ) : (
+                    <></>
+                  );
+                }, <></>)}
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           <div className='btn-wrap'>
             <button

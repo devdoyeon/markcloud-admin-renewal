@@ -957,6 +957,14 @@
 .modal-background .modal.applyPopup > .column > input[type=file] {
   display: none;
 }
+.modal-background .modal.applyPopup > .column label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+}
 .modal-background .modal.applyPopup > .column .imageInput {
   background-color: #fafafa;
   border: 2px dashed #434343;
@@ -1119,6 +1127,57 @@
 .modal-background .modal.qna-detail > .column .byte p, .modal-background .modal.qna-write > .column .byte p {
   display: inline-block;
   font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-list, .modal-background .modal.qna-write > .column .qna-keyword-list {
+  width: 100%;
+  padding: 5px 10px;
+  margin-top: 40px;
+  min-height: 50px;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-list span, .modal-background .modal.qna-write > .column .qna-keyword-list span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dddddd;
+  background-color: #f5f5f5;
+  padding: 3px 10px;
+  border-radius: 15px;
+  margin: 3px;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-list span svg, .modal-background .modal.qna-write > .column .qna-keyword-list span svg {
+  font-size: 16px;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-list span svg.hashtagIcon, .modal-background .modal.qna-write > .column .qna-keyword-list span svg.hashtagIcon {
+  margin-right: 10px;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-list span svg.closeIcon, .modal-background .modal.qna-write > .column .qna-keyword-list span svg.closeIcon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-input-wrap, .modal-background .modal.qna-write > .column .qna-keyword-input-wrap {
+  margin-top: 20px;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-input-wrap .qna-keyword-input, .modal-background .modal.qna-write > .column .qna-keyword-input-wrap .qna-keyword-input {
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  padding: 5px 10px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  height: 40px;
+  width: 300px;
+}
+.modal-background .modal.qna-detail > .column .qna-keyword-input-wrap .applyBtn, .modal-background .modal.qna-write > .column .qna-keyword-input-wrap .applyBtn {
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  height: 40px;
+  padding: 0px 15px;
+  background-color: #434343;
+  font-family: "NotoSansM", "맑은 고딕", "sans-serif";
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  color: white;
 }
 .modal-background .modal.qna-detail .btn-wrap, .modal-background .modal.qna-write .btn-wrap {
   margin-top: 40px;

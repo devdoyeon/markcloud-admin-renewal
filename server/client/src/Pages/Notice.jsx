@@ -148,6 +148,8 @@ const Notice = () => {
     if (!modal || !editor) getNotice();
   }, [pageInfo.page, pageInfo.limit, modal, editor]);
 
+  const props = { id, setModal, setEditor };
+
   return (
     <div className='container'>
       <SideBar />
@@ -236,12 +238,8 @@ const Notice = () => {
           <Pagination pageInfo={pageInfo} setPageInfo={setPageInfo} />
         )}
       </div>
-      {modal && (
-        <NoticeDetail id={id} setModal={setModal} setEditor={setEditor} />
-      )}
-      {editor && (
-        <NoticeWrite id={id} setModal={setModal} setEditor={setEditor} />
-      )}
+      {modal && <NoticeDetail {...props} />}
+      {editor && <NoticeWrite {...props} />}
       {alertBox.bool && (
         <CommonModal
           setModal={setAlertBox}
