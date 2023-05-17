@@ -211,25 +211,41 @@ const QnaWrite = ({ id, setModal, setEditor }) => {
                 );
               }, <></>)}
             </div>
-            <input
-              type='text'
-              className='qna-keyword-input'
-              placeholder='해시태그를 입력해 주세요.'
-              value={keyword}
-              onChange={e => setKeyword(e.target.value)}
-              onKeyDown={e =>
-                enterFn(e, () => {
-                  if (e.target.value) {
+            <div className='row qna-keyword-input-wrap'>
+              <input
+                type='text'
+                className='qna-keyword-input'
+                placeholder='해시태그를 입력해 주세요.'
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+                onKeyDown={e =>
+                  enterFn(e, () => {
+                    if (e.target.value) {
+                      setKeywordArr(prev => {
+                        const clone = [...prev];
+                        clone.push(e.target.value);
+                        return clone;
+                      });
+                      setKeyword('');
+                    }
+                  })
+                }
+              />
+              <button
+                className='applyBtn'
+                onClick={() => {
+                  if (keyword) {
                     setKeywordArr(prev => {
                       const clone = [...prev];
-                      clone.push(e.target.value);
+                      clone.push(keyword);
                       return clone;
                     });
                     setKeyword('');
                   }
-                })
-              }
-            />
+                }}>
+                등록
+              </button>
+            </div>
           </div>
           <div className='btn-wrap'>
             <button onClick={() => (id ? editFn() : postQna())}>

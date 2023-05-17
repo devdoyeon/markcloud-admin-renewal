@@ -24,6 +24,7 @@ const errorHandling = async error => {
     case 401:
       if (detail === 'Access Denied') return 'accessDenied';
       else if (detail === 'Please Add Days') return 'addDays';
+      else if (detail === 'Keyword Too Long') return 'keywordTooLong'
       break;
     case 403:
       if (detail === 'AccessTokenExpired') return await tokenReissue();
