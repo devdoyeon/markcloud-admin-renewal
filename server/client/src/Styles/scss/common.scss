@@ -891,6 +891,11 @@
         > input[type='file'] {
           display: none;
         }
+        label {
+          @include flex-style();
+          cursor: pointer;
+          width: 100%;
+        }
         .imageInput {
           background-color: $bgColor;
           border: 2px dashed $gray;
@@ -1012,7 +1017,7 @@
         .icon {
           font-size: 30px;
           width: 100%;
-        position: relative;
+          position: relative;
           svg {
             @include position-style($left: 0, $zIndex: 5);
             transform: translate(-20px, -20px);
@@ -1067,7 +1072,6 @@
             margin: 3px;
             svg {
               &.hashtagIcon {
-
                 margin-right: 10px;
               }
               &.closeIcon {

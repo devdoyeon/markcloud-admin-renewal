@@ -957,6 +957,14 @@
 .modal-background .modal.applyPopup > .column > input[type=file] {
   display: none;
 }
+.modal-background .modal.applyPopup > .column label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+}
 .modal-background .modal.applyPopup > .column .imageInput {
   background-color: #fafafa;
   border: 2px dashed #434343;
