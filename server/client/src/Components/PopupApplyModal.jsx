@@ -133,7 +133,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
         end_time: `${addZero(end.getHours())}:${addZero(end.getMinutes())}`,
       });
       setUpload(true);
-      setUploadImg(`http://192.168.0.38:5555${info?.img}`);
+      setUploadImg(info?.img);
     }
   }, []);
 

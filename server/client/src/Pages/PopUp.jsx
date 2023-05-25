@@ -105,7 +105,7 @@ const PopUp = () => {
             }}>
             <td>{serviceList[service_code]}</td>
             <td>
-              <img src={`http://192.168.0.38:5555${img_url}`} alt='' />
+              <img src={img_url} alt='' />
             </td>
             <td>{link_url}</td>
             <td>{returnDate(start_date)}</td>
