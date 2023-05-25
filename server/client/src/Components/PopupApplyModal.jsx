@@ -166,9 +166,9 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
               id='fileInput'
             />
             {upload ? (
-              <div className='imageInput'>
+              <label htmlFor='fileInput' className='imageInput'>
                 <img src={uploadImg} alt='업로드된 이미지' />
-              </div>
+              </label>
             ) : (
               <label htmlFor='fileInput'>
                 <div
