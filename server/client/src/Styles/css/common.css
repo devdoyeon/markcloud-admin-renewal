@@ -570,10 +570,14 @@
   width: 70vw !important;
   height: 80vh !important;
 }
-.modal-background .modal.editor .ck.ck-editor {
+.modal-background .modal.editor .quill-wrap {
   width: 100%;
 }
-.modal-background .modal.editor .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+.modal-background .modal.editor .quill-wrap .quill {
+  width: 100%;
+  margin-bottom: 50px;
+}
+.modal-background .modal.editor .quill-wrap .ql-editor {
   min-height: 500px;
   max-height: 700px;
   min-width: 100%;

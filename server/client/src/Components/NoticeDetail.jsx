@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
 import { AiFillNotification } from 'react-icons/ai';
 import CommonModal from './CommonModal';
-import { byteCount, catchError, commonModalSetting, outClick } from 'JS/common';
+import { byteCount, catchError, commonModalSetting, outClick, str2img } from 'JS/common';
 import { getNoticeDetail, noticeDelete, getServices } from 'JS/API';
 
 const NoticeDetail = ({ id, setModal, setEditor }) => {
@@ -39,17 +39,18 @@ const NoticeDetail = ({ id, setModal, setEditor }) => {
     }, 200);
     const result = await getNoticeDetail(id);
     if (typeof result === 'object') {
-      const { service_code, created_at, title, context, admin_name } =
+      const { service_code, created_at, title, context, admin_name, img_url } =
         result?.data?.data;
+      let str = str2img(img_url, context);
       setInfo({
         service_code: service_code,
         created_at: created_at,
         title: title,
-        context: context,
+        context: str,
         admin_name: admin_name,
       });
       document.querySelector('.context').innerHTML = domParser.parseFromString(
-        context,
+        str,
         'text/html'
       ).body.innerHTML;
       getServiceList();
