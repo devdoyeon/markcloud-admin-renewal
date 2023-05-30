@@ -511,13 +511,10 @@
         width: 100%;
         .quill {
           width: 100%;
-          margin-bottom: 50px;
         }
         .ql-editor {
           min-height: 500px;
-          max-height: 700px;
-          min-width: 100%;
-          // max-width: 100%;
+          width: 100%;
         }
       }
       > .topBar {

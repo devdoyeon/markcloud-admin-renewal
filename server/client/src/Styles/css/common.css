@@ -575,12 +575,10 @@
 }
 .modal-background .modal.editor .quill-wrap .quill {
   width: 100%;
-  margin-bottom: 50px;
 }
 .modal-background .modal.editor .quill-wrap .ql-editor {
   min-height: 500px;
-  max-height: 700px;
-  min-width: 100%;
+  width: 100%;
 }
 .modal-background .modal.editor > .topBar select {
   padding: 10px;
