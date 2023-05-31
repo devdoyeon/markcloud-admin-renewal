@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWindowClose } from 'react-icons/fa';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ReactQuill from 'react-quill';
 import CommonModal from './CommonModal';
 import {
   catchError,
@@ -10,8 +9,11 @@ import {
   changeState,
   commonModalSetting,
   getKeyByValue,
+  makeFormData,
+  str2img,
 } from 'JS/common';
 import { getNoticeDetail, noticeEdit, noticeWrite, getServices } from 'JS/API';
+import 'react-quill/dist/quill.snow.css';
 
 const NoticeWrite = ({ id, setModal, setEditor }) => {
   const [info, setInfo] = useState({});
@@ -30,6 +32,47 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
   const navigate = useNavigate();
 
   let prevent = false;
+
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+      if (input.files) {
+        const file = input.files[0];
+        const formData = new FormData();
+
+        formData.append('image', file);
+        console.log(formData);
+      }
+    };
+  };
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      ['image'],
+      [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
+      ['clean'],
+    ],
+  };
+
+  const formats = [
+    'header',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'link',
+    'image',
+    'align',
+    'color',
+    'background',
+  ];
 
   //= 서비스 목록 불러오기
   const getServiceList = async () => {
@@ -59,10 +102,11 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
     }, 200);
     const result = await getNoticeDetail(id);
     if (typeof result === 'object') {
-      const { service_code, title, context } = result?.data?.data;
+      const { service_code, title, context, img_url } = result?.data?.data;
+      const content = str2img(img_url, context);
       setInfo({
         title: title,
-        context: context,
+        context: content,
         service_code: service_code,
       });
     } else return catchError(result, navigate, setAlertBox, setAlert);
@@ -70,8 +114,12 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
 
   //= 수정
   const editNotice = async () => {
-    const data = { ...info };
-    const result = await noticeEdit(id, data);
+    const editor = document.querySelector('.ql-editor');
+    const formData = makeFormData();
+    formData.append('service_code', info.service_code);
+    formData.append('title', info.title);
+    formData.append('context', editor.innerHTML);
+    const result = await noticeEdit(id, formData);
     if (typeof result === 'object') {
       setAlert('completeEdit');
       commonModalSetting(
@@ -107,7 +155,12 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
         '내용을 입력해 주세요.'
       );
     } else {
-      const result = await noticeWrite(info);
+      const editor = document.querySelector('.ql-editor');
+      const formData = makeFormData();
+      formData.append('service_code', info.service_code);
+      formData.append('title', info.title);
+      formData.append('context', editor.innerHTML);
+      const result = await noticeWrite(formData);
       if (typeof result === 'object') {
         setAlert('completeApply');
         commonModalSetting(
@@ -179,13 +232,17 @@ const NoticeWrite = ({ id, setModal, setEditor }) => {
             </div>
           </div>
           <hr />
-          <CKEditor
-            editor={ClassicEditor}
-            data={info.context}
-            onChange={(e, editor) =>
-              changeState(setInfo, 'context', editor.getData())
-            }
-          />
+          <div className='quill-wrap'>
+            <ReactQuill
+              theme='snow'
+              modules={modules}
+              formats={formats}
+              value={info?.context}
+              onChange={(c, d, s, editor) =>
+                changeState(setInfo, 'context', editor.getContents())
+              }
+            />
+          </div>
           <div className='footer'>
             <div className='viewBytes'>
               <span>{byte.context}</span>/3000
