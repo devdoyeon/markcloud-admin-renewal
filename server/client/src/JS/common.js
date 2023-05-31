@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { removeCookie } from 'JS/cookie';
 import { errorList } from 'JS/array';
 
@@ -139,4 +140,49 @@ export const regularExpression = (type, str) => {
       break;
   }
   return regExp.test(str.trim());
+};
+
+//& base64 -> file -> return formData
+export const makeFormData = () => {
+  const editor = document.querySelector('.ql-editor');
+  const imgArr = editor.querySelectorAll('img');
+  const fileList = [];
+  let file;
+  const formData = new FormData();
+  if (imgArr.length) {
+    for (let img of imgArr) {
+      if (img.currentSrc.includes('base64')) {
+        const arr = img.currentSrc.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while (n--) u8arr[n] = bstr.charCodeAt(n);
+        file = new File([u8arr], { type: mime });
+        fileList.push(file);
+      } else {
+        const arr = [];
+        arr.push(img.currentSrc);
+        formData.append('img_url', arr);
+      }
+    }
+    for (let i = 0; i < imgArr.length; i++)
+      $(imgArr[i]).replaceWith(`UploadedImage${i}`);
+    for (let file of fileList) formData.append('file', file);
+  }
+  return formData;
+};
+
+//& img url Arr -> img src
+export const str2img = (img_url, content) => {
+  let str = content;
+  if (img_url?.split(',').length)
+    for (let i = 0; i < img_url?.split(',').length; i++)
+      str = str.replace(
+        `UploadedImage${i}`,
+        `<img src=${
+          img_url?.length >= 2 ? img_url?.split(',')[i] : img_url
+        }></img>`
+      );
+  return str;
 };

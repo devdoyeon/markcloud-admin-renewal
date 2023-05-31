@@ -507,14 +507,15 @@
     &.editor {
       width: 70vw !important;
       height: 80vh !important;
-      .ck.ck-editor {
+      .quill-wrap {
         width: 100%;
-      }
-      .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
-        min-height: 500px;
-        max-height: 700px;
-        min-width: 100%;
-        // max-width: 100%;
+        .quill {
+          width: 100%;
+        }
+        .ql-editor {
+          min-height: 500px;
+          width: 100%;
+        }
       }
       > .topBar {
         select {

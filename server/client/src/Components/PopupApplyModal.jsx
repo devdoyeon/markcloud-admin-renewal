@@ -133,7 +133,7 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
         end_time: `${addZero(end.getHours())}:${addZero(end.getMinutes())}`,
       });
       setUpload(true);
-      setUploadImg(`http://192.168.0.38:5555${info?.img}`);
+      setUploadImg(info?.img);
     }
   }, []);
 
@@ -166,9 +166,9 @@ const PopupApplyModal = ({ setModal, mode, info, setInfo }) => {
               id='fileInput'
             />
             {upload ? (
-              <div className='imageInput'>
+              <label htmlFor='fileInput' className='imageInput'>
                 <img src={uploadImg} alt='업로드된 이미지' />
-              </div>
+              </label>
             ) : (
               <label htmlFor='fileInput'>
                 <div

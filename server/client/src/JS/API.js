@@ -24,7 +24,7 @@ const errorHandling = async error => {
     case 401:
       if (detail === 'Access Denied') return 'accessDenied';
       else if (detail === 'Please Add Days') return 'addDays';
-      else if (detail === 'Keyword Too Long') return 'keywordTooLong'
+      else if (detail === 'Keyword Too Long') return 'keywordTooLong';
       break;
     case 403:
       if (detail === 'AccessTokenExpired') return await tokenReissue();
@@ -245,21 +245,21 @@ export const getNoticeDetail = async id => {
 };
 
 //공지 사항 작성
-export const noticeWrite = async data => {
+export const noticeWrite = async formData => {
   try {
-    return await axios.post(`/api/admin/notification`, data, header());
+    return await axios.post(`/api/admin/notification`, formData, fileHeader());
   } catch (error) {
     return await errorHandling(error);
   }
 };
 
 // 공지 사항 수정
-export const noticeEdit = async (id, data) => {
+export const noticeEdit = async (id, formData) => {
   try {
     return await axios.post(
       `/api/admin/notification/edit/${id}`,
-      data,
-      header()
+      formData,
+      fileHeader()
     );
   } catch (error) {
     return await errorHandling(error);
