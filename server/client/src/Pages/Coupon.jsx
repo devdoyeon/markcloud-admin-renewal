@@ -51,8 +51,9 @@ const Coupon = () => {
   const renderTableBody = () => {
     return list.map(
       ({
-        event_uid,
+        unique_uuid,
         merchant_name,
+        merchant_code,
         created_at,
         applied_at,
         expired_at,
@@ -61,7 +62,7 @@ const Coupon = () => {
       }) => {
         return (
           <tr>
-            <td>{event_uid}</td>
+            <td>{merchant_code === 'MVMKT' ? unique_uuid : ''}</td>
             <td>{merchant_name}</td>
             <td>{created_at?.replace('T', ' ')}</td>
             <td>{applied_at?.replace('T', ' ')}</td>
