@@ -1,16 +1,8 @@
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CommonModal from './CommonModal';
-import { commonModalSetting } from 'JS/common';
 import { removeCookie } from 'JS/cookie';
 import cloudLogo from 'Image/logo.png';
 
 const SideBar = () => {
-  const [alertBox, setAlertBox] = useState({
-    mode: '',
-    context: '',
-    bool: false,
-  });
   const path = useLocation().pathname;
   const navigate = useNavigate();
 
@@ -107,9 +99,6 @@ const SideBar = () => {
           로그아웃
         </div>
       </div>
-      {alertBox.bool && (
-        <CommonModal setModal={setAlertBox} modal={alertBox} okFn={() => {}} />
-      )}
     </>
   );
 };
