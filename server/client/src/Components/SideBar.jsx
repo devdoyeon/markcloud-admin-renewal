@@ -89,23 +89,6 @@ const SideBar = () => {
             rel='noopener noreferrer'>
             <li>마크뷰</li>
           </a>
-          {/* <a
-            href='https://markcloud.co.kr/mark-link'
-            target='_blank'
-            rel='noopener noreferrer'>
-            <li>마크링크</li>
-          </a> */}
-          <li
-            onClick={() =>
-              commonModalSetting(
-                setAlertBox,
-                true,
-                'alert',
-                '서비스 준비 중입니다.'
-              )
-            }>
-            마크링크
-          </li>
           <a
             href='https://markcloud.co.kr/mark-group'
             target='_blank'
